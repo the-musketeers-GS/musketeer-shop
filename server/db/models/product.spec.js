@@ -25,5 +25,16 @@ describe('Product model', () => {
         }
       })
     })
+
+    it('sets a default `image` if none is provided', () => {
+      const newProduct = Product.build({
+        title: 'shiny sword',
+        price: 1234
+      })
+
+      expect(newProduct.image).to.be.equal(
+        `http://sueadler.com/wp-content/uploads/2015/04/shutterstock_133818692-279x300.jpg`
+      )
+    })
   })
 })
