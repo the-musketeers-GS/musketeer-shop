@@ -1,7 +1,7 @@
 {
   "name": "musketeer-shop",
   "version": "1.0.0",
-  "description": "A shop for all your musketeering needs",
+  "description": "A shop for all your 'Three Musketeering' needs",
   "engines": {
     "node": ">= 7.0.0"
   },
