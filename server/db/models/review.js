@@ -5,10 +5,7 @@ const Review = db.define('review', {
   body: {
     type: Sequelize.TEXT,
     validate: {
-      len: {
-        args: [[20, 500]],
-        msg: 'Review needs to be between 20 and 500 characters.'
-      }
+      len: [20, 500]
     }
   },
   rating: {
@@ -21,4 +18,3 @@ const Review = db.define('review', {
 })
 
 module.exports = Review
-//

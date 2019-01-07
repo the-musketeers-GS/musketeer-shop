@@ -7,7 +7,7 @@ const Review = require('./review')
  *    BlogPost.belongsTo(User)
  */
 Review.belongsTo(User)
-Review.belongsTo(Product)
+//Review.belongsTo(Product)
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
