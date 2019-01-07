@@ -1,7 +1,7 @@
 {
-  "name": "boilermaker",
+  "name": "musketeer-shop",
   "version": "1.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "A shop for all your 'Three Musketeering' needs",
   "engines": {
     "node": ">= 7.0.0"
   },
@@ -34,7 +34,7 @@
       "git add"
     ]
   },
-  "author": "Fullstack Academy of Code",
+  "author": "The Musketeers",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.15.3",
