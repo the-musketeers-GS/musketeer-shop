@@ -5,13 +5,16 @@ const Product = db.define('product', {
   title: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   description: {
     type: Sequelize.TEXT
   },
   price: {
-    type: Sequelize.DECIMAL,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   quantity: {
@@ -26,7 +29,7 @@ const Product = db.define('product', {
     type: Sequelize.ENUM('clothes', 'hats', 'boots', 'weapons', 'accessories')
   },
   size: {
-    type: Sequelize.enum('S', 'M', 'l', 'XL')
+    type: Sequelize.ENUM('S', 'M', 'l', 'XL')
   }
 })
 
