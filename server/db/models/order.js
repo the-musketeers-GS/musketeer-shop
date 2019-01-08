@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Order = db.define('order', {
   total: {
@@ -9,6 +9,6 @@ const Order = db.define('order', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   }
-})
+});
 
-module.exports = Order
+module.exports = Order;
