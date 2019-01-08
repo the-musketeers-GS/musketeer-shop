@@ -1,5 +1,4 @@
 const User = require('./user')
-const Product = require('./product')
 const Order = require('./order')
 
 Order.belongsTo(User)
@@ -20,6 +19,5 @@ Order.belongsTo(User)
 
 module.exports = {
   User,
-  Product,
   Order
 }
