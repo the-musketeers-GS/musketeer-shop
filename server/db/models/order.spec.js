@@ -13,9 +13,7 @@ describe('Order model', () => {
 
       beforeEach(async () => {
         orderTest = await Order.create({
-          productId: 1,
-          price: 1234,
-          quantity: 4
+          total: 12345
         })
       })
 
