@@ -1,4 +1,6 @@
 const User = require('./user')
+const Product = require('./product')
+const Review = require('./review')
 const Order = require('./order')
 
 Order.belongsTo(User)
@@ -9,7 +11,8 @@ Order.belongsTo(User)
  *
  *    BlogPost.belongsTo(User)
  */
-
+Review.belongsTo(User)
+//Review.belongsTo(Product)
 /**
  * We'll export all of our models here, so that any time a module needs a model,
  * we can just require it from 'db/models'
@@ -19,5 +22,7 @@ Order.belongsTo(User)
 
 module.exports = {
   User,
-  Order
+  Product,
+  Order,
+  Review
 }
