@@ -4,6 +4,11 @@ const Review = require('./review')
 const Order = require('./order')
 
 Order.belongsTo(User)
+User.hasMany(Order)
+Review.belongsTo(User)
+User.hasMany(Review)
+Review.belongsTo(Product)
+Product.hasMany(Review)
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -11,9 +16,6 @@ Order.belongsTo(User)
  *
  *    BlogPost.belongsTo(User)
  */
-Review.belongsTo(User)
-
-Review.belongsTo(Product)
 
 //Review.belongsTo(Product)
 
