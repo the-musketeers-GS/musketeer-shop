@@ -1,43 +1,40 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import store from '../store'
+import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import store from '../store';
 
-import {Products} from './Products'
+import { Products } from './Products';
 
-class ProductList extends React.Component {
-  constructor() {
-    super()
+// class ProductList extends React.Component {
+//   constructor() {
+//     super()
 
-    this.state = {
-      products: []
-    }
-  }
+// this.state = store.getState()
+// }
 
-  componentDidMount() {
-    this.setState(store.getState())
-  }
+// componentDidMount() {
+//   this.setState({products: store.getState()})
+// }
 
-  render() {
-    const {products} = this.state
-    return (
-      <div>
-        {products.map(product => {
-          return (
-            <ul key={product.id}>
-              <Products products={products} />
-            </ul>
-          )
-        })}
-        <h1>Hello World!</h1>
-      </div>
-    )
-  }
-}
+const ProductList = props => {
+  // render() {
+  return (
+    <div>
+      {props.products.map(product => (
+        <ul key={product.id}>
+          <li>{product.title}</li>
+        </ul>
+      ))}
+    </div>
+  );
+};
 
-const mapState = state => {
-  return {
-    products: state.products
-  }
-}
+// const mapState = state => {
+//   return {
+//     products: state.products
+//   }
+// }
 
-export default connect(mapState)(ProductList)
+// export default withRouter(connect(mapState)(ProductList))
+
+export default ProductList;
