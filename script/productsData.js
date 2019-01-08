@@ -3,8 +3,7 @@ const productsData = [
     title: 'Musketeer Hat with Feather',
     description: 'One size fits most adult. Made of felt, includes feather',
     price: 2500,
-    category: 'hats',
-    color: 'black'
+    category: 'hats'
   },
   {
     title: 'Blue Feather',
@@ -60,7 +59,7 @@ const productsData = [
     description:
       'The Musketeer was a personal guard King Louis XIII of France & were known for the finest qualities in all men; Gallant, brave, chivalrous, and debonair. Our Musketeer Tabard is a red, 100 percent cotton velvet top, fully lined with a matching satin gold cross and fleur-de-lis of the Musketeers emblazoned on the front. With matching silver trim on edges, the tabard is a must have for any Musketeer costume.',
     price: 10000,
-    category: 'clothing'
+    category: 'clothes'
   },
   {
     title: 'Musketeer Larp Small Sword',
@@ -81,14 +80,14 @@ const productsData = [
     description:
       'This simple yet stylish shirt is light, breathable, and soft, all thanks to it being made of lightweight batiste fabric. The shirt has a wide, flat collar decorated with lace. The shoulders of the shirt are also laden with lace decoration. The full-length sleeves are loose-fitted from shoulder to wrist, where they are gathered in a small band decorated with more lace. When worn properly, the Musketeer Shirt should be between waist and hip length. It is also only available in white, although it comes in sizes small, medium, large, and x-large.',
     price: 4500,
-    category: 'clothing'
+    category: 'clothes'
   },
   {
     title: 'Royal Musketeer Tabard',
     description:
       'Influenced by Alexandre Dumas The Man in the Iron Mask, this Royal Musketeer Tabard is made of rich black cotton velvet with a deep gold rayon lining. Embroidered crosses with fleur-de-lis are on both the chest and sleeves. An adjustable high collar completes this stunning look. The Royal Musketeer Tabard is one size fits most and is dry clean only. Take your Musketeer costume or historical reenactment look to the next level with this high quality tabard.',
     price: 7700,
-    category: 'clothing'
+    category: 'clothes'
   },
   {
     title: 'High Musketeer Boots',
