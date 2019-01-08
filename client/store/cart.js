@@ -9,6 +9,7 @@ const initialState = {
 const ADD_TO_CART = 'ADD_TO_CART';
 
 // ACTION CREATORS
+// need productId
 // const addToCart =
 
 // THUNK CREATORS
