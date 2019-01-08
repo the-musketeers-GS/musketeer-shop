@@ -11,7 +11,8 @@ const Product = db.define('product', {
     }
   },
   description: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    defaultValue: 'Three Musketeers Item'
   },
   price: {
     type: Sequelize.INTEGER,
@@ -26,10 +27,11 @@ const Product = db.define('product', {
     defaultValue: `http://sueadler.com/wp-content/uploads/2015/04/shutterstock_133818692-279x300.jpg`
   },
   category: {
-    type: Sequelize.ENUM('clothes', 'hats', 'boots', 'weapons', 'accessories')
+    type: Sequelize.ENUM('clothes', 'hats', 'boots', 'weapons', 'accessories'),
+    defaultValue: 'accessories'
   },
   size: {
-    type: Sequelize.ENUM('S', 'M', 'l', 'XL')
+    type: Sequelize.ENUM('S', 'M', 'L', 'XL', `N/A`)
   }
 })
 
