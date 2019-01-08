@@ -1,15 +1,14 @@
 const router = require('express').Router();
-const { Order } = require('../db/models');
+const { Order, OrderItem } = require('../db/models');
 module.exports = router;
 
 // GET /api/order/  return all products in an order where completed = false (current cart items)
-router.get('/', async (req, res, next) => {
-  const { userId } = req.body;
+router.get('/:id', async (req, res, next) => {
+  const id = req.params.id;
   try {
     const products = await Order.findAll({
       where: {
-        completed: false,
-        userId
+        id
       }
     });
     res.json(products);
