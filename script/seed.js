@@ -2,7 +2,8 @@
 
 const db = require('../server/db')
 const productsData = require('./productsData')
-const {User, Product} = require('../server/db/models')
+const reviewsData = require('./reviewsData')
+const {User, Product, Review} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -17,8 +18,13 @@ async function seed() {
     Product.bulkCreate(productsData, {returning: true})
   ])
 
+  const reviews = await Promise.all([
+    Review.bulkCreate(reviewsData, {returning: true})
+  ])
+
   console.log(`seeded ${users.length} users`)
   console.log(`seeded ${products.length} products`)
+  console.log(`seeded ${reviews.length} reviews`)
   console.log(`seeded successfully`)
 }
 
