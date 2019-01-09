@@ -1,7 +1,7 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import formatMoney from '../../lib/formatMoney';
-import SingleProduct from './SingleProduct';
 
 const ProductList = props => {
   const { products } = props;
@@ -20,4 +20,10 @@ const ProductList = props => {
   );
 };
 
-export default ProductList;
+const mapState = ({ products }) => {
+  return {
+    products
+  };
+};
+
+export default withRouter(connect(mapState)(ProductList));
