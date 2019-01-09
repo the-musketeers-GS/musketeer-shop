@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { fetchCart } from '../store/cart';
 
-const Cart = ({ products }) => {
-  return (
-    <div>
-      <p>Cart component</p>
-    </div>
-  );
-};
+class Cart extends Component {
+  componentDidMount() {
+    this.props.getCart(1);
+  }
 
-const mapState = state => ({
-  products: state.cart.products
+  render() {
+    const products = this.props.products || [];
+    console.log('>>>', products);
+    return (
+      <div>
+        <ul>
+          {products.map(item => (
+            <li key={item.product.id}>{item.product.title}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
+const mapState = state => ({ products: state.cart.products });
+
+const mapDispatch = dispatch => ({
+  getCart: userId => dispatch(fetchCart(userId))
 });
 
-export default connect(mapState)(Cart);
+export default connect(mapState, mapDispatch)(Cart);
