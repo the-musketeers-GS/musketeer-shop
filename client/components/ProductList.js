@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Link } from 'react-router-dom';
 import formatMoney from '../../lib/formatMoney';
 import SingleProduct from './SingleProduct';
+import AddToCart from './AddToCart';
 
 const ProductList = props => {
   const { products } = props;
@@ -14,6 +15,7 @@ const ProductList = props => {
             <li>{formatMoney(product.price)}</li>
             <img src={`${product.image}`} />
           </Link>
+          <AddToCart />
         </ul>
       ))}
     </div>

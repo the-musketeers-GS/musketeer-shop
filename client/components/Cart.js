@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCart } from '../store/cart';
@@ -7,7 +6,6 @@ class Cart extends Component {
   componentDidMount() {
     this.props.getCart(1);
   }
-
   render() {
     const products = this.props.products || [];
     console.log('>>>', products);
@@ -30,4 +28,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(Cart);
-
