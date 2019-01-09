@@ -8,5 +8,4 @@ export { default as ProductList } from './ProductList';
 export { default as SingleProduct } from './SingleProduct';
 export { default as UserHome } from './user-home';
 export { default as ConnectedReviewList } from './ReviewList';
-export { default as Review } from './Review';
 export { Login, Signup } from './auth-form';
