@@ -20,6 +20,6 @@ const reviewsData = [
     userId: 2,
     productId: 5
   }
-]
+];
 
-module.exports = reviewsData
+module.exports = reviewsData;

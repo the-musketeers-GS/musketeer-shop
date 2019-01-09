@@ -2,6 +2,7 @@
 
 const { expect } = require('chai');
 const db = require('../db');
+
 //const app = require('../index');
 const Review = db.model('review');
 //const Product = db.model('product');
@@ -17,6 +18,7 @@ describe('Review routes', () => {
 
   describe('/api/reviews/product/:id', () => {
     if (!Review.findAll) Review.findAll = function() {};
+
     let agent = supertest(app);
     const fakeFindAll = sinon.fake.resolves([
       { id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5 },
@@ -38,6 +40,7 @@ describe('Review routes', () => {
 
     it.only('Get one review for productId of 5', async () => {
       const response = await agent.get('/api/reviews/product/5').expect(200);
+
       expect(response.body).to.deep.equal([
         { id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5 }
       ]);
