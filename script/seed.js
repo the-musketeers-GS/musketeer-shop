@@ -3,7 +3,19 @@
 const db = require('../server/db');
 const productsData = require('./productsData');
 const reviewsData = require('./reviewsData');
-const { User, Product, Review } = require('../server/db/models');
+const orderData = require('./orderData');
+const orderItemData = require('./orderItemData');
+const cartData = require('./cartData');
+const cartItemData = require('./cartItemData');
+const {
+  User,
+  Product,
+  Review,
+  Order,
+  OrderItem,
+  Cart,
+  CartItem
+} = require('../server/db/models');
 
 async function seed() {
   await db.sync({ force: true });
@@ -22,9 +34,29 @@ async function seed() {
     Review.bulkCreate(reviewsData, { returning: true })
   ]);
 
+  const orders = await Promise.all([
+    Order.bulkCreate(orderData, { returning: true })
+  ]);
+
+  const orderItems = await Promise.all([
+    OrderItem.bulkCreate(orderItemData, { returning: true })
+  ]);
+
+  const carts = await Promise.all([
+    Cart.bulkCreate(cartData, { returning: true })
+  ]);
+
+  const cartItems = await Promise.all([
+    CartItem.bulkCreate(cartItemData, { returning: true })
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${products.length} products`);
   console.log(`seeded ${reviews.length} reviews`);
+  console.log(`seeded ${orders.length} orders`);
+  console.log(`seeded ${orderItems.length} orderItems`);
+  console.log(`seeded ${carts.length} carts`);
+  console.log(`seeded ${cartItems.length} cartItems`);
   console.log(`seeded successfully`);
 }
 
