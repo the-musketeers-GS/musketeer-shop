@@ -1,42 +1,47 @@
 /* global describe beforeEach it */
 
-const {expect} = require('chai')
-const db = require('../db')
-const app = require('../index')
-const Review = db.model('review')
-const Product = db.model('product')
-const supertest = require('supertest')
-const sinon = require('sinon')
-const app2 = require('./index')
-const agent = require('supertest')(app2)
+const { expect } = require('chai');
+const db = require('../db');
+//const app = require('../index');
+const Review = db.model('review');
+//const Product = db.model('product');
+
+const sinon = require('sinon');
+import app from './index';
+import supertest from 'supertest';
 
 describe('Review routes', () => {
   beforeEach(() => {
-    return db.sync({force: true})
-  })
+    return db.sync({ force: true });
+  });
 
   describe('/api/reviews/product/:id', () => {
-    if (!Review.findAll) Review.findAll = function() {}
-
+    if (!Review.findAll) Review.findAll = function() {};
+    let agent = supertest(app);
     const fakeFindAll = sinon.fake.resolves([
-      {id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5},
-      {id: 2, body: 'skadfjlkasjflk;afjslk;ajfakjflaj', rating: 5, productId: 3}
-    ])
+      { id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5 },
+      {
+        id: 2,
+        body: 'skadfjlkasjflk;afjslk;ajfakjflaj',
+        rating: 5,
+        productId: 3
+      }
+    ]);
 
     beforeEach(() => {
-      sinon.replace(Review, 'findAll', fakeFindAll)
-    })
+      sinon.replace(Review, 'findAll', fakeFindAll);
+    });
 
     afterEach(() => {
-      sinon.restore()
-    })
+      sinon.restore();
+    });
 
-    it('Get one review for productId of 5', async () => {
-      const response = await supertest.get('/api/reviews/product/0').expect(200)
+    it.only('Get one review for productId of 5', async () => {
+      const response = await agent.get('/api/reviews/product/5').expect(200);
       expect(response.body).to.deep.equal([
-        {id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5}
-      ])
-    })
+        { id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5 }
+      ]);
+    });
     // let product1, review1
 
     // beforeEach(async () => {
@@ -62,5 +67,5 @@ describe('Review routes', () => {
     //   expect(data).to.be.an('array')
     //expect(res.body[0].body).to.be.equal('Something Smelly!')
     //})
-  }) // end describe('/api/users')
-}) // end describe('User routes')
+  }); // end describe('/api/users')
+}); // end describe('User routes')
