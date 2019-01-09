@@ -7,17 +7,15 @@ const ProductList = props => {
   const { products } = props;
   return (
     <div>
-      {products.length &&
-        products.map(product => (
-          <ul key={product.id}>
-            {/* <Route path={`/products/${product.id}`} render={routeProps => <SingleProduct {...routeProps} product={product} /> } /> */}
-            <Link to={`/products/${product.id}`}>
-              <li>{product.title}</li>
-              <li>{formatMoney(product.price)}</li>
-              <img src={`${product.image}`} />
-            </Link>
-          </ul>
-        ))}
+      {products.map(product => (
+        <ul key={product.id}>
+          <Link to={`/products/${product.id}`}>
+            <li>{product.title}</li>
+            <li>{formatMoney(product.price)}</li>
+            <img src={`${product.image}`} />
+          </Link>
+        </ul>
+      ))}
     </div>
   );
 };
