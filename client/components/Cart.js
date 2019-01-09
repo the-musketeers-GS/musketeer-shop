@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Image, List } from 'semantic-ui-react';
 import { fetchCart } from '../store/cart';
+import formatMoney from '../../lib/formatMoney';
 
 class Cart extends Component {
   componentDidMount() {
@@ -10,13 +12,16 @@ class Cart extends Component {
     const products = this.props.products || [];
     console.log('>>>', products);
     return (
-      <div>
-        <ul>
-          {products.map(item => (
-            <li key={item.product.id}>{item.product.title}</li>
-          ))}
-        </ul>
-      </div>
+      <List celled>
+        {products.map(item => (
+          <List.Item key={item.product.id}>
+            <List.Content>
+              <List.Header>{item.product.title}</List.Header>
+              {formatMoney(item.product.price)}
+            </List.Content>
+          </List.Item>
+        ))}
+      </List>
     );
   }
 }
