@@ -1,11 +1,16 @@
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 
-export const Cart = () => {
+const Cart = ({ products }) => {
   return (
     <div>
       <p>Cart component</p>
     </div>
-  )
-}
+  );
+};
 
-export default Cart
+const mapState = state => ({
+  products: state.cart.products
+});
+
+export default connect(mapState)(Cart);
