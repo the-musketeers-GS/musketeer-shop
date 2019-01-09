@@ -54,7 +54,7 @@ router.post('/:userId/:productId', async (req, res, next) => {
     if (!isNew) {
       await item.update(
         {
-          quantity: req.body.qty + item.quantity,
+          quantity: item.quantity + 1,
           cartId
         },
         {

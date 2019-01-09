@@ -1,9 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { createCartItem } from '../store/cart';
 
-const Cart = props => (
+const userId = 1;
+
+const AddToCart = ({ addToCart, productId }) => (
   <div>
-    <button type="button">Add To Cart</button>
+    <button
+      type="button"
+      onClick={() => {
+        addToCart(userId, productId);
+      }}
+    >
+      Add To Cart
+    </button>
   </div>
 );
 
-export default Cart;
+const mapDispatch = dispatch => ({
+  addToCart: (userId, productId) => dispatch(createCartItem(userId, productId))
+});
+
+export default connect(null, mapDispatch)(AddToCart);

@@ -15,7 +15,7 @@ const ProductList = props => {
             <li>{formatMoney(product.price)}</li>
             <img src={`${product.image}`} />
           </Link>
-          <AddToCart />
+          <AddToCart userId={props.userId} productId={product.id} />
         </ul>
       ))}
     </div>
