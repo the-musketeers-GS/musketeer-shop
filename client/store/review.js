@@ -15,7 +15,7 @@ export const gotOneProjectReviewsFromServer = projReviews => {
 //thunk creator
 export const fetchReviewsForOneProject = projectId => {
   return async dispatch => {
-    const response = await axios.get(`/api/reviews/project/:${projectId}`);
+    const response = await axios.get(`/api/reviews/product/${projectId}`);
     const projReviews = response.data;
     const action = gotOneProjectReviewsFromServer(projReviews);
     dispatch(action);

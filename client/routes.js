@@ -8,7 +8,9 @@ import {
   UserHome,
   Cart,
   ProductList,
-  SingleProduct
+  SingleProduct,
+  ConnectedReviewList,
+  Review
 } from './components';
 import { me, fetchProducts } from './store';
 
