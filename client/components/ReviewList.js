@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Review from './Review';
 
 class ReviewList extends React.Component {
   componentDidMount() {
-    const projId = this.props.match.params.id;
+    const prodId = this.props.match.params.id;
   }
 
   render() {
