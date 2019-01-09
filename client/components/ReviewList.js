@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchReviewsForOneProject } from '../store/review';
+import { fetchReviewsForOneProduct } from '../store/review';
 
 class ReviewList extends React.Component {
   componentDidMount() {
-    const projId = Number(this.props.match.params.id);
-    this.props.fetchReviewsForOneProject(projId);
+    const prodId = Number(this.props.match.params.id);
+    this.props.fetchReviewsForOneProduct(prodId);
   }
 
   render() {
@@ -33,14 +33,14 @@ class ReviewList extends React.Component {
 const mapStateToProps = state => {
   console.log('state in mapStateToProps-------', state);
   return {
-    reviews: state.review.allProjReviews
+    reviews: state.review.allProdReviews
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchReviewsForOneProject: projId =>
-      dispatch(fetchReviewsForOneProject(projId))
+    fetchReviewsForOneProduct: prodId =>
+      dispatch(fetchReviewsForOneProduct(prodId))
   };
 };
 

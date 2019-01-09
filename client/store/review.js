@@ -1,23 +1,23 @@
 import axios from 'axios';
 
 //action contstant
-const GOT_ONE_PROJECT_REVIEWS_FROM_SERVER =
-  'GOT_ONE_PROJECT_REVIEWS_FROM_SERVER';
+const GOT_ONE_PRODUCT_REVIEWS_FROM_SERVER =
+  'GOT_ONE_PRODUCT_REVIEWS_FROM_SERVER';
 
 //action type
-export const gotOneProjectReviewsFromServer = projReviews => {
+export const gotOneProductReviewsFromServer = prodReviews => {
   return {
-    type: GOT_ONE_PROJECT_REVIEWS_FROM_SERVER,
-    projReviews: projReviews
+    type: GOT_ONE_PRODUCT_REVIEWS_FROM_SERVER,
+    prodReviews: prodReviews
   };
 };
 
 //thunk creator
-export const fetchReviewsForOneProject = projectId => {
+export const fetchReviewsForOneProduct = productId => {
   return async dispatch => {
-    const response = await axios.get(`/api/reviews/product/${projectId}`);
-    const projReviews = response.data;
-    const action = gotOneProjectReviewsFromServer(projReviews);
+    const response = await axios.get(`/api/reviews/product/${productId}`);
+    const prodReviews = response.data;
+    const action = gotOneProductReviewsFromServer(prodReviews);
     dispatch(action);
   };
 };
@@ -25,15 +25,15 @@ export const fetchReviewsForOneProject = projectId => {
 //reducer
 
 const initialState = {
-  allProjReviews: []
+  allProdReviews: []
 };
 
 const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_ONE_PROJECT_REVIEWS_FROM_SERVER:
+    case GOT_ONE_PRODUCT_REVIEWS_FROM_SERVER:
       return {
         ...state,
-        allProjReviews: action.projReviews
+        allProdReviews: action.prodReviews
       };
     default:
       return state;
