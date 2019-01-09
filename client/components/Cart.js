@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCart } from '../store/cart';
@@ -30,4 +29,3 @@ const mapDispatch = dispatch => ({
 });
 
 export default connect(mapState, mapDispatch)(Cart);
-
