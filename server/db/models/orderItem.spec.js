@@ -1,21 +1,29 @@
 const { expect } = require('chai');
 const db = require('../index');
 const OrderItem = db.model('orderItem');
+const Order = db.model('order');
 
 describe('OrderItem model', () => {
   beforeEach(() => {
     return db.sync({ force: true });
   });
 
-  describe('instanceMethods', () => {
+  xdescribe('instanceMethods', () => {
     describe('', () => {
+      let order;
       let orderTest;
-
       beforeEach(async () => {
+        order = await Order.create({
+          orderNumber: 111,
+          total: 1234 * 4,
+          completed: false
+        });
+
         orderTest = await OrderItem.create({
-          productId: 1,
+          productId: 5,
           price: 1234,
-          quantity: 4
+          quantity: 4,
+          orderId: 1
         });
       });
 
