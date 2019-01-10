@@ -9,14 +9,17 @@ class ProductList extends React.Component {
 
     this.state = {
       filteredProducts: '',
-      searchProducts: ''
+      searchProducts: '',
+      searched: ''
     };
   }
 
   handleKey = e => {
-    event.preventDefault();
     if (e.key === 'Enter') {
-      this.setState({ searchProducts: '' });
+      e.preventDefault();
+      let searched = this.state.searchProducts;
+      this.setState({ searched });
+      setTimeout(this.setState({ searchProducts: '' }), 5000);
     }
   };
 
@@ -25,23 +28,34 @@ class ProductList extends React.Component {
   };
 
   handleClick = e => {
-    this.setState({ filteredProducts: e.target.value });
+    this.setState({ filteredProducts: e.target.value, searchProducts: '' });
     console.log(e.target.value);
   };
 
   render() {
     let { products } = this.props;
-    if (this.state.filteredProducts) {
+    let { filteredProducts, searchProducts, searched } = this.state;
+    if (filteredProducts) {
       products = products.filter(
-        product => product.category === this.state.filteredProducts
+        product => product.category === filteredProducts
       );
     }
-
-    if (this.state.searchProducts) {
+    if (searchProducts) {
       products = products.filter(
         product =>
-          product.title.includes(this.state.searchProducts) ||
-          product.description.includes(this.state.searchProducts)
+          product.title.toLowerCase().includes(searchProducts.toLowerCase()) ||
+          product.description
+            .toLowerCase()
+            .includes(searchProducts.toLowerCase())
+      );
+    }
+    if (!searchProducts && searched) {
+      products = products.filter(
+        product =>
+          product.title.toLowerCase().includes(searchProducts.toLowerCase()) ||
+          product.description
+            .toLowerCase()
+            .includes(searchProducts.toLowerCase())
       );
     }
 
@@ -86,15 +100,21 @@ class ProductList extends React.Component {
           </form>
         </div>
 
-        {products.map(product => (
-          <ul key={product.id}>
-            <Link to={`/products/${product.id}`}>
-              <li>{product.title}</li>
-              <li>{formatMoney(product.price)}</li>
-              <img src={`${product.image}`} />
-            </Link>
-          </ul>
-        ))}
+        {!products.length ? (
+          <h2>
+            No result found for "{searched}" in {filteredProducts.toUpperCase()}
+          </h2>
+        ) : (
+          products.map(product => (
+            <ul key={product.id}>
+              <Link to={`/products/${product.id}`}>
+                <li>{product.title}</li>
+                <li>{formatMoney(product.price)}</li>
+                <img src={`${product.image}`} />
+              </Link>
+            </ul>
+          ))
+        )}
       </div>
     );
   }
