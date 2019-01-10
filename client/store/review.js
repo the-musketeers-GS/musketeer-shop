@@ -15,7 +15,7 @@ export const gotOneProductReviewsFromServer = prodReviews => {
 //thunk creator
 export const fetchReviewsForOneProduct = productId => {
   return async dispatch => {
-    const response = await axios.get(`/api/reviews/product/:${productId}`);
+    const response = await axios.get(`/api/reviews/product/${productId}`);
     const prodReviews = response.data;
     const action = gotOneProductReviewsFromServer(prodReviews);
     dispatch(action);
