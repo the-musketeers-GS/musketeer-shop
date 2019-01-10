@@ -12,11 +12,11 @@ const ProductList = props => {
           Filter By Category >>{' '}
         </button>
         <div className="dropdown-content">
-          <span>Accessories</span>
-          <span>Boots</span>
-          <span>Clothes</span>
-          <span>Hats</span>
-          <span>Weapons</span>
+          <a href="/products/accessories">Accessories</a>
+          <a href="/products/boots">Boots</a>
+          <a href="/products/clothes">Clothes</a>
+          <a href="products/hats">Hats</a>
+          <a href="products/weapons">Weapons</a>
         </div>
       </div>
 

@@ -8,7 +8,8 @@ import {
   UserHome,
   Cart,
   ProductList,
-  SingleProduct
+  SingleProduct,
+  Categories
 } from './components';
 import { me, fetchProducts } from './store';
 
@@ -21,13 +22,14 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, products } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={ProductList} />
         <Route exact path="/products/:id" component={SingleProduct} />
+        <Route exact path="/products/:categories" component={Categories} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/cart" component={Cart} />
