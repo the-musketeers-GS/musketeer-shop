@@ -11,7 +11,7 @@ const sinon = require('sinon');
 import app from './index';
 import supertest from 'supertest';
 
-describe('Review routes', () => {
+xdescribe('Review routes', () => {
   beforeEach(() => {
     return db.sync({ force: true });
   });
@@ -38,7 +38,7 @@ describe('Review routes', () => {
       sinon.restore();
     });
 
-    it.only('Get one review for productId of 5', async () => {
+    it('Get one review for productId of 5', async () => {
       const response = await agent.get('/api/reviews/product/5').expect(200);
 
       expect(response.body).to.deep.equal([
