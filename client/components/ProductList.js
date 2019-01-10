@@ -17,9 +17,6 @@ class ProductList extends React.Component {
   handleKey = e => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      let searched = this.state.searchProducts;
-      this.setState({ searched });
-      setTimeout(this.setState({ searchProducts: '' }), 5000);
     }
   };
 
@@ -101,9 +98,7 @@ class ProductList extends React.Component {
         </div>
 
         {!products.length ? (
-          <h2>
-            No result found for "{searched}" in {filteredProducts.toUpperCase()}
-          </h2>
+          <h2>No result found in {filteredProducts.toUpperCase()}</h2>
         ) : (
           products.map(product => (
             <ul key={product.id}>
