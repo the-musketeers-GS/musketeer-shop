@@ -13,6 +13,17 @@ class ProductList extends React.Component {
     };
   }
 
+  handleKey = e => {
+    event.preventDefault();
+    if (e.key === 'Enter') {
+      this.setState({ searchProducts: '' });
+    }
+  };
+
+  handleChange = e => {
+    this.setState({ searchProducts: e.target.value });
+  };
+
   handleClick = e => {
     this.setState({ filteredProducts: e.target.value });
     console.log(e.target.value);
@@ -23,6 +34,14 @@ class ProductList extends React.Component {
     if (this.state.filteredProducts) {
       products = products.filter(
         product => product.category === this.state.filteredProducts
+      );
+    }
+
+    if (this.state.searchProducts) {
+      products = products.filter(
+        product =>
+          product.title.includes(this.state.searchProducts) ||
+          product.description.includes(this.state.searchProducts)
       );
     }
 
@@ -52,6 +71,19 @@ class ProductList extends React.Component {
               Weapons
             </option>
           </div>
+        </div>
+
+        <div>
+          <form className="search" id="searchProduct" method="post">
+            <input
+              type="text"
+              name="searchProducts"
+              value={this.state.searchProducts}
+              onKeyDown={this.handleKey}
+              onChange={this.handleChange}
+              placeholder={`Search in ${this.state.filteredProducts.toUpperCase()} by name, keyword, etc...`}
+            />
+          </form>
         </div>
 
         {products.map(product => (
