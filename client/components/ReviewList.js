@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { fetchReviewsForOneProduct } from '../store/review';
 
 class ReviewList extends React.Component {
