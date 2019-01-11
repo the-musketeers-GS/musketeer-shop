@@ -22,11 +22,6 @@ router.get('/:userId/items', async (req, res, next) => {
         ]
       });
       return res.json(cartItems);
-    } else {
-      // const newCart = Cart.build();
-      // newCart.userId = userId;
-      // await newCart.save();
-      // cartId = newCart.id;
     }
     return res.json({ message: 'no cart found' });
   } catch (err) {
