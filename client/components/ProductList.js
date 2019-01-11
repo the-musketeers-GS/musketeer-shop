@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import formatMoney from '../../lib/formatMoney';
+import AddToCart from './AddToCart';
 import avgRating from '../../lib/avgRating';
 
 class ProductList extends React.Component {
@@ -27,7 +28,6 @@ class ProductList extends React.Component {
 
   handleClick = e => {
     this.setState({ filteredProducts: e.target.value, searchProducts: '' });
-    console.log(e.target.value);
   };
 
   render() {
@@ -114,6 +114,7 @@ class ProductList extends React.Component {
                     : 'No Reviews'}
                 </li>
               </Link>
+              <AddToCart productId={product.id} />
             </ul>
           ))
         )}

@@ -2,41 +2,102 @@ const router = require('express').Router();
 const { Cart, CartItem, Product } = require('../db/models');
 module.exports = router;
 
-// GET /api/cart/:userId  return user's cart
-// router.get('/:userId', async (req, res, next) => {
-//   const customerId = req.params.userId;
-//   try {
-//     const cart = await Cart.findOne({
-//       where: { customerId }
-//     });
-//     const items = await CartItem.findAll({
-//       where: { cartId: cart.id }
-//     });
-//     res.json(items);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// GET /api/cart/:cartId/items  return items on a specific cart/order instance
-router.get('/:cartId/items', async (req, res, next) => {
-  const cartId = req.params.cartId;
+// GET /api/cart/:userId/items ---- return items on a specific user/cart instance
+router.get('/:userId/items', async (req, res, next) => {
   try {
-    const cartItems = await CartItem.findAll({
-      where: { cartId },
-      include: [{ model: Product, attributes: ['id', 'title', 'price'] }]
+    const userId = req.params.userId;
+    let cartId;
+    let cartItems;
+    const cart = await Cart.findOne({
+      where: {
+        userId
+      }
     });
-    res.json(cartItems);
+    if (cart) {
+      cartId = cart.id;
+      cartItems = await CartItem.findAll({
+        where: { cartId },
+        include: [
+          { model: Product, attributes: ['id', 'title', 'price', 'image'] }
+        ]
+      });
+      return res.json(cartItems);
+    }
+    return res.json({ message: 'no cart found' });
   } catch (err) {
     next(err);
   }
 });
 
-// POST /api/cart/  create cart item
-// router.post('/:id', async (req, res, next) => {
-//   const id = req.params.id;
-//   try {
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+// POST /api/cart/:userId/:productId ---- create cart item
+router.post('/:userId/:productId', async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+    //! TODO 1. check if user is logged in (later)
+    // 2. if they are, check if they have an exisiting cart, findOne where customer id
+    let cartId;
+    const cart = await Cart.findOne({
+      where: {
+        userId
+      }
+    });
+    if (cart) {
+      cartId = cart.id;
+    }
+    // 3. if they DO have cart, find or create the cartItem with params/productId and current cart id
+    // 3.1 if they DON'T have cart, build one and set userId and save
+    if (!cart) {
+      const newCart = Cart.build();
+      newCart.userId = userId;
+      await newCart.save();
+      cartId = newCart.id;
+    }
+    // 4 find or create the item (to see if it already exists)
+    // isNew will be false if found and true if created
+    const [item, isNew] = await CartItem.findOrCreate({
+      where: {
+        productId,
+        cartId
+      }
+    });
+    // 5 if that item already exists, update quantity
+    if (!isNew) {
+      await item.update(
+        {
+          quantity: item.quantity + 1,
+          cartId
+        },
+        {
+          returning: true
+        }
+      );
+    }
+    res.status(201).json(item);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// DELETE /api/cart/:userId/:productId ---- delete cart item instance
+router.delete('/:userId/:productId', async (req, res, next) => {
+  const userId = req.params.userId;
+  const productId = req.params.productId;
+  try {
+    // 1 find the cart to get cartId
+    const cart = await Cart.findOne({
+      where: { userId }
+    });
+    const cartId = cart.id;
+    // 2 await destroy item
+    await CartItem.destroy({
+      where: {
+        cartId,
+        productId
+      }
+    });
+    res.json(productId);
+  } catch (err) {
+    next(err);
+  }
+});

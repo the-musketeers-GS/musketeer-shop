@@ -11,7 +11,6 @@ const SingleProduct = props => {
     [product] = props.products.filter(p => p.id === id);
   }
 
-
   return (
     <div>
       <h2>Single Product</h2>
