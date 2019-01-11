@@ -18,7 +18,7 @@ class ManageProducts extends Component {
 
   render() {
     const { products } = this.props || [];
-    console.log('products>>>', products);
+
     return (
       products.length && (
         <div>
