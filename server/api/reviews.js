@@ -13,13 +13,18 @@ router.get('/product/:id', async (req, res, next) => {
   }
 });
 
-router.post('/product/:id', async (req, res, next) => {
+router.post('/product/:prodId/user/:userId', async (req, res, next) => {
   try {
     let product = await Product.findOne({
-      where: { id: req.params.id }
+      where: { id: req.params.prodId }
+    });
+    let user = await User.findOne({
+      where: { id: req.params.userId }
     });
     let review = await Review.create(req.body);
+    await review.setUser(user);
     let productReview = await review.setProduct(product);
+
     res.status(201).send(productReview);
   } catch (error) {
     next(error);
