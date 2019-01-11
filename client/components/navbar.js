@@ -10,7 +10,7 @@ import Title from './styles/Title';
 import NavStyles from './styles/NavStyles';
 
 const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
-  <div style={{ justifyContent: 'center' }}>
+  <div>
     <Link to="/">
       <Title>MUSKETEER SHOP</Title>
     </Link>
