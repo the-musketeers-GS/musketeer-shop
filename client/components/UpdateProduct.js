@@ -10,8 +10,6 @@ class UpdateProduct extends React.Component {
     this.state = {
       title: ''
     };
-
-    console.log(this.props);
   }
 
   handleChange = e => {
@@ -23,9 +21,6 @@ class UpdateProduct extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.updateThunkProduct(this.props.match.params.id, this.state);
-    console.log('updateProduct');
-    console.log('this.state>>>', this.state);
-    // console.log('id ', this.props.match.params.id);
   };
 
   render() {
