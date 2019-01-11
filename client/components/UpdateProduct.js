@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import store from '../store';
 import { updateThunkProduct } from '../store';
 
 class UpdateProduct extends React.Component {

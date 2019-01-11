@@ -15,7 +15,7 @@ router.put('/product/:id', async (req, res, next) => {
         plain: true
       }
     );
-    res.sendStatus(201);
+    res.json(update);
   } catch (err) {
     next(err);
   }

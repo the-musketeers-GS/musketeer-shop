@@ -54,6 +54,7 @@ const mapState = state => {
     products: state.products
   };
 };
+
 const mapDispatch = dispatch => {
   return {
     fetchProducts: () => dispatch(fetchProducts()),
