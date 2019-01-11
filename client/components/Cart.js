@@ -47,7 +47,6 @@ class Cart extends Component {
   }
 
   render() {
-    console.log('USER>>>', this.props.user);
     const products = this.props.products || [];
     return (
       <CartStyles open={this.props.isOpen}>
@@ -86,7 +85,6 @@ class Cart extends Component {
             </ul>
           )}
           <footer>
-            {console.log(products)}
             <p>{formatMoney(calcTotalPrice(products))}</p>
             {products.length && (
               // <TakeMyMoney>
