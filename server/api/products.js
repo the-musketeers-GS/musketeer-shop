@@ -19,3 +19,22 @@ router.get('/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const { data: product } = await Product.update(
+      {
+        title: req.body.title,
+        price: 345
+      },
+      {
+        where: { id: req.params.id },
+        returning: true,
+        plain: true
+      }
+    );
+    res.json(product);
+  } catch (err) {
+    next(err);
+  }
+});

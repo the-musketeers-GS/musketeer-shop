@@ -40,8 +40,6 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our ProductList component as a fallback */}
-        {/* <Route render={routeProps => (
-        <ProductList {...routeProps} products={products} /> )} /> */}
       </Switch>
     );
   }
