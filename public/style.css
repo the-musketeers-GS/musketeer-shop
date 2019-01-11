@@ -1,6 +1,6 @@
-app {
+/* app {
   font-size: 10px;
-}
+} */
 
 body {
   font-family: sans-serif;
@@ -28,8 +28,8 @@ img {
   object-fit: contain;
   /* max-width: 5%; */
   /* max-height: 5%; */
-  width: auto;
-  height: auto;
+  /* width: auto;
+  height: auto; */
 }
 
 .dropbtn {

@@ -3,6 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import formatMoney from '../../lib/formatMoney';
 import AddToCart from './AddToCart';
+import avgRating from '../../lib/avgRating';
 
 class ProductList extends React.Component {
   constructor() {
@@ -106,6 +107,12 @@ class ProductList extends React.Component {
                 <li>{product.title}</li>
                 <li>{formatMoney(product.price)}</li>
                 <img src={`${product.image}`} />
+                <li>
+                  Avg rating:{' '}
+                  {product.reviews.length
+                    ? avgRating(product.reviews.map(review => review.rating))
+                    : 'No Reviews'}
+                </li>
               </Link>
               <AddToCart productId={product.id} />
             </ul>

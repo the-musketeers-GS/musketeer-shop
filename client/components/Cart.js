@@ -61,7 +61,7 @@ class Cart extends Component {
               {products.map(item => (
                 <CartItemStyles key={item.product && item.product.id}>
                   <img
-                    width="5"
+                    width="100"
                     src={item.product.image}
                     alt={item.product.title}
                   />
@@ -69,9 +69,8 @@ class Cart extends Component {
                     <h3>{item.product && item.product.title}</h3>
                     <p>
                       {formatMoney(item.product && item.product.price)} | qty:{' '}
-                      {item.quantity} | total:{formatMoney(
-                        item.quantity * item.product.price
-                      )}
+                      {item.quantity} | total:{' '}
+                      {formatMoney(item.quantity * item.product.price)}
                     </p>
                   </div>
                   <BigButton
@@ -87,6 +86,7 @@ class Cart extends Component {
             </ul>
           )}
           <footer>
+            {console.log(products)}
             <p>{formatMoney(calcTotalPrice(products))}</p>
             {products.length && (
               // <TakeMyMoney>
