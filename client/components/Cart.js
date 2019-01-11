@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
 import formatMoney from '../../lib/formatMoney';
+import calcTotalPrice from '../../lib/calcTotalPrice';
 import CartStyles from './styles/CartStyles';
 
 const CloseButton = styled.button`
@@ -46,20 +47,21 @@ class Cart extends Component {
   }
 
   render() {
+    console.log('USER>>>', this.props.user);
     const products = this.props.products || [];
     return (
       <CartStyles open={this.props.isOpen}>
-        {this.props.products.length && (
-          <>
-            <header>
-              Your Cart
-              <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
-            </header>
+        <>
+          <header>
+            Your Cart
+            <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
+          </header>
+          {this.props.products.length && (
             <ul>
               {products.map(item => (
                 <CartItemStyles key={item.product && item.product.id}>
                   <img
-                    width="100"
+                    width="5"
                     src={item.product.image}
                     alt={item.product.title}
                   />
@@ -83,8 +85,16 @@ class Cart extends Component {
                 </CartItemStyles>
               ))}
             </ul>
-          </>
-        )}
+          )}
+          <footer>
+            <p>{formatMoney(calcTotalPrice(products))}</p>
+            {products.length && (
+              // <TakeMyMoney>
+              <BigButton>Checkout</BigButton>
+              // </TakeMyMoney>
+            )}
+          </footer>
+        </>
       </CartStyles>
     );
   }
@@ -92,7 +102,8 @@ class Cart extends Component {
 
 const mapState = state => ({
   products: state.cart.products,
-  isOpen: state.cart.isOpen
+  isOpen: state.cart.isOpen,
+  user: state.user
 });
 
 const mapDispatch = dispatch => ({
