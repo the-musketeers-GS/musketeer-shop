@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ReviewList = props => {
-  console.log(props);
   let reviews = props.product.reviews;
 
   return (
