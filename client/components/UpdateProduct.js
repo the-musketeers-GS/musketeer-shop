@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import store from '../store';
-import { updatedTheProduct } from '../store';
+import { updateThunkProduct } from '../store';
 
 class UpdateProduct extends React.Component {
   constructor(props) {
@@ -22,10 +22,11 @@ class UpdateProduct extends React.Component {
   };
 
   handleSubmit = e => {
-    this.props.updatedTheProduct(this.props.product.id, this.state);
+    e.preventDefault();
+    this.props.updateThunkProduct(this.props.match.params.id, this.state);
     console.log('updateProduct');
     console.log('this.state>>>', this.state);
-    console.log('id ', this.props.product.id);
+    // console.log('id ', this.props.match.params.id);
   };
 
   render() {
@@ -48,7 +49,7 @@ class UpdateProduct extends React.Component {
 
 const mapDispatch = dispatch => {
   return {
-    updatedTheProduct: () => dispatch(updatedTheProduct())
+    updateThunkProduct: () => dispatch(updateThunkProduct())
   };
 };
 
