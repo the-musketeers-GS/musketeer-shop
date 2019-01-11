@@ -12,6 +12,7 @@ import {
   Categories
 } from './components';
 import { me, fetchProducts } from './store';
+import AdminManageRoutes from './components/AdminManage';
 
 /**
  * COMPONENT
@@ -40,8 +41,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our ProductList component as a fallback */}
-        {/* <Route render={routeProps => (
-        <ProductList {...routeProps} products={products} /> )} /> */}
+        <AdminManageRoutes />
       </Switch>
     );
   }
