@@ -6,9 +6,9 @@ import {
   Login,
   Signup,
   UserHome,
-  Cart,
   ProductList,
-  SingleProduct
+  SingleProduct,
+  Categories
 } from './components';
 import { me, fetchProducts } from './store';
 
@@ -26,17 +26,11 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route
-          exact
-          path="/"
-          render={routeProps => (
-            <ProductList {...routeProps} products={products} />
-          )}
-        />
+        <Route exact path="/" component={ProductList} />
         <Route exact path="/products/:id" component={SingleProduct} />
+        <Route exact path="/products/:categories" component={Categories} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -59,7 +53,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    products: state.product
+    products: state.products
   };
 };
 

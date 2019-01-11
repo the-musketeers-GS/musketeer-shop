@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import { toggleCart } from '../store/cart';
+import Cart from './Cart';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
   <div>
     <Link to="/">
       <h1>MUSKETEER SHOP</h1>
@@ -25,7 +27,11 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
-      <Link to="/cart">Cart 🛒</Link>
+      {/* <Link to="/cart">Cart 🛒</Link> */}
+      <button type="button" onClick={openCart}>
+        Cart 🛒
+      </button>
+      <Cart />
     </nav>
     <hr />
   </div>
@@ -44,7 +50,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
-    }
+    },
+    openCart: () => dispatch(toggleCart())
   };
 };
 

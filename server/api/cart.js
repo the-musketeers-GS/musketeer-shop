@@ -2,15 +2,33 @@ const router = require('express').Router();
 const { Cart, CartItem, Product } = require('../db/models');
 module.exports = router;
 
-// GET /api/cart/:cartId/items ---- return items on a specific cart/order instance
-router.get('/:cartId/items', async (req, res, next) => {
-  const cartId = req.params.cartId;
+// GET /api/cart/:userId/items ---- return items on a specific user/cart instance
+router.get('/:userId/items', async (req, res, next) => {
   try {
-    const cartItems = await CartItem.findAll({
-      where: { cartId },
-      include: [{ model: Product, attributes: ['id', 'title', 'price'] }]
+    const userId = req.params.userId;
+    let cartId;
+    let cartItems;
+    const cart = await Cart.findOne({
+      where: {
+        userId
+      }
     });
-    res.json(cartItems);
+    if (cart) {
+      cartId = cart.id;
+      cartItems = await CartItem.findAll({
+        where: { cartId },
+        include: [
+          { model: Product, attributes: ['id', 'title', 'price', 'image'] }
+        ]
+      });
+      return res.json(cartItems);
+    } else {
+      // const newCart = Cart.build();
+      // newCart.userId = userId;
+      // await newCart.save();
+      // cartId = newCart.id;
+    }
+    return res.json({ message: 'no cart found' });
   } catch (err) {
     next(err);
   }
@@ -21,7 +39,7 @@ router.post('/:userId/:productId', async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const productId = req.params.productId;
-    // TODO 1. check if user is logged in (later)
+    //! TODO 1. check if user is logged in (later)
     // 2. if they are, check if they have an exisiting cart, findOne where customer id
     let cartId;
     const cart = await Cart.findOne({
@@ -39,7 +57,6 @@ router.post('/:userId/:productId', async (req, res, next) => {
       newCart.userId = userId;
       await newCart.save();
       cartId = newCart.id;
-      console.log('NO CART', cartId);
     }
     // 4 find or create the item (to see if it already exists)
     // isNew will be false if found and true if created
@@ -49,7 +66,6 @@ router.post('/:userId/:productId', async (req, res, next) => {
         cartId
       }
     });
-    console.log('CART ITEM EXISTS...', !isNew);
     // 5 if that item already exists, update quantity
     if (!isNew) {
       await item.update(
@@ -63,6 +79,29 @@ router.post('/:userId/:productId', async (req, res, next) => {
       );
     }
     res.status(201).json(item);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// DELETE /api/cart/:userId/:productId ---- delete cart item instance
+router.delete('/:userId/:productId', async (req, res, next) => {
+  const userId = req.params.userId;
+  const productId = req.params.productId;
+  try {
+    // 1 find the cart to get cartId
+    const cart = await Cart.findOne({
+      where: { userId }
+    });
+    const cartId = cart.id;
+    // 2 await destroy item
+    await CartItem.destroy({
+      where: {
+        cartId,
+        productId
+      }
+    });
+    res.json(productId);
   } catch (err) {
     next(err);
   }

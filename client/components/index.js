@@ -6,6 +6,8 @@
 export { default as Navbar } from './navbar';
 export { default as ProductList } from './ProductList';
 export { default as SingleProduct } from './SingleProduct';
+export { default as Categories } from './Categories';
 export { default as UserHome } from './user-home';
 export { default as Cart } from './Cart';
+export { default as ConnectedReviewList } from './ReviewList';
 export { Login, Signup } from './auth-form';

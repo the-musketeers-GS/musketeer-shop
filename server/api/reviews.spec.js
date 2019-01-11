@@ -2,15 +2,16 @@
 
 const { expect } = require('chai');
 const db = require('../db');
-const app = require('../index');
-const Review = db.model('review');
-const Product = db.model('product');
-const supertest = require('supertest');
-const sinon = require('sinon');
-const app2 = require('./index');
-const agent = require('supertest')(app2);
 
-describe('Review routes', () => {
+//const app = require('../index');
+const Review = db.model('review');
+//const Product = db.model('product');
+
+const sinon = require('sinon');
+import app from './index';
+import supertest from 'supertest';
+
+xdescribe('Review routes', () => {
   beforeEach(() => {
     return db.sync({ force: true });
   });
@@ -18,6 +19,7 @@ describe('Review routes', () => {
   describe('/api/reviews/product/:id', () => {
     if (!Review.findAll) Review.findAll = function() {};
 
+    let agent = supertest(app);
     const fakeFindAll = sinon.fake.resolves([
       { id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5 },
       {
@@ -37,9 +39,8 @@ describe('Review routes', () => {
     });
 
     it('Get one review for productId of 5', async () => {
-      const response = await supertest
-        .get('/api/reviews/product/0')
-        .expect(200);
+      const response = await agent.get('/api/reviews/product/5').expect(200);
+
       expect(response.body).to.deep.equal([
         { id: 1, body: 'abcdefghijklmnopqrstuwxyz', rating: 1, productId: 5 }
       ]);

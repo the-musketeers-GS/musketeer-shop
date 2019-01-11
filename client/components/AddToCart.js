@@ -2,14 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createCartItem } from '../store/cart';
 
-const userId = 1;
-
 const AddToCart = ({ addToCart, productId }) => (
   <div>
     <button
       type="button"
       onClick={() => {
-        addToCart(userId, productId);
+        // 1 needs to be changed to userId when we have user on state
+        addToCart(1, productId);
       }}
     >
       Add To Cart

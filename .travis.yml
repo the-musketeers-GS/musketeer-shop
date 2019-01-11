@@ -14,14 +14,14 @@ notifications:
 install:
   - npm ci # faster, goes only from package-lock
 before_script:
-  - psql -c 'create database "boilermaker-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+  - psql -c 'create database "musketeer-shop-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: musketeershop-graceshopper # see README
+  api_key:
+    secure: 'RrJPpWjJHxapdcbHBcwQTxDx9DvMUrNqts+hLqh77caAksELBfMvQSwl40lyy0LnmUK2dvBccnigZGzTZIHfiObqchv5d7ck6IEe54DDjm20bQlZg0d+Z24S8iBDtZbxWfn7cVmjYsdldAPNDijgK2k8YXdLorshm1J19K+UQllNMr7wtNwVotK4oqEjzOEGj1rM7HnGNlI/KkHBZAPVgeHiOiJqrDTrUScq1CUw7dxMW+4JtOidnObGWwC8ES12Rf0xcpRHnMUEUjddT2YS0SOp82Q6JHldu60B4rgoRi326pk4NyF5wleME/5sZs6I2/zj422U/85cxV5fuZo0ZSNhxOH4wtmGutMu24xISKeIXy6oeewqnEW8zcunL/lSFl8vSF3o774TuV1DJiIg8vUUKsKv56HsG8dqBwirEVqbq0CZwdztTiI/FEVJnyTIfgcrrJnaRpkNw5e9PxTyw0r7Ckev5suj3eKfNOKALHUDPoM4VsINnOiAhgCNPQi0rNAT84jsiwkQ9PoYendnz7vSxAKoCps4KWIbEY/dqbf0hkToqkKAZfWOFhpGd3VBpYSLSHFxdmO5GAaopMKao9P8QrZNCJCEIviw0efs2JGf30Zdgj9k1B/1eCsh9eYGhB81M17pRaMhPT5h+plg5gPCF7RishyRR6t1wu52J+A='
