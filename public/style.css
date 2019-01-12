@@ -14,23 +14,23 @@ label {
   display: block;
 }
 
-nav a {
+/* nav a {
   display: inline-block;
   margin: 1em;
-}
+} */
 
 form div {
   margin: 1em;
   display: inline-block;
 }
 
-img {
+/* img {
   object-fit: contain;
   max-width: 5%;
   max-height: 5%;
   width: auto;
   height: auto;
-}
+} */
 
 .dropbtn {
   background-color: antiquewhite;

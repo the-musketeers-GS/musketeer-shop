@@ -14,7 +14,6 @@ class AddProduct extends React.Component {
   }
 
   handleChange = e => {
-    console.log(e.target);
     const name = e.target.name;
     const value = e.target.value;
     this.setState({

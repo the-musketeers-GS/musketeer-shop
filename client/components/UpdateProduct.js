@@ -6,9 +6,6 @@ import { updateThunkProduct } from '../store';
 class UpdateProduct extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log('updateproduct props', this.props);
-
     this.state = {
       title: ''
     };

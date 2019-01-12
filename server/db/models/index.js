@@ -6,14 +6,15 @@ const OrderItem = require('./orderItem');
 const Cart = require('./cart');
 const CartItem = require('./cartItem');
 
-Order.belongsTo(User /*{ as: 'customer' }*/);
+Order.belongsTo(User);
 Order.belongsToMany(Product, { through: OrderItem });
 
 OrderItem.belongsTo(Order);
 OrderItem.belongsTo(Product);
 
+User.hasMany(Cart);
 User.hasMany(Review);
-User.hasMany(Order /*{ as: 'customer' }*/);
+User.hasMany(Order);
 
 Review.belongsTo(User);
 Review.belongsTo(Product);
@@ -22,7 +23,7 @@ Product.hasMany(Review);
 Product.belongsToMany(Cart, { through: CartItem });
 Product.belongsToMany(Order, { through: OrderItem });
 
-Cart.belongsTo(User /*{ as: 'customer' }*/);
+Cart.belongsTo(User);
 Cart.belongsToMany(Product, { through: CartItem });
 
 CartItem.belongsTo(Cart);

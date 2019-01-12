@@ -6,6 +6,7 @@ import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
 import noUserCart from '../../lib/noUserCart';
 import CartStyles from './styles/CartStyles';
+import { checkout } from '../store/order';
 
 const CloseButton = styled.button`
   background: black;
@@ -40,6 +41,12 @@ const BigButton = styled.button`
     color: red;
     cursor: pointer;
   }
+`;
+
+const CheckoutButton = styled.button`
+  background: none;
+  border: 0;
+  font-size: 3rem;
 `;
 
 class Cart extends Component {
@@ -79,24 +86,22 @@ class Cart extends Component {
           {products.length && (
             <ul>
               {products.map(item => (
-                <CartItemStyles key={item.product && item.product.id}>
+                <CartItemStyles key={item.product.id}>
                   <img
                     width="100"
                     src={item.product.image}
                     alt={item.product.title}
                   />
                   <div>
-                    <h3>{item.product && item.product.title}</h3>
+                    <h3>{item.product.title}</h3>
                     <p>
-                      {formatMoney(item.product && item.product.price)} | qty:{' '}
-                      {item.quantity} | total:{' '}
-                      {formatMoney(item.quantity * item.product.price)}
+                      {formatMoney(item.product.price)} | qty: {item.quantity} |
+                      total: {formatMoney(item.quantity * item.product.price)}
                     </p>
                   </div>
                   <BigButton
-                    // 1 needs to change to userId
                     onClick={() =>
-                      this.props.deleteCartItem(1, item.product.id)
+                      this.props.deleteCartItem(userId, item.product.id)
                     }
                   >
                     &times;
@@ -107,11 +112,16 @@ class Cart extends Component {
           )}
           <footer>
             <p>{formatMoney(calcTotalPrice(products))}</p>
-            {products.length && (
-              // <TakeMyMoney>
-              <BigButton>Checkout</BigButton>
-              // </TakeMyMoney>
-            )}
+            <CheckoutButton
+              onClick={async () => {
+                await this.props.checkout(userId);
+                await this.props.toggleCart();
+                await this.props.getCart(userId);
+              }}
+              disabled={!products.length}
+            >
+              Checkout
+            </CheckoutButton>
           </footer>
         </>
       </CartStyles>
@@ -131,7 +141,8 @@ const mapDispatch = dispatch => ({
   getCart: userId => dispatch(fetchCart(userId)),
   toggleCart: () => dispatch(toggleCart()),
   deleteCartItem: (userId, productId) =>
-    dispatch(deleteCartItem(userId, productId))
+    dispatch(deleteCartItem(userId, productId)),
+  checkout: userId => dispatch(checkout(userId))
 });
 
 export default connect(mapState, mapDispatch)(Cart);
