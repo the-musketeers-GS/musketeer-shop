@@ -8,7 +8,8 @@ import {
   UserHome,
   ProductList,
   SingleProduct,
-  Categories
+  Categories,
+  SingleOrder
 } from './components';
 import { me, fetchProducts } from './store';
 import AdminManageRoutes from './components/AdminManage';
@@ -22,7 +23,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, products } = this.props;
+    const { isLoggedIn } = this.props;
 
     return (
       <Switch>
@@ -30,6 +31,7 @@ class Routes extends Component {
         <Route exact path="/" component={ProductList} />
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route exact path="/products/:categories" component={Categories} />
+        <Route exact path="/order/:orderId" component={SingleOrder} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (

@@ -5,6 +5,8 @@ import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
 import CartStyles from './styles/CartStyles';
+import { checkout } from '../store/order';
+import history from '../history';
 
 const CloseButton = styled.button`
   background: black;
@@ -49,7 +51,7 @@ const CheckoutButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    // change this from 4 to userId
+    //! change this from 4 to userId
     this.props.getCart(4);
   }
 
@@ -67,22 +69,21 @@ class Cart extends Component {
           ) : (
             <ul>
               {products.map(item => (
-                <CartItemStyles key={item.product && item.product.id}>
+                <CartItemStyles key={item.product.id}>
                   <img
                     width="100"
                     src={item.product.image}
                     alt={item.product.title}
                   />
                   <div>
-                    <h3>{item.product && item.product.title}</h3>
+                    <h3>{item.product.title}</h3>
                     <p>
-                      {formatMoney(item.product && item.product.price)} | qty:{' '}
-                      {item.quantity} | total:{' '}
-                      {formatMoney(item.quantity * item.product.price)}
+                      {formatMoney(item.product.price)} | qty: {item.quantity} |
+                      total: {formatMoney(item.quantity * item.product.price)}
                     </p>
                   </div>
                   <BigButton
-                    // 1 needs to change to userId
+                    //! 1 needs to change to userId
                     onClick={() =>
                       this.props.deleteCartItem(4, item.product.id)
                     }
@@ -95,11 +96,18 @@ class Cart extends Component {
           )}
           <footer>
             <p>{formatMoney(calcTotalPrice(products))}</p>
-            {/* {products.length && ( */}
-            <CheckoutButton disabled={!products.length}>
+            <CheckoutButton
+              onClick={async () => {
+                //! change 4 to userId
+                await this.props.checkout(4);
+                await this.props.toggleCart();
+                await this.props.getCart(4);
+                history.push(`/order/1`);
+              }}
+              disabled={!products.length}
+            >
               Checkout
             </CheckoutButton>
-            {/*  )} */}
           </footer>
         </>
       </CartStyles>
@@ -117,7 +125,8 @@ const mapDispatch = dispatch => ({
   getCart: userId => dispatch(fetchCart(userId)),
   toggleCart: () => dispatch(toggleCart()),
   deleteCartItem: (userId, productId) =>
-    dispatch(deleteCartItem(userId, productId))
+    dispatch(deleteCartItem(userId, productId)),
+  checkout: userId => dispatch(checkout(userId))
 });
 
 export default connect(mapState, mapDispatch)(Cart);

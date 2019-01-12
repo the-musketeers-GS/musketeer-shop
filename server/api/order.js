@@ -3,23 +3,30 @@ const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
 module.exports = router;
 
-// GET /api/order/:orderId  return all products in an order
-router.get('/:orderId', async (req, res, next) => {
-  const orderId = req.params.orderId;
+// GET /api/order/:orderId ---- return all orders for a user
+router.get('/:userId', async (req, res, next) => {
   try {
-    // const order = await Order.findAll({
-    //   where: {
-    //     id: orderId
-    //   }
-    // });
-    const products = await OrderItem.findAll({ where: { orderId } });
-    res.json(products);
+    const userId = req.params.userId;
+    const order = await Order.findAll({ where: { userId } });
+    res.json(order);
   } catch (err) {
     next(err);
   }
 });
 
-// POST /api/order/:userId
+// GET /api/order/:orderId/data ---- return all data for a single order
+router.get('/:orderId/data', async (req, res, next) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findOne({ where: { id: orderId } });
+    const products = await OrderItem.findAll({ where: { orderId } });
+    res.json({ order, products });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/order/:userId ---- turn Cart and CartItems into Order and OrderItems, change Cart completed to true
 router.post('/:userId', async (req, res, next) => {
   try {
     // 1. find cart for user + save cartId
@@ -47,7 +54,9 @@ router.post('/:userId', async (req, res, next) => {
       newOrderItem.orderId = orderId;
       newOrderItem.quantity = cartItem.quantity;
       newOrderItem.productId = cartItem.productId;
+      newOrderItem.title = cartItem.product.title;
       newOrderItem.price = cartItem.product.price;
+      newOrderItem.image = cartItem.product.image;
       await newOrderItem.save();
     });
     // 5. update cart to completed: TRUE
