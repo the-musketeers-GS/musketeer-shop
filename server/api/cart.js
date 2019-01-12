@@ -10,7 +10,8 @@ router.get('/:userId/items', async (req, res, next) => {
     let cartItems;
     const cart = await Cart.findOne({
       where: {
-        userId
+        userId,
+        completed: false
       }
     });
     if (cart) {
@@ -34,19 +35,20 @@ router.post('/:userId/:productId', async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const productId = req.params.productId;
-    //! TODO 1. check if user is logged in (later)
+    //?. check if user is logged in (later)
+    // handling loggedOut users on frontend
     // 2. if they are, check if they have an exisiting cart, findOne where customer id
     let cartId;
     const cart = await Cart.findOne({
       where: {
-        userId
+        userId,
+        completed: false
       }
     });
     if (cart) {
       cartId = cart.id;
     }
-    // 3. if they DO have cart, find or create the cartItem with params/productId and current cart id
-    // 3.1 if they DON'T have cart, build one and set userId and save
+    // 3 if they DON'T have cart, build one and set userId and save
     if (!cart) {
       const newCart = Cart.build();
       newCart.userId = userId;

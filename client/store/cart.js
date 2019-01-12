@@ -39,6 +39,14 @@ export const deleteCartItem = (userId, productId) => async dispatch => {
     console.error(err);
   }
 };
+// export const checkout = userId => async dispatch => {
+//   try {
+//     await axios.post(`/api/order/${userId}`);
+//     //
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
 
 // INITIAL STATE
 const initialState = {

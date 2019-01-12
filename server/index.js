@@ -64,7 +64,6 @@ const createApp = () => {
   app.use(passport.session());
 
   app.use((req, res, next) => {
-    // console.log('req.session---------------    ', req.session);
     next(); // needed to continue through express middleware
   });
 

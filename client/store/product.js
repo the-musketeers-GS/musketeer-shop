@@ -41,10 +41,7 @@ export const addThunkProduct = product => async dispatch => {
 
 export const updateThunkProduct = (id, product) => async dispatch => {
   try {
-    console.log('id>>>>', id);
-    console.log('product >>>', product);
     const res = await axios.put(`/api/manage/product/${id}`, product);
-    console.log(res.data);
     dispatch(fetchProducts());
     history.goBack();
   } catch (err) {

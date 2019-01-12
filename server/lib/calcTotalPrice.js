@@ -5,4 +5,4 @@ const calcTotalPrice = cart => {
   }, 0);
 };
 
-export default calcTotalPrice;
+module.exports = calcTotalPrice;

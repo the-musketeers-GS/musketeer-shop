@@ -7,42 +7,41 @@ import { logout } from '../store';
 import { toggleCart } from '../store/cart';
 import Cart from './Cart';
 import Title from './styles/Title';
-
-const StyledNav = styled.div`
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-self: end;
-  font-size: 2rem;
-`;
+import NavStyles from './styles/NavStyles';
 
 const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
   <div>
     <Link to="/">
       <Title>MUSKETEER SHOP</Title>
     </Link>
-    <StyledNav>
+    <NavStyles>
       {isLoggedIn ? (
-        <div>
+        <NavStyles>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <Link className="nav-button" to="/home">
+            Home
+          </Link>
+          <a href="#" className="nav-button" onClick={handleClick}>
             Logout
           </a>
-        </div>
+        </NavStyles>
       ) : (
-        <div>
+        <NavStyles>
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
+          <Link className="nav-button" to="/login">
+            Login
+          </Link>
+          <Link className="nav-button" to="/signup">
+            Sign Up
+          </Link>
+        </NavStyles>
       )}
       {/* <Link to="/cart">Cart 🛒</Link> */}
-      <button type="button" onClick={openCart}>
+      <button className="nav-button" type="button" onClick={openCart}>
         Cart 🛒
       </button>
       <Cart />
-    </StyledNav>
+    </NavStyles>
     <hr />
   </div>
 );
