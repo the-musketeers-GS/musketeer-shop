@@ -41,9 +41,16 @@ const BigButton = styled.button`
   }
 `;
 
+const CheckoutButton = styled.button`
+  background: none;
+  border: 0;
+  font-size: 3rem;
+`;
+
 class Cart extends Component {
   componentDidMount() {
-    this.props.getCart(1);
+    // change this from 4 to userId
+    this.props.getCart(4);
   }
 
   render() {
@@ -55,7 +62,9 @@ class Cart extends Component {
             Your Cart
             <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
           </header>
-          {this.props.products.length && (
+          {!this.props.products.length ? (
+            <CartItemStyles>No items in your cart ☹️</CartItemStyles>
+          ) : (
             <ul>
               {products.map(item => (
                 <CartItemStyles key={item.product && item.product.id}>
@@ -75,7 +84,7 @@ class Cart extends Component {
                   <BigButton
                     // 1 needs to change to userId
                     onClick={() =>
-                      this.props.deleteCartItem(1, item.product.id)
+                      this.props.deleteCartItem(4, item.product.id)
                     }
                   >
                     &times;
@@ -86,11 +95,11 @@ class Cart extends Component {
           )}
           <footer>
             <p>{formatMoney(calcTotalPrice(products))}</p>
-            {products.length && (
-              // <TakeMyMoney>
-              <BigButton>Checkout</BigButton>
-              // </TakeMyMoney>
-            )}
+            {/* {products.length && ( */}
+            <CheckoutButton disabled={!products.length}>
+              Checkout
+            </CheckoutButton>
+            {/*  )} */}
           </footer>
         </>
       </CartStyles>

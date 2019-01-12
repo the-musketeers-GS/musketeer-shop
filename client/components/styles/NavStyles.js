@@ -6,8 +6,9 @@ const StyledNav = styled.div`
   display: flex;
   justify-self: end;
   font-size: 2rem;
-  a,
-  button {
+  /* a,
+  button { */
+  .nav-button {
     padding: 1rem 3rem;
     display: flex;
     align-items: center;

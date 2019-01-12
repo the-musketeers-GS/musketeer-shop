@@ -18,20 +18,26 @@ const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
       {isLoggedIn ? (
         <NavStyles>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
+          <Link className="nav-button" to="/home">
+            Home
+          </Link>
+          <a href="#" className="nav-button" onClick={handleClick}>
             Logout
           </a>
         </NavStyles>
       ) : (
         <NavStyles>
           {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          <Link className="nav-button" to="/login">
+            Login
+          </Link>
+          <Link className="nav-button" to="/signup">
+            Sign Up
+          </Link>
         </NavStyles>
       )}
       {/* <Link to="/cart">Cart 🛒</Link> */}
-      <button type="button" onClick={openCart}>
+      <button className="nav-button" type="button" onClick={openCart}>
         Cart 🛒
       </button>
       <Cart />

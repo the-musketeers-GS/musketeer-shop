@@ -10,7 +10,8 @@ router.get('/:userId/items', async (req, res, next) => {
     let cartItems;
     const cart = await Cart.findOne({
       where: {
-        userId
+        userId,
+        completed: false
       }
     });
     if (cart) {
@@ -39,7 +40,8 @@ router.post('/:userId/:productId', async (req, res, next) => {
     let cartId;
     const cart = await Cart.findOne({
       where: {
-        userId
+        userId,
+        completed: false
       }
     });
     if (cart) {

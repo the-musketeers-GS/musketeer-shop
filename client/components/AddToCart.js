@@ -7,8 +7,8 @@ const AddToCart = ({ addToCart, productId }) => (
     <button
       type="button"
       onClick={() => {
-        // 1 needs to be changed to userId when we have user on state
-        addToCart(1, productId);
+        // 4 needs to be changed to userId when we have user on state
+        addToCart(4, productId);
       }}
     >
       Add To Cart
