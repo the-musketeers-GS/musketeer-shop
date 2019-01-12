@@ -7,11 +7,11 @@ import { auth } from '../store';
  * COMPONENT
  */
 const LoginForm = props => {
-  const { name, displayName, handleSubmit, error } = props;
+  const { displayName, handleSubmit, error } = props;
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmit} name="login">
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -24,7 +24,6 @@ const LoginForm = props => {
           </label>
           <input name="password" type="password" />
         </div>
-
         <div>
           <button type="submit">{displayName}</button>
         </div>
@@ -99,7 +98,6 @@ export const Login = connect(mapLogin, mapDispatch)(LoginForm);
  * PROP TYPES
  */
 LoginForm.propTypes = {
-  name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object

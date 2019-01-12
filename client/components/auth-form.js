@@ -7,11 +7,11 @@ import { auth } from '../store';
  * COMPONENT
  */
 const SignUpForm = props => {
-  const { name, displayName, handleSubmit, error } = props;
+  const { displayName, handleSubmit, error } = props;
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmit} name="signup">
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -109,6 +109,7 @@ const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
       evt.preventDefault();
+      console.log('signup form target------', evt.target.firstName.value);
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
@@ -146,7 +147,6 @@ export const Signup = connect(mapSignup, mapDispatch)(SignUpForm);
  * PROP TYPES
  */
 SignUpForm.propTypes = {
-  name: PropTypes.string.isRequired,
   displayName: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object

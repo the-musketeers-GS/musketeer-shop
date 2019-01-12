@@ -30,10 +30,36 @@ export const me = () => async dispatch => {
   }
 };
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (
+  email,
+  password,
+  method,
+  firstName,
+  lastName,
+  addr1,
+  addr2,
+  city,
+  state,
+  zipCode,
+  phone
+) => async dispatch => {
+  console.log('email, password,method......)', email);
+  console.log('type of email+++++++++++++++++++', typeof email);
+  console.log('type of password+++++++++++++++++++', typeof password);
   let res;
   try {
-    res = await axios.post(`/auth/${method}`, { email, password });
+    res = await axios.post(`/auth/${method}`, {
+      email,
+      password,
+      firstName,
+      lastName,
+      addr1,
+      addr2,
+      city,
+      state,
+      zipCode,
+      phone
+    });
   } catch (authError) {
     return dispatch(getUser({ error: authError }));
   }
