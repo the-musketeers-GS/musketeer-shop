@@ -24,7 +24,7 @@ const Product = db.define('product', {
   },
   image: {
     type: Sequelize.STRING,
-    defaultValue: `http://sueadler.com/wp-content/uploads/2015/04/shutterstock_133818692-279x300.jpg`
+    defaultValue: '/images/product-image-coming-soon.png'
   },
   category: {
     type: Sequelize.ENUM('clothes', 'hats', 'boots', 'weapons', 'accessories'),

@@ -33,6 +33,7 @@ export const addThunkProduct = product => async dispatch => {
   try {
     const res = await axios.post('/api/manage/products', product);
     dispatch(fetchProducts());
+    history.goBack();
   } catch (err) {
     console.error(err);
   }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { deleteThunkProduct } from '../store';
 
 const ManageProductList = ({ product, handleDelete }) => {
+  let count = 0;
   return (
     <tr>
       <td>{product.id}</td>
