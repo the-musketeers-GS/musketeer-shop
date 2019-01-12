@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Product = db.define('product', {
   title: {
@@ -18,13 +18,13 @@ const Product = db.define('product', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  quantity: {
+  stockQty: {
     type: Sequelize.INTEGER,
     defaultValue: 1
   },
   image: {
     type: Sequelize.STRING,
-    defaultValue: `http://sueadler.com/wp-content/uploads/2015/04/shutterstock_133818692-279x300.jpg`
+    defaultValue: '/images/product-image-coming-soon.png'
   },
   category: {
     type: Sequelize.ENUM('clothes', 'hats', 'boots', 'weapons', 'accessories'),
@@ -34,6 +34,6 @@ const Product = db.define('product', {
     type: Sequelize.ENUM('S', 'M', 'L', 'XL', 'N/A'),
     defaultValue: 'N/A'
   }
-})
+});
 
-module.exports = Product
+module.exports = Product;

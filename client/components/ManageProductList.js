@@ -2,6 +2,8 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteThunkProduct } from '../store';
+import { DeleteButton } from './styles/Button';
+import { StyledLink } from './styles/Link';
 
 const ManageProductList = ({ product, handleDelete }) => {
   return (
@@ -9,7 +11,7 @@ const ManageProductList = ({ product, handleDelete }) => {
       <td>{product.id}</td>
       <td>{product.title}</td>
       <td>{product.price}</td>
-      <td>{product.quantity}</td>
+      <td>{product.stockQty}</td>
       <td>
         <Link to={`/products/${product.id}`}>View</Link>
       </td>
@@ -17,9 +19,9 @@ const ManageProductList = ({ product, handleDelete }) => {
         <Link to={`/manage/product/${product.id}`}>Edit</Link>
       </td>
       <td>
-        <button type="submit" onClick={e => handleDelete(e, product)}>
+        <DeleteButton onClick={e => handleDelete(e, product)}>
           Delete
-        </button>
+        </DeleteButton>
       </td>
     </tr>
   );
