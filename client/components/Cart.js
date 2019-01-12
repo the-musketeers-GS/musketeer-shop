@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
+import noUserCart from '../../lib/noUserCart';
 import CartStyles from './styles/CartStyles';
 
 const CloseButton = styled.button`
@@ -43,11 +44,31 @@ const BigButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    if (this.props.isLoggedIn) this.props.getCart(this.props.user.id);
+    if (this.props.isLoggedIn) {
+      this.props.getCart(this.props.user.id);
+    }
   }
 
   render() {
-    const products = this.props.products || [];
+    let products = [];
+    const data = JSON.parse(localStorage.getItem('cart'));
+    console.log(data);
+    // if (this.props.isLoggedIn) {
+    //   products = this.props.products
+    // } else {
+    //   let obj = noUserCart(data);
+    //   let productId = Object.keys(obj)
+    //   let quantity = Object.values(obj)
+    //   let productInfo = productId.map(eachId => {
+    //     Number(eachId)
+    //     eachId = this.props.allProducts.filter(product => product.id === eachId)
+    //   })
+    //   console.log(productInfo)
+    //   let eachProductObj = {
+    //     quantity,
+    //     productInfo
+    //   }
+    // }
     return (
       <CartStyles open={this.props.isOpen}>
         <>
@@ -55,7 +76,7 @@ class Cart extends Component {
             Your Cart
             <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
           </header>
-          {this.props.products.length && (
+          {products.length && (
             <ul>
               {products.map(item => (
                 <CartItemStyles key={item.product && item.product.id}>
@@ -99,6 +120,7 @@ class Cart extends Component {
 }
 
 const mapState = state => ({
+  allProducts: state.products,
   products: state.cart.products,
   isOpen: state.cart.isOpen,
   user: state.user,

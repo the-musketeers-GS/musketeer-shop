@@ -5,7 +5,6 @@ import formatMoney from '../../lib/formatMoney';
 import AddToCart from './AddToCart';
 import avgRating from '../../lib/avgRating';
 import { createCartItem } from '../store/cart';
-import { noUserCart } from './localStorageCart';
 
 class ProductList extends React.Component {
   constructor() {
@@ -14,8 +13,7 @@ class ProductList extends React.Component {
     this.state = {
       filteredProducts: '',
       searchProducts: '',
-      searched: '',
-      noUserProducts: []
+      searched: ''
     };
   }
 
@@ -39,13 +37,11 @@ class ProductList extends React.Component {
     }
   };
 
-  handleAddNoUser = async id => {
-    await this.setState({
-      noUserProducts: this.state.noUserProducts.concat(id)
-    });
-    localStorage.setItem('items', JSON.stringify(this.state.noUserProducts));
-    const data = JSON.parse(localStorage.getItem('items'));
-    console.log(data);
+  handleAddNoUser = async product => {
+    let noUserCart = [];
+    // noUserCart = JSON.parse(localStorage.getItem('cart'))
+    await noUserCart.push(product);
+    localStorage.setItem('cart', JSON.stringify(noUserCart));
   };
 
   render() {
