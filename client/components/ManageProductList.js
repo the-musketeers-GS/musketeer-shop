@@ -9,7 +9,7 @@ const ManageProductList = ({ product, handleDelete }) => {
       <td>{product.id}</td>
       <td>{product.title}</td>
       <td>{product.price}</td>
-      <td>{product.quantity}</td>
+      <td>{product.stockQty}</td>
       <td>
         <Link to={`/products/${product.id}`}>View</Link>
       </td>
