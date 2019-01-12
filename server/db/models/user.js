@@ -38,8 +38,7 @@ const User = db.define('user', {
     }
   },
   addr2: {
-    type: Sequelize.STRING,
-    allowNull: false
+    type: Sequelize.STRING
   },
   city: {
     type: Sequelize.STRING,

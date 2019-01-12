@@ -7,6 +7,7 @@ const orderData = require('./orderData');
 const orderItemData = require('./orderItemData');
 const cartData = require('./cartData');
 const cartItemData = require('./cartItemData');
+const userData = require('./userData');
 const {
   User,
   Product,
@@ -22,9 +23,7 @@ async function seed() {
   console.log('db synced!');
 
   const users = await Promise.all([
-    User.create({ email: 'cody@email.com', password: '123', isAdmin: false }),
-    User.create({ email: 'murphy@email.com', password: '123' }),
-    User.create({ email: 'chris@email.com', password: '12345', isAdmin: true })
+    User.bulkCreate(userData, { returning: true })
   ]);
 
   const products = await Promise.all([
