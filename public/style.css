@@ -24,13 +24,13 @@ form div {
   display: inline-block;
 }
 
-img {
+/* img {
   object-fit: contain;
   max-width: 5%;
   max-height: 5%;
   width: auto;
   height: auto;
-}
+} */
 
 .dropbtn {
   background-color: antiquewhite;

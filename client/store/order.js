@@ -1,4 +1,5 @@
 import axios from 'axios';
+import history from '../history';
 
 // ACTION TYPES
 const REQUEST_SINGLE_ORDER = 'REQUEST_SINGLE_ORDER';
@@ -34,6 +35,7 @@ export const fetchAllOrders = userId => async dispatch => {
 export const checkout = userId => async dispatch => {
   try {
     const { data: orderId } = await axios.post(`/api/order/${userId}`);
+    history.push(`/order/${orderId}`);
     dispatch(fetchSingleOrder(orderId));
   } catch (err) {
     console.error(err);

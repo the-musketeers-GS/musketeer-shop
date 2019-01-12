@@ -6,7 +6,6 @@ import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
 import CartStyles from './styles/CartStyles';
 import { checkout } from '../store/order';
-import history from '../history';
 
 const CloseButton = styled.button`
   background: black;
@@ -51,11 +50,14 @@ const CheckoutButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    //! change this from 4 to userId
-    this.props.getCart(4);
+    // this is for testing purposes only
+    const userId = this.props.user.id || 4;
+    this.props.getCart(userId);
   }
 
   render() {
+    // this is for testing purposes only
+    const userId = this.props.user.id || 4;
     const products = this.props.products || [];
     return (
       <CartStyles open={this.props.isOpen}>
@@ -83,9 +85,8 @@ class Cart extends Component {
                     </p>
                   </div>
                   <BigButton
-                    //! 1 needs to change to userId
                     onClick={() =>
-                      this.props.deleteCartItem(4, item.product.id)
+                      this.props.deleteCartItem(userId, item.product.id)
                     }
                   >
                     &times;
@@ -98,11 +99,9 @@ class Cart extends Component {
             <p>{formatMoney(calcTotalPrice(products))}</p>
             <CheckoutButton
               onClick={async () => {
-                //! change 4 to userId
-                await this.props.checkout(4);
+                await this.props.checkout(userId);
                 await this.props.toggleCart();
-                await this.props.getCart(4);
-                history.push(`/order/1`);
+                await this.props.getCart(userId);
               }}
               disabled={!products.length}
             >
