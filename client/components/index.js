@@ -12,4 +12,5 @@ export { default as UserHome } from './user-home';
 export { default as Cart } from './Cart';
 export { default as ConnectedReviewList } from './ReviewList';
 export { default as ReviewList } from './ReviewList';
-export { Login, Signup } from './auth-form';
+export { Signup } from './auth-form';
+export { Login } from './login-form';
