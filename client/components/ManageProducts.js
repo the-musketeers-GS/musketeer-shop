@@ -22,13 +22,15 @@ class ManageProducts extends Component {
     return (
       products.length && (
         <div>
+          <h3>Total # of Products: {products.length}</h3>
+          <Link to="/manage/product/add">Add Product</Link>
           <table>
             <thead>
               <tr>
-                <th>ID</th>
+                <th>Product Id</th>
                 <th>Title</th>
                 <th>Price</th>
-                <th>Quantity</th>
+                <th>stockQty</th>
               </tr>
             </thead>
             <tbody>

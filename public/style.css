@@ -26,10 +26,10 @@ form div {
 
 img {
   object-fit: contain;
-  /* max-width: 5%; */
-  /* max-height: 5%; */
-  /* width: auto;
-  height: auto; */
+  max-width: 5%;
+  max-height: 5%;
+  width: auto;
+  height: auto;
 }
 
 .dropbtn {
