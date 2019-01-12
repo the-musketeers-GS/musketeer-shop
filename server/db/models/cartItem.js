@@ -11,11 +11,9 @@ const CartItem = db.define('cartItem', {
     type: Sequelize.INTEGER,
     allowNull: false
   },
-  price: {
-    type: Sequelize.INTEGER
-  },
   quantity: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 1
   }
 });
 

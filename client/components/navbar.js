@@ -2,14 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { logout } from '../store';
+import { toggleCart } from '../store/cart';
+import Cart from './Cart';
+import Title from './styles/Title';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const StyledNav = styled.div`
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-self: end;
+  font-size: 2rem;
+`;
+
+const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
   <div>
     <Link to="/">
-      <h1>MUSKETEER SHOP</h1>
+      <Title>MUSKETEER SHOP</Title>
     </Link>
-    <nav>
+    <StyledNav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
@@ -25,8 +37,12 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
-      <Link to="/cart">Cart 🛒</Link>
-    </nav>
+      {/* <Link to="/cart">Cart 🛒</Link> */}
+      <button type="button" onClick={openCart}>
+        Cart 🛒
+      </button>
+      <Cart />
+    </StyledNav>
     <hr />
   </div>
 );
@@ -44,7 +60,8 @@ const mapDispatch = dispatch => {
   return {
     handleClick() {
       dispatch(logout());
-    }
+    },
+    openCart: () => dispatch(toggleCart())
   };
 };
 
