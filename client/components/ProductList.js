@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import formatMoney from '../../lib/formatMoney';
 import AddToCart from './AddToCart';
 import avgRating from '../../lib/avgRating';
+import { createCartItem } from '../store/cart';
+import { noUserCart } from './localStorageCart';
 
 class ProductList extends React.Component {
   constructor() {
@@ -12,7 +14,8 @@ class ProductList extends React.Component {
     this.state = {
       filteredProducts: '',
       searchProducts: '',
-      searched: ''
+      searched: '',
+      noUserProducts: []
     };
   }
 
@@ -26,12 +29,27 @@ class ProductList extends React.Component {
     this.setState({ searchProducts: e.target.value });
   };
 
-  handleClick = e => {
+  handleSelect = e => {
     this.setState({ filteredProducts: e.target.value, searchProducts: '' });
   };
 
+  handleAdd = (user, product) => {
+    if (this.props.isLoggedIn) {
+      this.props.addToCart(user, product);
+    }
+  };
+
+  handleAddNoUser = async id => {
+    await this.setState({
+      noUserProducts: this.state.noUserProducts.concat(id)
+    });
+    localStorage.setItem('items', JSON.stringify(this.state.noUserProducts));
+    const data = JSON.parse(localStorage.getItem('items'));
+    console.log(data);
+  };
+
   render() {
-    let { products } = this.props;
+    let { products, user, isLoggedIn, addToCart } = this.props;
     let { filteredProducts, searchProducts, searched } = this.state;
     if (filteredProducts) {
       products = products.filter(
@@ -64,22 +82,22 @@ class ProductList extends React.Component {
             Filter By Category >>{' '}
           </button>
           <div className="dropdown-content">
-            <option value="" onClick={this.handleClick}>
+            <option value="" onClick={this.handleSelect}>
               All Products
             </option>
-            <option value="accessories" onClick={this.handleClick}>
+            <option value="accessories" onClick={this.handleSelect}>
               Accessories
             </option>
-            <option value="boots" onClick={this.handleClick}>
+            <option value="boots" onClick={this.handleSelect}>
               Boots
             </option>
-            <option value="clothes" onClick={this.handleClick}>
+            <option value="clothes" onClick={this.handleSelect}>
               Clothes
             </option>
-            <option value="hats" onClick={this.handleClick}>
+            <option value="hats" onClick={this.handleSelect}>
               Hats
             </option>
-            <option value="weapons" onClick={this.handleClick}>
+            <option value="weapons" onClick={this.handleSelect}>
               Weapons
             </option>
           </div>
@@ -114,7 +132,14 @@ class ProductList extends React.Component {
                     : 'No Reviews'}
                 </li>
               </Link>
-              <AddToCart productId={product.id} />
+              <AddToCart
+                product={product}
+                user={user}
+                isLoggedIn={isLoggedIn}
+                handleAdd={this.handleAdd}
+                handleAddNoUser={this.handleAddNoUser}
+                addToCart={addToCart}
+              />
             </ul>
           ))
         )}
@@ -123,10 +148,16 @@ class ProductList extends React.Component {
   }
 }
 
-const mapState = ({ products }) => {
+const mapState = state => {
   return {
-    products
+    user: state.user,
+    isLoggedIn: !!state.user.id,
+    products: state.products
   };
 };
 
-export default withRouter(connect(mapState)(ProductList));
+const mapDispatch = dispatch => ({
+  addToCart: (userId, productId) => dispatch(createCartItem(userId, productId))
+});
+
+export default withRouter(connect(mapState, mapDispatch)(ProductList));

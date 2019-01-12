@@ -8,14 +8,12 @@ import ManageProducts from './ManageProducts';
 
 import UpdateProduct from './UpdateProduct';
 import AddProduct from './AddProduct';
-import dummy from './dummy';
 // import UpdateOrder from './UpdateOrder'
 // import UpdateUser from './UpdateUser'
 
 const AdminManageRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/test" component={dummy} />
       <Route exact path="/manage" component={ManageProducts} />
       <Route exact path="/manage/products" component={ManageProducts} />
       <Route exact path="/manage/product/add" component={AddProduct} />

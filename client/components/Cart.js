@@ -43,7 +43,7 @@ const BigButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    this.props.getCart(1);
+    if (this.props.isLoggedIn) this.props.getCart(this.props.user.id);
   }
 
   render() {
@@ -101,7 +101,8 @@ class Cart extends Component {
 const mapState = state => ({
   products: state.cart.products,
   isOpen: state.cart.isOpen,
-  user: state.user
+  user: state.user,
+  isLoggedIn: state.isLoggedIn
 });
 
 const mapDispatch = dispatch => ({

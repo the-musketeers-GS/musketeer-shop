@@ -2,13 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createCartItem } from '../store/cart';
 
-const AddToCart = ({ addToCart, productId }) => (
+const AddToCart = ({
+  addToCart,
+  product,
+  handleAdd,
+  handleAddNoUser,
+  user,
+  isLoggedIn
+}) => (
   <div>
     <button
       type="button"
-      onClick={() => {
+      onClick={e => {
+        e.preventDefault();
         // 1 needs to be changed to userId when we have user on state
-        addToCart(1, productId);
+        isLoggedIn
+          ? handleAdd(user.id, product.id)
+          : handleAddNoUser(product.id);
       }}
     >
       Add To Cart
@@ -16,8 +26,14 @@ const AddToCart = ({ addToCart, productId }) => (
   </div>
 );
 
-const mapDispatch = dispatch => ({
-  addToCart: (userId, productId) => dispatch(createCartItem(userId, productId))
-});
+// const mapState = state => ({
+//   user: state.user
+// })
 
-export default connect(null, mapDispatch)(AddToCart);
+// const mapDispatch = dispatch => ({
+//   addToCart: (userId, productId) => dispatch(createCartItem(userId, productId))
+// });
+
+// export default connect(mapState, mapDispatch)(AddToCart);
+
+export default AddToCart;
