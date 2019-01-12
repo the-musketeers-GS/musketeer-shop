@@ -7,7 +7,7 @@ const orderData = require('./orderData');
 const orderItemData = require('./orderItemData');
 const cartData = require('./cartData');
 const cartItemData = require('./cartItemData');
-const userData = require('./userData');
+//const userData = require('./userData');
 const {
   User,
   Product,
@@ -23,7 +23,42 @@ async function seed() {
   console.log('db synced!');
 
   const users = await Promise.all([
-    User.bulkCreate(userData, { returning: true })
+    User.create({
+      email: 'cody@email.com',
+      password: '123',
+      firstName: 'Cody',
+      lastName: 'Puggy',
+      addr1: '555 Puppy Dog Lane',
+      city: 'Moline',
+      state: 'IL',
+      zipCode: '61240',
+      phone: '123456789',
+      isAdmin: false
+    }),
+    User.create({
+      email: 'murphy@email.com',
+      password: '123',
+      firstName: 'Murphy',
+      lastName: 'Puglet',
+      addr1: '999 I Dunno Way',
+      addr2: 'Suite 9a',
+      city: 'Birmingham',
+      state: 'AL',
+      zipCode: '35005',
+      phone: '098765432'
+    }),
+    User.create({
+      email: 'chris@email.com',
+      password: '12345',
+      firstName: 'Chris',
+      lastName: 'U know who I am',
+      addr1: '678 I Am Not a Dog Blvd',
+      city: 'Not Here',
+      state: 'OR',
+      zipCode: '97201',
+      phone: '246801357',
+      isAdmin: true
+    })
   ]);
 
   const products = await Promise.all([
