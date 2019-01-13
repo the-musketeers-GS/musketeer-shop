@@ -111,7 +111,13 @@ class ProductList extends React.Component {
 
         <ProductListStyles>
           {!products.length ? (
-            <h2>No result found in {filteredProducts.toUpperCase()}</h2>
+            !filteredProducts ? (
+              <h2>
+                I'm sorry but we do not carry the item you are looking for..
+              </h2>
+            ) : (
+              <h2>No result found in {filteredProducts.toUpperCase()}</h2>
+            )
           ) : (
             products.map(product => (
               <ul key={product.id}>

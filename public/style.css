@@ -14,15 +14,14 @@ label {
   display: block;
 }
 
+#selectSize {
+  display: flex;
+}
+
 /* nav a {
   display: inline-block;
   margin: 1em;
 } */
-
-form div {
-  margin: 1em;
-  display: inline-block;
-}
 
 /* img {
   object-fit: contain;

@@ -14,7 +14,9 @@ const ManageProductList = ({ product, handleDelete }) => {
         <Link to={`/products/${product.id}`}>View</Link>
       </td>
       <td>
-        <Link to={`/manage/product/${product.id}`}>Edit</Link>
+        <Link to={`/manage/product/${product.id}`} state={product}>
+          Edit
+        </Link>
       </td>
       <td>
         <DeleteButton onClick={e => handleDelete(e, product)}>

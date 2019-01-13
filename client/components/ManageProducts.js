@@ -28,8 +28,8 @@ class ManageProducts extends Component {
               <tr>
                 <th>Product Id</th>
                 <th>Title</th>
-                <th>Price</th>
-                <th>stockQty</th>
+                <th>Price (in cents)</th>
+                <th>Stock Qty</th>
               </tr>
             </thead>
             <tbody>
