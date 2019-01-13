@@ -56,7 +56,8 @@ const mapState = state => {
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     user: state.user,
     isLoggedIn: !!state.user.id,
-    products: state.products
+    products: state.products,
+    guestCart: state.guestCart.cart
   };
 };
 

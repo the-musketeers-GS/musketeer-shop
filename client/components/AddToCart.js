@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { createCartItem } from '../store/cart';
 
 const AddToCart = ({
-  addToCart,
   product,
   handleAdd,
   handleAddNoUser,
@@ -14,6 +13,7 @@ const AddToCart = ({
     <button
       type="button"
       onClick={e => {
+        e.preventDefault();
         // 1 needs to be changed to userId when we have user on state
         isLoggedIn ? handleAdd(user.id, product.id) : handleAddNoUser(product);
       }}

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import formatMoney from '../../lib/formatMoney';
 import AddToCart from './AddToCart';
 import avgRating from '../../lib/avgRating';
-import { createCartItem } from '../store/cart';
+import { createCartItem, guestAddCart } from '../store';
 
 const ProductListStyles = styled.div`
   img {
@@ -44,20 +44,15 @@ class ProductList extends React.Component {
   };
 
   handleAdd = (user, product) => {
-    if (this.props.isLoggedIn) {
-      this.props.addToCart(user, product);
-    }
+    this.props.addToCart(user, product);
   };
 
-  handleAddNoUser = async product => {
-    let noUserCart = [];
-    // noUserCart = JSON.parse(localStorage.getItem('cart'))
-    await noUserCart.push(product);
-    localStorage.setItem('cart', JSON.stringify(noUserCart));
+  handleAddNoUser = product => {
+    this.props.guestAddCart(product);
   };
 
   render() {
-    let { products, user, isLoggedIn, addToCart } = this.props;
+    let { products, user, isLoggedIn } = this.props;
     let { filteredProducts, searchProducts, searched } = this.state;
     if (filteredProducts) {
       products = products.filter(
@@ -141,7 +136,13 @@ class ProductList extends React.Component {
                       : 'No Reviews'}
                   </li>
                 </Link>
-                <AddToCart productId={product.id} />
+                <AddToCart
+                  product={product}
+                  user={user}
+                  isLoggedIn={isLoggedIn}
+                  handleAdd={this.handleAdd}
+                  handleAddNoUser={this.handleAddNoUser}
+                />
               </ul>
             ))
           )}
@@ -160,7 +161,8 @@ const mapState = state => {
 };
 
 const mapDispatch = dispatch => ({
-  addToCart: (userId, productId) => dispatch(createCartItem(userId, productId))
+  addToCart: (userId, productId) => dispatch(createCartItem(userId, productId)),
+  guestAddCart: product => dispatch(guestAddCart(product))
 });
 
 export default withRouter(connect(mapState, mapDispatch)(ProductList));

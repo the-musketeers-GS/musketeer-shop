@@ -1,19 +1,15 @@
-let cartItems = {};
-let noUserCart = {};
+let guestCart = [];
 
-noUserCart.saveToCart = function(productId) {
-  if (cartItems === null) {
-    cartItems = {
-      count: '1',
-      items: [{ item: productId, quanitty: '1' }]
-    };
+guestCart.saveToCart = function(product) {
+  if (guestCart.length < 1) {
+    guestCart.concat(product);
   } else {
     let newItem = true;
-    for (let i = 0; i < cartItems.items.length; i++) {
-      if (cartItems.items[i].item === productId) {
+    for (let i = 0; i < guestCart.length; i++) {
+      if (guestCart[i].id === product.it) {
         newItem = false;
-        let itemQuantity = parseInt(cartItems.items[i].quantity);
-        itemQuantity++;
+        let quantity = parseInt(guestCart[i].quantity);
+        quantity++;
         cartItems.items[i].quantity = itemQuantity.toString();
       }
     }
