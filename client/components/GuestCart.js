@@ -60,7 +60,7 @@ const GuestCart = props => {
           Your Cart
           <CloseButton onClick={props.toggleCart}>&times;</CloseButton>
         </header>
-        {products.length && (
+        {
           <ul>
             {products.map(product => (
               <CartItemStyles key={product.id}>
@@ -82,7 +82,7 @@ const GuestCart = props => {
               </CartItemStyles>
             ))}
           </ul>
-        )}
+        }
         <footer>
           {/* <p>{formatMoney(calcTotalPrice(products))}</p> */}
           <CheckoutButton

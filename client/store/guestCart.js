@@ -18,14 +18,14 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case GUEST_ADD_CART: {
-      let foundIdx;
+      let findProduct;
       const prevState = { ...state };
-      const found = prevState.cart.find((item, index) => {
-        foundIdx = index;
+      const product = prevState.cart.find((item, index) => {
+        findProduct = index;
         return item.id === action.product.id;
       });
-      if (found) {
-        found.quantity = state.cart[foundIdx].quantity + 1;
+      if (product) {
+        product.quantity = state.cart[findProduct].quantity + 1;
 
         const newState = { ...state, cart: [...state.cart] };
         window.localStorage.guestCart = JSON.stringify(newState);
