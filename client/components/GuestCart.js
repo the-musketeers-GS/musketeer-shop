@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
+import history from '../history';
+
+import { toggleCart, guestRemoveCartItem } from '../store';
+
 import formatMoney from '../../lib/formatMoney';
-import calcTotalPrice from '../../lib/calcTotalPrice';
+import calcTotalPriceGuest from '../../lib/calcTotalPriceGuest';
+
+import styled from 'styled-components';
 import CartStyles from './styles/CartStyles';
-import { checkout } from '../store/order';
 
 const CloseButton = styled.button`
   background: black;
@@ -49,9 +53,9 @@ const CheckoutButton = styled.button`
 `;
 
 const GuestCart = props => {
-  // const { products } = props
-  const guestCart = JSON.parse(window.localStorage.getItem('guestCart'));
-  const products = guestCart.cart || [];
+  let guestCart = JSON.parse(window.sessionStorage.getItem('guestCart'));
+  let products = guestCart.cart;
+  console.log(products);
 
   return (
     <CartStyles open={props.isOpen}>
@@ -72,24 +76,21 @@ const GuestCart = props => {
                     total: {formatMoney(product.quantity * product.price)}
                   </p>
                 </div>
-                {/* <BigButton
-                    onClick={() =>
-                      this.props.deleteCartItem(this.props.user.id, product.id)
-                    }
-                  >
-                    &times;
-                  </BigButton> */}
+                <BigButton
+                  onClick={() => props.guestRemoveCartItem(product.id)}
+                >
+                  &times;
+                </BigButton>
               </CartItemStyles>
             ))}
           </ul>
         }
         <footer>
-          {/* <p>{formatMoney(calcTotalPrice(products))}</p> */}
+          <p>{formatMoney(calcTotalPriceGuest(products))}</p>
           <CheckoutButton
-            onClick={async () => {
-              await props.checkout(userId);
-              await props.toggleCart();
-              await props.getCart(userId);
+            onClick={() => {
+              alert('Please Login/Signup to continue..');
+              history.push('/login');
             }}
             disabled={!products.length}
           >
@@ -101,16 +102,11 @@ const GuestCart = props => {
   );
 };
 
-// const mapState = state => ({
-//   isOpen: state.cart.isOpen,
-//   guestCart: state.guestCart.cart
-// });
+const mapState = state => ({
+  isOpen: state.cart.isOpen,
+  products: state.guestCart.cart
+});
 
-// const mapDispatch = dispatch => ({
-//   toggleCart: () => dispatch(toggleCart()),
-//   checkout: userId => dispatch(checkout(userId))
-// });
+const mapDispatch = { toggleCart, guestRemoveCartItem };
 
-// export default connect(mapState, mapDispatch)(GuestCart);
-
-export default GuestCart;
+export default withRouter(connect(mapState, mapDispatch)(GuestCart));

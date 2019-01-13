@@ -1,9 +1,7 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { deleteThunkProduct } from '../store';
+import { Link } from 'react-router-dom';
+
 import { DeleteButton } from './styles/Button';
-import { StyledLink } from './styles/Link';
 
 const ManageProductList = ({ product, handleDelete }) => {
   return (

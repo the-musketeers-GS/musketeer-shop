@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 
-import { fetchProducts, deleteThunkProduct } from '../store';
 import { ManageProductList } from '../components';
+import { fetchProducts, deleteThunkProduct } from '../store';
 
 class ManageProducts extends Component {
   componentDidMount() {
@@ -51,17 +50,8 @@ class ManageProducts extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    products: state.products
-  };
-};
+const mapState = state => ({ products: state.products });
 
-const mapDispatch = dispatch => {
-  return {
-    fetchProducts: () => dispatch(fetchProducts()),
-    deleteThunkProduct: product => dispatch(deleteThunkProduct(product))
-  };
-};
+const mapDispatch = { fetchProducts, deleteThunkProduct };
 
 export default withRouter(connect(mapState, mapDispatch)(ManageProducts));

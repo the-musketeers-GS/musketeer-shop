@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+
+import GuestCart from './GuestCart';
+
 import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
+import { checkout } from '../store/order';
+
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
+
+import styled from 'styled-components';
 import CartStyles from './styles/CartStyles';
-import { checkout } from '../store/order';
-import GuestCart from './GuestCart';
 
 const CloseButton = styled.button`
   background: black;
@@ -58,14 +62,9 @@ class Cart extends Component {
 
   render() {
     let { products, isLoggedIn, guestCart, isOpen, toggleCart } = this.props;
+
     if (!isLoggedIn && guestCart.length) {
-      return (
-        <GuestCart
-          products={guestCart}
-          isOpen={isOpen}
-          toggleCart={toggleCart}
-        />
-      );
+      return <GuestCart isOpen={isOpen} toggleCart={toggleCart} />;
     } else {
       return (
         <CartStyles open={this.props.isOpen}>

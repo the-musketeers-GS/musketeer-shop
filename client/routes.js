@@ -8,11 +8,10 @@ import {
   UserHome,
   ProductList,
   SingleProduct,
-  Categories,
   SingleOrder
 } from './components';
 import { me, fetchProducts } from './store';
-import AdminManageRoutes from './components/AdminManage';
+import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
  * COMPONENT
@@ -30,14 +29,13 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={ProductList} />
         <Route exact path="/products/:id" component={SingleProduct} />
-        <Route exact path="/products/:categories" component={Categories} />
-        <Route exact path="/order/:orderId" component={SingleOrder} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route exact path="/order/:orderId" component={SingleOrder} />
           </Switch>
         )}
         {/* Displays our ProductList component as a fallback */}

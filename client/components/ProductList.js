@@ -24,8 +24,7 @@ class ProductList extends React.Component {
 
     this.state = {
       filteredProducts: '',
-      searchProducts: '',
-      searched: ''
+      searchProducts: ''
     };
   }
 
@@ -44,7 +43,7 @@ class ProductList extends React.Component {
   };
 
   handleAdd = (user, product) => {
-    this.props.addToCart(user, product);
+    this.props.createCartItem(user, product);
   };
 
   handleAddNoUser = product => {
@@ -53,22 +52,13 @@ class ProductList extends React.Component {
 
   render() {
     let { products, user, isLoggedIn } = this.props;
-    let { filteredProducts, searchProducts, searched } = this.state;
+    let { filteredProducts, searchProducts } = this.state;
     if (filteredProducts) {
       products = products.filter(
         product => product.category === filteredProducts
       );
     }
     if (searchProducts) {
-      products = products.filter(
-        product =>
-          product.title.toLowerCase().includes(searchProducts.toLowerCase()) ||
-          product.description
-            .toLowerCase()
-            .includes(searchProducts.toLowerCase())
-      );
-    }
-    if (!searchProducts && searched) {
       products = products.filter(
         product =>
           product.title.toLowerCase().includes(searchProducts.toLowerCase()) ||
@@ -160,9 +150,6 @@ const mapState = state => {
   };
 };
 
-const mapDispatch = dispatch => ({
-  addToCart: (userId, productId) => dispatch(createCartItem(userId, productId)),
-  guestAddCart: product => dispatch(guestAddCart(product))
-});
+const mapDispatch = { createCartItem, guestAddCart };
 
 export default withRouter(connect(mapState, mapDispatch)(ProductList));

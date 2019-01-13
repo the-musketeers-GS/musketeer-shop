@@ -1,14 +1,14 @@
 const GUEST_ADD_CART = 'GUEST_ADD CART';
-const GUEST_REMOVE_CART = 'REMOVE_FROM_CART';
+const GUEST_REMOVE_ITEM = 'GUEST_REMOVE_ITEM';
 
 export const guestAddCart = product => ({
   type: GUEST_ADD_CART,
   product
 });
 
-export const guestRemoveCartItem = product => ({
-  type: GUEST_REMOVE_CART,
-  product
+export const guestRemoveCartItem = id => ({
+  type: GUEST_REMOVE_ITEM,
+  id
 });
 
 const initialState = {
@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
         product.quantity = state.cart[findProduct].quantity + 1;
 
         const newState = { ...state, cart: [...state.cart] };
-        window.localStorage.guestCart = JSON.stringify(newState);
+        window.sessionStorage.guestCart = JSON.stringify(newState);
 
         return newState;
       } else {
@@ -36,10 +36,17 @@ export default function(state = initialState, action) {
           ...state,
           cart: [...state.cart, { ...action.product, quantity: 1 }]
         };
-        window.localStorage.guestCart = JSON.stringify(newState);
+        window.sessionStorage.guestCart = JSON.stringify(newState);
         return newState;
       }
     }
+    case GUEST_REMOVE_ITEM:
+      const newState = {
+        ...state,
+        cart: state.cart.filter(product => product.id !== action.id)
+      };
+      window.sessionStorage.guestCart = JSON.stringify(newState);
+      return newState;
     default:
       return state;
   }
