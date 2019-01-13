@@ -7,7 +7,14 @@ module.exports = router;
 router.get('/:userId', async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const order = await Order.findAll({ where: { userId } });
+    const order = await Order.findAll({
+      where: { userId },
+      include: [
+        {
+          model: OrderItem
+        }
+      ]
+    });
     res.json(order);
   } catch (err) {
     next(err);
@@ -61,6 +68,7 @@ router.post('/:userId', async (req, res, next) => {
     });
     // 5. update cart to completed: TRUE
     await cart.update({ completed: true }, { returning: true });
+    // 6. send back the newly created order
     res.json(orderId);
   } catch (err) {
     next(err);

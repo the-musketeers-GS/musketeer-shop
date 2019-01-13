@@ -6,8 +6,6 @@ const StyledNav = styled.div`
   display: flex;
   justify-self: end;
   font-size: 2rem;
-  /* a,
-  button { */
   .nav-button {
     padding: 1rem 3rem;
     display: flex;
@@ -31,7 +29,6 @@ const StyledNav = styled.div`
       height: 100%;
       left: 0;
       position: absolute;
-      /* transform: skew(-20deg); */
       top: 0;
       bottom: 0;
     }
