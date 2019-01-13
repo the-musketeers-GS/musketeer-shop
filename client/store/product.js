@@ -1,10 +1,10 @@
 import axios from 'axios';
+import history from '../history';
 /**
  * ACTION TYPES
  */
 const GET_PRODUCT = 'GET_PRODUCT';
 const DELETE_PRODUCT = 'DELETE_PRODUCT';
-const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 /**
  * INITIAL STATE
@@ -15,7 +15,6 @@ const initialProducts = [];
  * ACTION CREATORS
  */
 const getProducts = products => ({ type: GET_PRODUCT, products });
-// const updateProduct = product => ({ type: UPDATE_PRODUCT, product });
 const deleteProduct = id => ({ type: DELETE_PRODUCT, id });
 
 /**
@@ -30,10 +29,21 @@ export const fetchProducts = () => async dispatch => {
   }
 };
 
+export const addThunkProduct = product => async dispatch => {
+  try {
+    const res = await axios.post('/api/manage/products', product);
+    dispatch(fetchProducts());
+    history.goBack();
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const updateThunkProduct = (id, product) => async dispatch => {
   try {
     const res = await axios.put(`/api/manage/product/${id}`, product);
     dispatch(fetchProducts());
+    history.goBack();
   } catch (err) {
     console.error(err);
   }
@@ -55,12 +65,6 @@ export default function(state = initialProducts, action) {
   switch (action.type) {
     case GET_PRODUCT:
       return action.products;
-    // case UPDATE_PRODUCT:
-    //   return state.map(product => {
-    //     if (product.id === action.product.id) {
-    //       product = action.product
-    //     }
-    //   })
     case DELETE_PRODUCT:
       return [...state].filter(product => product.id !== action.id);
     default:

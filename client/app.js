@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { Navbar, ProductList } from './components';
+import { Navbar } from './components';
 import Routes from './routes';
-import AdminManageRoutes from './components/AdminManage';
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`

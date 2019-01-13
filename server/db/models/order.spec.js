@@ -17,8 +17,8 @@ describe('Order model', () => {
         });
       });
 
-      it('returns default completed value to be false', () => {
-        expect(orderTest.completed).to.be.equal(false);
+      it('returns default order status to be 1', () => {
+        expect(orderTest.status).to.be.equal(1);
       });
     });
   });

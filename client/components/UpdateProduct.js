@@ -6,7 +6,6 @@ import { updateThunkProduct } from '../store';
 class UpdateProduct extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       title: ''
     };
@@ -20,7 +19,10 @@ class UpdateProduct extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.updateThunkProduct(this.props.match.params.id, this.state);
+    this.props.updateThunkProduct(
+      this.props.match.params.productId,
+      this.state
+    );
   };
 
   render() {
@@ -41,10 +43,6 @@ class UpdateProduct extends React.Component {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    updateThunkProduct: () => dispatch(updateThunkProduct())
-  };
-};
+const mapDispatch = { updateThunkProduct };
 
 export default withRouter(connect(null, mapDispatch)(UpdateProduct));
