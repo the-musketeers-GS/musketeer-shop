@@ -3,7 +3,12 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import history from '../history';
 
-import { toggleCart, guestRemoveCartItem } from '../store';
+import {
+  toggleCart,
+  guestRemoveCartItem,
+  createCartItem,
+  checkout
+} from '../store';
 
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPriceGuest from '../../lib/calcTotalPriceGuest';
@@ -88,8 +93,10 @@ const GuestCart = props => {
           <p>{formatMoney(calcTotalPriceGuest(products))}</p>
           <CheckoutButton
             onClick={() => {
-              alert('Please Login/Signup to continue..');
-              history.push('/login');
+              if (!props.user.id) {
+                alert('Please Login/Signup to continue..');
+                history.push('/login');
+              }
             }}
             disabled={!products.length}
           >
@@ -102,6 +109,8 @@ const GuestCart = props => {
 };
 
 const mapState = state => ({
+  user: state.user,
+  isLoggedIn: state.isLoggedIn,
   isOpen: state.cart.isOpen
 });
 
