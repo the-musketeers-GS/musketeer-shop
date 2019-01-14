@@ -21,7 +21,7 @@ export const fetchStorageData = () => async dispatch => {
   try {
     const res = await JSON.parse(window.localStorage.getItem('guestCart'));
     const products = res.cart;
-    dispatch(initialCart(products));
+    dispatch(initialCart(products || []));
   } catch (err) {
     console.error(err);
   }
