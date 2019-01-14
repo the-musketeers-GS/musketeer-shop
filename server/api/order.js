@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
+const isSelforAdmin = require('../middlewares/issSelforAdmin');
 module.exports = router;
 
 // GET /api/order/:userId ---- return all orders for a user
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', isSelforAdmin, async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const order = await Order.findAll({
@@ -21,8 +22,8 @@ router.get('/:userId', async (req, res, next) => {
   }
 });
 
-// GET /api/order/:orderId/data ---- return all data for a single order
-router.get('/:userId/:orderId/data', async (req, res, next) => {
+// GET /api/order/:userId/:orderId/data ---- return all data for a single order
+router.get('/:userId/:orderId/data', isSelforAdmin, async (req, res, next) => {
   try {
     const orderId = req.params.orderId;
     const order = await Order.findOne({ where: { id: orderId } });
@@ -34,7 +35,7 @@ router.get('/:userId/:orderId/data', async (req, res, next) => {
 });
 
 // POST /api/order/:userId ---- turn Cart and CartItems into Order and OrderItems, change Cart completed to true
-router.post('/:userId', async (req, res, next) => {
+router.post('/:userId', isSelforAdmin, async (req, res, next) => {
   try {
     // 1. find cart for user + save cartId
     const userId = req.params.userId;

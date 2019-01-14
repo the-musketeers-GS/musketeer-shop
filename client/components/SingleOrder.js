@@ -7,7 +7,8 @@ import OrderStyles from './styles/OrderStyles';
 class SingleOrder extends Component {
   componentDidMount() {
     const orderId = this.props.match.params.orderId;
-    this.props.getOrder(orderId);
+    const userId = this.props.match.params.userId;
+    this.props.getOrder(orderId, userId);
   }
   render() {
     const orderData = this.props.orderData || {};
@@ -62,7 +63,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  getOrder: orderId => dispatch(fetchSingleOrder(orderId))
+  getOrder: (orderId, userId) => dispatch(fetchSingleOrder(orderId, userId))
 });
 
 export default connect(mapState, mapDispatch)(SingleOrder);
