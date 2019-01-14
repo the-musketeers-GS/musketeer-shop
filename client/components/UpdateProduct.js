@@ -6,21 +6,38 @@ import history from '../history';
 
 import { UpdateButton, Button } from './styles/Button';
 import { Form, LabelUpdate, Input, Select } from './styles/Form';
+import axios from 'axios';
 
 class UpdateProduct extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
 
     this.state = {
       title: '',
       price: '',
       stockQty: '',
       category: '',
-      size: 'NA',
+      size: '',
       description: ''
     };
   }
 
+  componentDidMount = async () => {
+    const id = await Number(this.props.match.params.productId);
+    console.log(id);
+    const { data } = await axios.get(`/api/products/${id}`);
+    console.log(data);
+    this.setState({
+      title: data.title,
+      price: data.price,
+      stockQty: data.stockQty,
+      category: data.category,
+      size: data.size,
+      description: data.description
+    });
+    console.log(this.state);
+  };
   handleChange = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -38,6 +55,13 @@ class UpdateProduct extends React.Component {
   };
 
   render() {
+    // const id = Number(this.props.match.params.id);
+
+    // let product = {};
+    // if (this.props.products.length) {
+    //   [product] = this.props.products.filter(p => p.id === id);
+    // }
+
     return (
       <div id="updateForm">
         <Form onSubmit={this.handleSubmit}>
@@ -170,6 +194,10 @@ class UpdateProduct extends React.Component {
   }
 }
 
+const mapState = state => {
+  return { products: state.products };
+};
+
 const mapDispatch = { updateThunkProduct };
 
-export default withRouter(connect(null, mapDispatch)(UpdateProduct));
+export default withRouter(connect(mapState, mapDispatch)(UpdateProduct));
