@@ -108,7 +108,7 @@ const mapDispatch = dispatch => {
       const firstName = evt.target.firstName.value;
       const lastName = evt.target.lastName.value;
       const addr1 = evt.target.addressOne.value;
-      const addr2 = evt.target.addressOne.value;
+      const addr2 = evt.target.addressTwo.value;
       const city = evt.target.city.value;
       const state = evt.target.state.value;
       const zipCode = evt.target.zipCode.value;
