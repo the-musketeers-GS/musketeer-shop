@@ -25,7 +25,7 @@ router.post('/product/:prodId/user/:userId', async (req, res, next) => {
     await review.setUser(user);
     let productReview = await review.setProduct(product);
 
-    res.status(201).send(productReview);
+    res.status(201).json(productReview);
   } catch (error) {
     next(error);
   }
