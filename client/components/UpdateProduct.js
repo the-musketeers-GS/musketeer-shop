@@ -11,7 +11,6 @@ import axios from 'axios';
 class UpdateProduct extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
 
     this.state = {
       title: '',
@@ -25,9 +24,7 @@ class UpdateProduct extends React.Component {
 
   componentDidMount = async () => {
     const id = await Number(this.props.match.params.productId);
-    console.log(id);
     const { data } = await axios.get(`/api/products/${id}`);
-    console.log(data);
     this.setState({
       title: data.title,
       price: data.price,
@@ -36,7 +33,6 @@ class UpdateProduct extends React.Component {
       size: data.size,
       description: data.description
     });
-    console.log(this.state);
   };
   handleChange = e => {
     const name = e.target.name;
