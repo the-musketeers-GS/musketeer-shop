@@ -69,7 +69,7 @@ router.post('/:userId', async (req, res, next) => {
     // 5. update cart to completed: TRUE
     await cart.update({ completed: true }, { returning: true });
     // 6. send back the newly created order
-    res.json(orderId);
+    res.status(201).json(orderId);
   } catch (err) {
     next(err);
   }

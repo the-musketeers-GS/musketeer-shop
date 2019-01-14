@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import GuestCart from './GuestCart';
-
-import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
-import { checkout } from '../store/order';
-
+import styled from 'styled-components';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
-
-import styled from 'styled-components';
+import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
+import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
+import GuestCart from './GuestCart';
 
 const CloseButton = styled.button`
   background: black;
@@ -72,14 +68,18 @@ class Cart extends Component {
         />
       );
     } else {
+      products = products || [];
+      const userId = this.props.user.id;
       return (
         <CartStyles open={this.props.isOpen}>
           <>
             <header>
               Your Cart
-              <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
+              <CloseButton onClick={toggleCart}>&times;</CloseButton>
             </header>
-            {products.length && (
+            {!products.length ? (
+              <CartItemStyles>No items in your cart ☹️</CartItemStyles>
+            ) : (
               <ul>
                 {products.map(item => (
                   <CartItemStyles key={item.product.id}>
@@ -98,10 +98,7 @@ class Cart extends Component {
                     </div>
                     <BigButton
                       onClick={() =>
-                        this.props.deleteCartItem(
-                          this.props.user.id,
-                          item.product.id
-                        )
+                        this.props.deleteCartItem(userId, item.product.id)
                       }
                     >
                       &times;

@@ -14,7 +14,11 @@ class SingleOrder extends Component {
     const orderItems = this.props.orderItems || [];
     const isLoggedIn = this.props.isLoggedIn || false;
     if (!orderData.id || !orderItems.length) {
-      return null;
+      return (
+        <OrderStyles>
+          <p>No order information</p>
+        </OrderStyles>
+      );
     } else if (!isLoggedIn) {
       return null;
     } else {
