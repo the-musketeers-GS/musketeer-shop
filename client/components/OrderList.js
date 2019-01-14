@@ -17,6 +17,7 @@ const OrderUl = styled.ul`
 
 class OrderList extends Component {
   componentDidMount() {
+    console.log('GOT HERE, SOMEHOW?');
     this.props.getAllOrders(this.props.match.params.userId);
   }
 

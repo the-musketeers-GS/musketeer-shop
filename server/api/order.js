@@ -47,7 +47,7 @@ router.post('/:userId', async (req, res, next) => {
         { model: Product, attributes: ['id', 'title', 'price', 'image'] }
       ]
     });
-    // calculate total for safety's sake
+    // re-calculate total for safety's sake
     const total = calcTotalPrice(cartItems);
     // 3. build order and grab orderId
     const newOrder = await Order.build();
