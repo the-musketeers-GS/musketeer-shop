@@ -62,11 +62,11 @@ const User = db.define('user', {
     }
   },
   phone: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.BIGINT.UNSIGNED,
     allowNull: false,
     validate: {
       isInt: true,
-      len: [9, 9]
+      len: [10, 10]
     }
   },
   isAdmin: {
