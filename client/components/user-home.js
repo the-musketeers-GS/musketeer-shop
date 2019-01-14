@@ -20,19 +20,7 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>
-        Welcome, {firstName} {lastName}
-      </h3>
-      <div>
-        <div>Address: </div>
-        <div>{addr1}</div>
-        <div>{addr2}</div>
-        <div>
-          {city}, {state} {zipCode}
-        </div>
-        <div>Email: {email}</div>
-        <div>Phone: {phone}</div>
-      </div>
+      <h3>Welcome, {email}</h3>
     </div>
   );
 };
