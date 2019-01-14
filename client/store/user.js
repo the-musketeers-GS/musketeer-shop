@@ -43,9 +43,6 @@ export const auth = (
   zipCode,
   phone
 ) => async dispatch => {
-  console.log('email, password,method......)', email);
-  console.log('type of email+++++++++++++++++++', typeof email);
-  console.log('type of password+++++++++++++++++++', typeof password);
   let res;
   try {
     res = await axios.post(`/auth/${method}`, {

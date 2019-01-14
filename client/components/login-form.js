@@ -49,14 +49,6 @@ const mapLogin = state => {
   };
 };
 
-// const mapSignup = state => {
-//   return {
-//     name: 'signup',
-//     displayName: 'Sign Up',
-//     error: state.user.error
-//   };
-// };
-
 const mapDispatch = dispatch => {
   return {
     handleSubmit(evt) {
@@ -64,35 +56,13 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name;
       const email = evt.target.email.value;
       const password = evt.target.password.value;
-      // const firstName = evt.target.firstName.value;
-      // const lastName = evt.target.lastName.value;
-      // const addr1 = evt.target.addressOne.value;
-      // const addr2 = evt.target.addressOne.value;
-      // const city = evt.target.city.value;
-      // const state = evt.target.state.value;
-      // const zipCode = evt.target.zipCode.value;
-      // const phone = evt.target.phone.value;
-      dispatch(
-        auth(
-          email,
-          password,
-          formName
-          // firstName,
-          // lastName,
-          // addr1,
-          // addr2,
-          // city,
-          // state,
-          // zipCode,
-          // phone
-        )
-      );
+
+      dispatch(auth(email, password, formName));
     }
   };
 };
 
 export const Login = connect(mapLogin, mapDispatch)(LoginForm);
-// export const Signup = connect(mapSignup, mapDispatch)(AuthForm);
 
 /**
  * PROP TYPES
