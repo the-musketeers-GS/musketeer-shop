@@ -26,17 +26,15 @@ export default function(state = initialState, action) {
       });
       if (product) {
         product.quantity = state.cart[findProduct].quantity + 1;
-
         const newState = { ...state, cart: [...state.cart] };
-        window.sessionStorage.guestCart = JSON.stringify(newState);
-
+        window.localStorage.guestCart = JSON.stringify(newState);
         return newState;
       } else {
         const newState = {
           ...state,
           cart: [...state.cart, { ...action.product, quantity: 1 }]
         };
-        window.sessionStorage.guestCart = JSON.stringify(newState);
+        window.localStorage.guestCart = JSON.stringify(newState);
         return newState;
       }
     }
@@ -45,7 +43,7 @@ export default function(state = initialState, action) {
         ...state,
         cart: state.cart.filter(product => product.id !== action.id)
       };
-      window.sessionStorage.guestCart = JSON.stringify(newState);
+      window.localStorage.guestCart = JSON.stringify(newState);
       return newState;
     default:
       return state;

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import history from '../history';
 
 import { ManageProductList } from '../components';
 import { fetchProducts, deleteThunkProduct } from '../store';
+
+import { AddProduct } from './styles/Button';
 
 class ManageProducts extends Component {
   componentDidMount() {
@@ -20,16 +23,23 @@ class ManageProducts extends Component {
 
     return (
       products.length && (
-        <div>
+        <div id="manage-product-list">
           <h3>Total # of Products: {products.length}</h3>
-          <Link to="/manage/product/add">Add Product</Link>
-          <table>
+          <AddProduct onClick={() => history.push('/manage/product/add')}>
+            Add Product
+          </AddProduct>
+          <table className="fixed_header">
             <thead>
               <tr>
-                <th>Product Id</th>
-                <th>Title</th>
-                <th>Price (in cents)</th>
+                <th>Product ID</th>
+                <th>Product Title</th>
+                <th>
+                  Price <small>(in cents)</small>
+                </th>
                 <th>Stock Qty</th>
+                <th />
+                <th />
+                <th />
               </tr>
             </thead>
             <tbody>

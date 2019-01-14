@@ -53,9 +53,8 @@ const CheckoutButton = styled.button`
 `;
 
 const GuestCart = props => {
-  let guestCart = JSON.parse(window.sessionStorage.getItem('guestCart'));
-  let products = guestCart.cart;
-  console.log(products);
+  const guestCart = JSON.parse(window.localStorage.getItem('guestCart'));
+  const products = guestCart.cart || [];
 
   return (
     <CartStyles open={props.isOpen}>
@@ -103,8 +102,7 @@ const GuestCart = props => {
 };
 
 const mapState = state => ({
-  isOpen: state.cart.isOpen,
-  products: state.guestCart.cart
+  isOpen: state.cart.isOpen
 });
 
 const mapDispatch = { toggleCart, guestRemoveCartItem };

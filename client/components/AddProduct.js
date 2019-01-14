@@ -2,9 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addThunkProduct } from '../store';
+import history from '../history';
 
-import { UpdateButton } from './styles/Button';
-import { Form, Label, Input } from './styles/Form';
+import { AddButton, Button } from './styles/Button';
+import { Form, Label, Input, Select } from './styles/Form';
 
 class AddProduct extends React.Component {
   constructor(props) {
@@ -37,64 +38,66 @@ class AddProduct extends React.Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          <h3>Add Product</h3>
-          <Label htmlFor="title">Product Title</Label>
-          <Input
-            type="text"
-            name="title"
-            value={this.state.title}
-            onChange={this.handleChange}
-            placeholder="Enter New/Same Name"
-            required
-          />
-          <Label htmlFor="price">Price in cents</Label>
-          <Input
-            type="number"
-            name="price"
-            value={this.state.price}
-            onChange={this.handleChange}
-            placeholder="Price"
-            min="1"
-            required
-          />
-          <Label htmlFor="stockQty">Stock Quantity</Label>
-          <Input
-            type="number"
-            name="stockQty"
-            value={this.state.stockQty}
-            onChange={this.handleChange}
-            placeholder="stockQty"
-            min="0"
-          />
-          <Label htmlFor="category">Category</Label>
-          <select
-            type="select"
-            name="category"
-            value={this.state.category}
-            onChange={this.handleChange}
-            placeholder="category"
-          >
-            <option value="category" onClick={this.handleSelect}>
-              Select Category:
-            </option>
-            <option value="accessories" onClick={this.handleSelect}>
-              Accessories
-            </option>
-            <option value="boots" onClick={this.handleSelect}>
-              Boots
-            </option>
-            <option value="clothes" onClick={this.handleSelect}>
-              Clothes
-            </option>
-            <option value="hats" onClick={this.handleSelect}>
-              Hats
-            </option>
-            <option value="weapons" onClick={this.handleSelect}>
-              Weapons
-            </option>
-          </select>
-          <div id="selectSize">
-            <Label htmlFor="size">Size</Label>
+          <h2>- ADD NEW PRODUCT -</h2>
+          <div className="required">
+            <Label htmlFor="title">Product Title</Label>
+            <Input
+              type="text"
+              name="title"
+              value={this.state.title}
+              onChange={this.handleChange}
+              placeholder="Enter Product Title"
+              required
+            />
+            <Label htmlFor="price">Price in cents</Label>
+            <Input
+              type="number"
+              name="price"
+              value={this.state.price}
+              onChange={this.handleChange}
+              placeholder="Enter Price ($1 = 100)"
+              min="1"
+              required
+            />
+            <Label htmlFor="stockQty">Stock Quantity</Label>
+            <Input
+              type="number"
+              name="stockQty"
+              value={this.state.stockQty}
+              onChange={this.handleChange}
+              placeholder="Enter # of products in stock"
+              min="0"
+              required
+            />
+            <Label htmlFor="category">Select Category</Label>
+            <Select
+              type="select"
+              name="category"
+              value={this.state.category}
+              onChange={this.handleChange}
+              placeholder="category"
+              required
+            >
+              <option value="">--</option>
+              <option value="accessories" onClick={this.handleSelect}>
+                Accessories
+              </option>
+              <option value="boots" onClick={this.handleSelect}>
+                Boots
+              </option>
+              <option value="clothes" onClick={this.handleSelect}>
+                Clothes
+              </option>
+              <option value="hats" onClick={this.handleSelect}>
+                Hats
+              </option>
+              <option value="weapons" onClick={this.handleSelect}>
+                Weapons
+              </option>
+            </Select>
+          </div>
+          <Label htmlFor="size">Size</Label>
+          <div display="flex">
             <Input
               type="radio"
               id="S"
@@ -102,7 +105,9 @@ class AddProduct extends React.Component {
               value="S"
               onClick={this.handleChange}
             />
-            <Label htmlFor="S">S</Label>
+            <Label id="size" htmlFor="S">
+              S
+            </Label>
             <Input
               type="radio"
               id="M"
@@ -110,7 +115,9 @@ class AddProduct extends React.Component {
               value="M"
               onClick={this.handleChange}
             />
-            <Label htmlFor="M">M</Label>
+            <Label id="size" htmlFor="M">
+              M
+            </Label>
             <Input
               type="radio"
               id="L"
@@ -118,7 +125,9 @@ class AddProduct extends React.Component {
               value="L"
               onClick={this.handleChange}
             />
-            <Label htmlFor="L">L</Label>
+            <Label id="size" htmlFor="L">
+              L
+            </Label>
             <Input
               type="radio"
               id="XL"
@@ -126,7 +135,9 @@ class AddProduct extends React.Component {
               value="XL"
               onClick={this.handleChange}
             />
-            <Label htmlFor="XL">XL</Label>
+            <Label id="size" htmlFor="XL">
+              XL
+            </Label>
             <Input
               type="radio"
               id="NA"
@@ -134,18 +145,24 @@ class AddProduct extends React.Component {
               value="NA"
               onClick={this.handleChange}
             />
-            <Label htmlFor="N/A">NA</Label>
+            <Label id="size" htmlFor="N/A">
+              NA
+            </Label>
           </div>
-          <Input
+          <Label htmlFor="description">Product Description</Label>
+          <textarea
+            rows="5"
+            cols="30"
             type="textArea"
             name="description"
             value={this.state.description}
             onChange={this.handleChange}
-            placeholder="Description"
+            placeholder="Enter Description.."
           />
-          <UpdateButton color="white" background="green" type="submit">
-            Update!
-          </UpdateButton>
+          <div id="manage-buttons">
+            <AddButton type="submit">Add</AddButton>
+            <Button onClick={() => history.goBack()}>Cancel</Button>
+          </div>
         </Form>
       </div>
     );
