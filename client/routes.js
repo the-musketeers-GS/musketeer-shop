@@ -9,7 +9,8 @@ import {
   ProductList,
   SingleProduct,
   SingleOrder,
-  OrderList
+  OrderList,
+  Admin
 } from './components';
 import { me, fetchProducts, fetchStorageData } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';

@@ -27,7 +27,7 @@ const Navbar = ({ handleClick, isLoggedIn, openCart, user }) => (
             Orders
           </Link>
           {user.isAdmin && (
-            <Link className="nav-button " to="/home">
+            <Link className="nav-button " to="/admin">
               Admin
             </Link>
           )}
