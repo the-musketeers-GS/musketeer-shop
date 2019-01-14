@@ -68,7 +68,7 @@ const SignUpForm = props => {
         </div>
         <div>
           <label htmlFor="phone">
-            <small>Phone - format(123456789)</small>
+            <small>Phone - format(0123456789)</small>
           </label>
           <input name="phone" type="text" />
         </div>
