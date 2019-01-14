@@ -3,7 +3,7 @@ const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
 module.exports = router;
 
-// GET /api/order/:orderId ---- return all orders for a user
+// GET /api/order/:userId ---- return all orders for a user
 router.get('/:userId', async (req, res, next) => {
   try {
     const userId = req.params.userId;
@@ -22,7 +22,7 @@ router.get('/:userId', async (req, res, next) => {
 });
 
 // GET /api/order/:orderId/data ---- return all data for a single order
-router.get('/:orderId/data', async (req, res, next) => {
+router.get('/:userId/:orderId/data', async (req, res, next) => {
   try {
     const orderId = req.params.orderId;
     const order = await Order.findOne({ where: { id: orderId } });
