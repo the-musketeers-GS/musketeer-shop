@@ -122,3 +122,8 @@ td {
 h2 {
   text-align: center;
 }
+
+#preview-image {
+  max-width: 50%;
+  max-height: 50%;
+}

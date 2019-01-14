@@ -14,6 +14,9 @@ export { default as Cart } from './Cart';
 export { default as GuestCart } from './GuestCart';
 export { default as ConnectedReviewList } from './ReviewList';
 export { default as ReviewList } from './ReviewList';
+
+export { Signup } from './auth-form';
+export { Login } from './login-form';
+
 export { default as SingleOrder } from './SingleOrder';
-export { Login, Signup } from './auth-form';
 export { AdminManageRoutes } from './AdminManageRoutes';
