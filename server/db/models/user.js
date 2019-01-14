@@ -16,6 +16,59 @@ const User = db.define('user', {
       return () => this.getDataValue('password');
     }
   },
+  firstName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  addr1: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  addr2: {
+    type: Sequelize.STRING
+  },
+  city: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  state: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  zipCode: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  phone: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      isInt: true,
+      len: [9, 9]
+    }
+  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
