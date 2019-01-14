@@ -10,7 +10,7 @@ import {
   SingleProduct,
   SingleOrder
 } from './components';
-import { me, fetchProducts } from './store';
+import { me, fetchProducts, fetchStorageData } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
@@ -64,6 +64,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me());
       dispatch(fetchProducts());
+      dispatch(fetchStorageData());
     }
   };
 };

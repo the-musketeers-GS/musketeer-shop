@@ -1,5 +1,11 @@
-const GUEST_ADD_CART = 'GUEST_ADD CART';
+const INITIAL_CART = 'INITIAL_CART';
+const GUEST_ADD_CART = 'GUEST_ADD_CART';
 const GUEST_REMOVE_ITEM = 'GUEST_REMOVE_ITEM';
+
+export const initialCart = products => ({
+  type: INITIAL_CART,
+  products
+});
 
 export const guestAddCart = product => ({
   type: GUEST_ADD_CART,
@@ -11,12 +17,24 @@ export const guestRemoveCartItem = id => ({
   id
 });
 
+export const fetchStorageData = () => async dispatch => {
+  try {
+    const res = await JSON.parse(window.localStorage.getItem('guestCart'));
+    const products = res.cart;
+    dispatch(initialCart(products));
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const initialState = {
   cart: []
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case INITIAL_CART:
+      return { ...state, cart: action.products };
     case GUEST_ADD_CART: {
       let findProduct;
       const prevState = { ...state };
