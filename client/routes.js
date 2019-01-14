@@ -3,12 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Login,
+  LoginForm,
   Signup,
   UserHome,
   ProductList,
   SingleProduct,
-  Categories,
   SingleOrder,
   OrderList
 } from './components';
