@@ -32,9 +32,12 @@ export const fetchAllOrders = userId => async dispatch => {
     console.error(err);
   }
 };
-export const checkout = userId => async dispatch => {
+export const checkout = (userId, shippingInfo) => async dispatch => {
   try {
-    const { data: orderId } = await axios.post(`/api/order/${userId}`);
+    const { data: orderId } = await axios.post(
+      `/api/order/${userId}`,
+      shippingInfo
+    );
     history.push(`/order/${orderId}`);
     dispatch(fetchSingleOrder(orderId));
   } catch (err) {
@@ -45,7 +48,8 @@ export const checkout = userId => async dispatch => {
 // INITIAL STATE
 const initialState = {
   allOrders: [],
-  currentOrder: {}
+  currentOrder: {},
+  shippingInfo: {}
 };
 
 // REDUCER
