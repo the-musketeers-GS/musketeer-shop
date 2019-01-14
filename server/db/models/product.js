@@ -31,8 +31,8 @@ const Product = db.define('product', {
     defaultValue: 'accessories'
   },
   size: {
-    type: Sequelize.ENUM('S', 'M', 'L', 'XL', 'N/A'),
-    defaultValue: 'N/A'
+    type: Sequelize.ENUM('S', 'M', 'L', 'XL', 'NA'),
+    defaultValue: 'NA'
   }
 });
 
