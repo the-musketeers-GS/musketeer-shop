@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createCartItem } from '../store/cart';
 
-const AddToCart = ({ addToCart, productId, user }) => {
+const AddToCart = ({ addToCart, productId, user, isLoading }) => {
   // this is for testing purposes only
   const userId = user.id || 4;
   return (
@@ -13,13 +13,14 @@ const AddToCart = ({ addToCart, productId, user }) => {
           addToCart(userId, productId);
         }}
       >
-        Add To Cart
+        Add{isLoading ? 'ing' : ''} To Cart
       </button>
     </div>
   );
 };
 
 const mapState = state => ({
+  isLoading: state.cart.isLoading,
   user: state.user
 });
 

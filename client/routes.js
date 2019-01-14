@@ -9,7 +9,8 @@ import {
   ProductList,
   SingleProduct,
   Categories,
-  SingleOrder
+  SingleOrder,
+  OrderList
 } from './components';
 import { me, fetchProducts } from './store';
 import AdminManageRoutes from './components/AdminManage';
@@ -38,6 +39,7 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route exact path="/orders/:userId" component={OrderList} />
           </Switch>
         )}
         {/* Displays our ProductList component as a fallback */}
