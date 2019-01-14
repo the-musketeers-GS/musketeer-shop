@@ -22,10 +22,8 @@ const SingleProduct = props => {
   );
 };
 
-const mapState = ({ products }) => {
-  return {
-    products
-  };
+const mapState = state => {
+  return { products: state.products };
 };
 
 export default withRouter(connect(mapState)(SingleProduct));

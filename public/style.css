@@ -10,19 +10,10 @@ a {
   text-decoration: none;
 }
 
-label {
-  display: block;
-}
-
 /* nav a {
   display: inline-block;
   margin: 1em;
 } */
-
-form div {
-  margin: 1em;
-  display: inline-block;
-}
 
 /* img {
   object-fit: contain;
@@ -71,11 +62,68 @@ form div {
   background-color: lightblue;
 }
 
-input [type='text'] {
-  float: right;
-  padding: 6px;
-  border: none;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 17px;
+::-webkit-input-placeholder {
+  font-size: 0.75em;
+}
+
+#size {
+  font-weight: normal;
+  color: black;
+}
+
+#manage-product-list {
+  margin-left: 3%;
+  margin-right: 3%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+tr:nth-child(even) {
+  background-color: whitesmoke;
+}
+
+tr:hover {
+  background-color: blanchedalmond;
+}
+
+th {
+  padding-left: 1.85%;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  text-align: left;
+  background-color: dodgerblue;
+  color: white;
+}
+
+td {
+  padding-left: 2%;
+}
+
+.required {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.required label:after {
+  color: #e32;
+  content: ' *';
+  display: inline;
+}
+
+#manage-buttons {
+  justify-content: center;
+  display: flex;
+}
+
+h2 {
+  text-align: center;
+}
+
+#preview-image {
+  max-width: 50%;
+  max-height: 50%;
 }
