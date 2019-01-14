@@ -22,7 +22,6 @@ class OrderList extends Component {
 
   render() {
     const orders = this.props.orders || [];
-
     if (!orders.length) {
       return (
         <OrderUl>

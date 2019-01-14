@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import history from '../history';
 
-import { fetchProducts, deleteThunkProduct } from '../store';
 import { ManageProductList } from '../components';
+import { fetchProducts, deleteThunkProduct } from '../store';
+
+import { AddProduct } from './styles/Button';
 
 class ManageProducts extends Component {
   componentDidMount() {
@@ -21,16 +23,23 @@ class ManageProducts extends Component {
 
     return (
       products.length && (
-        <div>
+        <div id="manage-product-list">
           <h3>Total # of Products: {products.length}</h3>
-          <Link to="/manage/product/add">Add Product</Link>
-          <table>
+          <AddProduct onClick={() => history.push('/manage/product/add')}>
+            Add Product
+          </AddProduct>
+          <table className="fixed_header">
             <thead>
               <tr>
-                <th>Product Id</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>stockQty</th>
+                <th>Product ID</th>
+                <th>Product Title</th>
+                <th>
+                  Price <small>(in cents)</small>
+                </th>
+                <th>Stock Qty</th>
+                <th />
+                <th />
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -51,17 +60,8 @@ class ManageProducts extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    products: state.products
-  };
-};
+const mapState = state => ({ products: state.products });
 
-const mapDispatch = dispatch => {
-  return {
-    fetchProducts: () => dispatch(fetchProducts()),
-    deleteThunkProduct: product => dispatch(deleteThunkProduct(product))
-  };
-};
+const mapDispatch = { fetchProducts, deleteThunkProduct };
 
 export default withRouter(connect(mapState, mapDispatch)(ManageProducts));

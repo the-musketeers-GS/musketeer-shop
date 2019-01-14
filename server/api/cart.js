@@ -22,9 +22,9 @@ router.get('/:userId/items', async (req, res, next) => {
           { model: Product, attributes: ['id', 'title', 'price', 'image'] }
         ]
       });
-      return res.json(cartItems);
+      return res.status(200).json(cartItems);
     }
-    return res.json({ message: 'no cart found' });
+    return res.status(200).json({ message: 'no cart found' });
   } catch (err) {
     next(err);
   }
@@ -98,7 +98,7 @@ router.delete('/:userId/:productId', async (req, res, next) => {
         productId
       }
     });
-    res.json(productId);
+    res.status(200).json(productId);
   } catch (err) {
     next(err);
   }

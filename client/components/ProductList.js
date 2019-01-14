@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import formatMoney from '../../lib/formatMoney';
 import AddToCart from './AddToCart';
 import avgRating from '../../lib/avgRating';
+import { createCartItem, guestAddCart } from '../store';
 
 const ProductListStyles = styled.div`
   img {
@@ -23,8 +24,7 @@ class ProductList extends React.Component {
 
     this.state = {
       filteredProducts: '',
-      searchProducts: '',
-      searched: ''
+      searchProducts: ''
     };
   }
 
@@ -38,28 +38,27 @@ class ProductList extends React.Component {
     this.setState({ searchProducts: e.target.value });
   };
 
-  handleClick = e => {
+  handleSelect = e => {
     this.setState({ filteredProducts: e.target.value, searchProducts: '' });
   };
 
+  handleAdd = (user, product) => {
+    this.props.createCartItem(user, product);
+  };
+
+  handleAddNoUser = product => {
+    this.props.guestAddCart(product);
+  };
+
   render() {
-    let { products } = this.props;
-    let { filteredProducts, searchProducts, searched } = this.state;
+    let { products, user, isLoggedIn } = this.props;
+    let { filteredProducts, searchProducts } = this.state;
     if (filteredProducts) {
       products = products.filter(
         product => product.category === filteredProducts
       );
     }
     if (searchProducts) {
-      products = products.filter(
-        product =>
-          product.title.toLowerCase().includes(searchProducts.toLowerCase()) ||
-          product.description
-            .toLowerCase()
-            .includes(searchProducts.toLowerCase())
-      );
-    }
-    if (!searchProducts && searched) {
       products = products.filter(
         product =>
           product.title.toLowerCase().includes(searchProducts.toLowerCase()) ||
@@ -76,22 +75,22 @@ class ProductList extends React.Component {
             Filter By Category >>{' '}
           </button>
           <div className="dropdown-content">
-            <option value="" onClick={this.handleClick}>
+            <option value="" onClick={this.handleSelect}>
               All Products
             </option>
-            <option value="accessories" onClick={this.handleClick}>
+            <option value="accessories" onClick={this.handleSelect}>
               Accessories
             </option>
-            <option value="boots" onClick={this.handleClick}>
+            <option value="boots" onClick={this.handleSelect}>
               Boots
             </option>
-            <option value="clothes" onClick={this.handleClick}>
+            <option value="clothes" onClick={this.handleSelect}>
               Clothes
             </option>
-            <option value="hats" onClick={this.handleClick}>
+            <option value="hats" onClick={this.handleSelect}>
               Hats
             </option>
-            <option value="weapons" onClick={this.handleClick}>
+            <option value="weapons" onClick={this.handleSelect}>
               Weapons
             </option>
           </div>
@@ -112,7 +111,13 @@ class ProductList extends React.Component {
 
         <ProductListStyles>
           {!products.length ? (
-            <h2>No result found in {filteredProducts.toUpperCase()}</h2>
+            !filteredProducts ? (
+              <h2>
+                I'm sorry but we do not carry the item you are looking for..
+              </h2>
+            ) : (
+              <h2>No result found in {filteredProducts.toUpperCase()}</h2>
+            )
           ) : (
             products.map(product => (
               <ul key={product.id}>
@@ -127,7 +132,13 @@ class ProductList extends React.Component {
                       : 'No Reviews'}
                   </li>
                 </Link>
-                <AddToCart productId={product.id} />
+                <AddToCart
+                  product={product}
+                  user={user}
+                  isLoggedIn={isLoggedIn}
+                  handleAdd={this.handleAdd}
+                  handleAddNoUser={this.handleAddNoUser}
+                />
               </ul>
             ))
           )}
@@ -137,10 +148,14 @@ class ProductList extends React.Component {
   }
 }
 
-const mapState = ({ products }) => {
+const mapState = state => {
   return {
-    products
+    user: state.user,
+    isLoggedIn: !!state.user.id,
+    products: state.products
   };
 };
 
-export default withRouter(connect(mapState)(ProductList));
+const mapDispatch = { createCartItem, guestAddCart };
+
+export default withRouter(connect(mapState, mapDispatch)(ProductList));

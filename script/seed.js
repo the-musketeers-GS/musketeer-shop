@@ -32,7 +32,7 @@ async function seed() {
       city: 'Moline',
       state: 'IL',
       zipCode: '61240',
-      phone: '123456789',
+      phone: '0123456789',
       isAdmin: false
     }),
     User.create({
@@ -45,7 +45,7 @@ async function seed() {
       city: 'Birmingham',
       state: 'AL',
       zipCode: '35005',
-      phone: '098765432'
+      phone: '0987654321'
     }),
     User.create({
       email: 'chris@email.com',
@@ -56,7 +56,7 @@ async function seed() {
       city: 'Not Here',
       state: 'OR',
       zipCode: '97201',
-      phone: '246801357',
+      phone: '2468013579',
       isAdmin: true
     })
   ]);

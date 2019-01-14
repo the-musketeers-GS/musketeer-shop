@@ -23,7 +23,7 @@ describe('User routes', () => {
         city: 'Moline',
         state: 'IL',
         zipCode: '61240',
-        phone: '123456789',
+        phone: '0123456789',
         isAdmin: false
       });
     });
