@@ -17,6 +17,7 @@ class AddProduct extends React.Component {
       stockQty: '',
       category: '',
       size: 'NA',
+      image: '/images/product-image-coming-soon.png',
       description: ''
     };
   }
@@ -37,7 +38,11 @@ class AddProduct extends React.Component {
   render() {
     return (
       <div>
-        <Form onSubmit={this.handleSubmit}>
+        <Form
+          onSubmit={this.handleSubmit}
+          method="post"
+          enctype="multipart/form-data"
+        >
           <h2>- ADD NEW PRODUCT -</h2>
           <div className="required">
             <Label htmlFor="title">Product Title</Label>
@@ -149,6 +154,13 @@ class AddProduct extends React.Component {
               NA
             </Label>
           </div>
+          <Label htmlFor="upload-image">Upload Product Image</Label>
+          <Input
+            type="file"
+            name="image"
+            accept=".png, .jpg"
+            onChange={this.handleChange}
+          />
           <Label htmlFor="description">Product Description</Label>
           <textarea
             rows="5"

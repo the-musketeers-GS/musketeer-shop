@@ -51,13 +51,6 @@ class UpdateProduct extends React.Component {
   };
 
   render() {
-    // const id = Number(this.props.match.params.id);
-
-    // let product = {};
-    // if (this.props.products.length) {
-    //   [product] = this.props.products.filter(p => p.id === id);
-    // }
-
     return (
       <div id="updateForm">
         <Form onSubmit={this.handleSubmit}>

@@ -23,14 +23,4 @@ const AddToCart = ({
   </div>
 );
 
-// const mapState = state => ({
-//   user: state.user
-// })
-
-// const mapDispatch = dispatch => ({
-//   addToCart: (userId, productId) => dispatch(createCartItem(userId, productId))
-// });
-
-// export default connect(mapState, mapDispatch)(AddToCart);
-
 export default AddToCart;
