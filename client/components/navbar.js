@@ -26,6 +26,11 @@ const Navbar = ({ handleClick, isLoggedIn, openCart, user }) => (
           <Link className="nav-button" to={`/orders/${user.id}`}>
             Orders
           </Link>
+          {user.isAdmin && (
+            <Link className="nav-button " to="/home">
+              Admin
+            </Link>
+          )}
         </NavStyles>
       ) : (
         <NavStyles>
