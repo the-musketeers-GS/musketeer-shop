@@ -163,7 +163,7 @@ class AddProduct extends React.Component {
           />
           <Label htmlFor="description">Product Description</Label>
           <textarea
-            rows="5"
+            rows="7"
             cols="30"
             type="textArea"
             name="description"

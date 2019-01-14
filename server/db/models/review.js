@@ -1,5 +1,5 @@
-const Sequelize = require('sequelize')
-const db = require('../db')
+const Sequelize = require('sequelize');
+const db = require('../db');
 
 const Review = db.define('review', {
   body: {
@@ -15,6 +15,6 @@ const Review = db.define('review', {
       max: 5
     }
   }
-})
+});
 
-module.exports = Review
+module.exports = Review;
