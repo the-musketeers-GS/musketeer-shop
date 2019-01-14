@@ -15,9 +15,7 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id, {
-      include: [Review]
-    });
+    const product = await Product.findById(req.params.id);
     res.json(product);
   } catch (err) {
     next(err);

@@ -7,12 +7,12 @@ router.post('/products', async (req, res, next) => {
     const newProduct = await Product.findOrCreate({
       where: {
         title: req.body.title,
-        // description: req.body.description,
-        price: req.body.price
-        // stockQty: req.body.stockQty,
-        // image: req.body.image,
-        // category: req.body.category,
-        // size: req.body.size
+        description: req.body.description,
+        price: req.body.price,
+        stockQty: req.body.stockQty,
+        image: req.body.image,
+        category: req.body.category,
+        size: req.body.size
       }
     });
     res.json(newProduct[0]);
@@ -26,7 +26,12 @@ router.put('/product/:id', async (req, res, next) => {
     const [count, update] = await Product.update(
       {
         title: req.body.title,
-        price: 345
+        description: req.body.description,
+        price: req.body.price,
+        stockQty: req.body.stockQty,
+        image: req.body.image,
+        category: req.body.category,
+        size: req.body.size
       },
       {
         where: { id: req.params.id },
