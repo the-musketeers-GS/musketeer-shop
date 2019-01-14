@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createCartItem } from '../store/cart';
 
 const AddToCart = ({
   product,
   handleAdd,
   handleAddNoUser,
   user,
-  isLoggedIn
+  isLoggedIn,
+  isLoading
 }) => (
   <div>
     <button
@@ -18,9 +18,14 @@ const AddToCart = ({
         isLoggedIn ? handleAdd(user.id, product.id) : handleAddNoUser(product);
       }}
     >
-      Add To Cart
+      Add{isLoading ? 'ing' : ''} To Cart
     </button>
   </div>
 );
 
-export default AddToCart;
+const mapState = state => ({
+  isLoading: state.cart.isLoading,
+  user: state.user
+});
+
+export default connect(mapState)(AddToCart);

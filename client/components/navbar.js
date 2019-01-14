@@ -9,7 +9,7 @@ import Cart from './Cart';
 import Title from './styles/Title';
 import NavStyles from './styles/NavStyles';
 
-const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
+const Navbar = ({ handleClick, isLoggedIn, openCart, user }) => (
   <div>
     <Link to="/">
       <Title>MUSKETEER SHOP</Title>
@@ -24,6 +24,9 @@ const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
           <a href="#" className="nav-button" onClick={handleClick}>
             Logout
           </a>
+          <Link className="nav-button" to={`/orders/${user.id}`}>
+            Orders
+          </Link>
         </NavStyles>
       ) : (
         <NavStyles>
@@ -51,7 +54,8 @@ const Navbar = ({ handleClick, isLoggedIn, openCart }) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    user: state.user
   };
 };
 
