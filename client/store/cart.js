@@ -89,11 +89,12 @@ export function localCartMiddleware(store) {
       } else {
         // authenticated user
         if (localStorageCart.length > 0) {
+          console.log('localStorageCart', localStorageCart);
           localStorageCart.forEach(product => {
             store.dispatch(createCartItem(state.user.id, product.id));
           });
           localStorageCart = [];
-          localStorage.setItem('cart', JSON.stringify([]));
+          localStorage.setItem('guestCart', JSON.stringify([]));
         }
         return store.dispatch(fetchCart(state.user.id));
       }

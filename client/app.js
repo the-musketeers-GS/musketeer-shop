@@ -1,8 +1,16 @@
 import React from 'react';
-
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Navbar } from './components';
 import Routes from './routes';
 import { createGlobalStyle } from 'styled-components';
+
+import {
+  fetchProducts,
+  requestCart,
+  fetchCart,
+  checkLocalStorage
+} from './store';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -22,14 +30,43 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const App = () => {
-  return (
-    <div>
-      <Navbar />
-      <Routes />
-      <GlobalStyle />
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    this.props.fetchProducts();
+    this.props.checkLocalStorage();
+
+    if (!this.props.user.id) {
+      if (!localStorage.guestCart) {
+        const cart = JSON.stringify([]);
+        localStorage.setItem('guestCart', cart);
+      }
+      this.props.requestCart(JSON.parse(localStorage.guestCart));
+    } else this.props.fetchCart(this.props.user.id);
+  }
+  render() {
+    return (
+      <div>
+        <Navbar />
+        <Routes />
+        <GlobalStyle />
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = {
+  fetchProducts,
+  requestCart,
+  fetchCart,
+  checkLocalStorage
 };
 
-export default App;
+const mapStateToProps = state => {
+  const { user, cart } = state;
+  return {
+    user,
+    cart
+  };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

@@ -68,11 +68,21 @@ class Cart extends Component {
   }
 
   render() {
-    // let productsInCart = [];
-    // this.props.cart.forEach(item => {
-    //   productsInCart.push(this.props.products.filter(product => product.id === item.id))
-    // })
-    console.log('what is in the cart?', this.props.cart);
+    let cartProducts = this.props.cart.products.cart || [];
+    let products = this.props.products || [];
+    let productsInCart = [];
+    if (cartProducts.length && products.length) {
+      console.log('reached this js');
+      cartProducts.forEach(item => {
+        productsInCart.push(products.filter(product => product.id === item.id));
+      });
+    }
+    console.log('this.props.products', this.props.products);
+    console.log(
+      'what is in the cart.products.cart?',
+      this.props.cart.products.cart
+    );
+    console.log('productsInCart >>>>>', productsInCart);
 
     return (
       <CartStyles open={this.props.isOpen}>
@@ -81,36 +91,32 @@ class Cart extends Component {
             Your Cart
             <CloseButton onClick={toggleCart}>&times;</CloseButton>
           </header>
-          {/* {!productsInCart.length ? (
+          {!productsInCart.length ? (
             <CartItemStyles>No items in your cart ☹️</CartItemStyles>
           ) : (
             <ul>
-              {productsInCart.map(item => (
-                <CartItemStyles key={item.product.id}>
-                  <img
-                    width="100"
-                    src={item.product.image}
-                    alt={item.product.title}
-                  />
-                  <div>
-                    <h3>{item.product.title}</h3>
-                    <p>
+              {productsInCart.map(product =>
+                product.map(item => (
+                  <CartItemStyles key={item.id}>
+                    <img width="100" src={item.image} alt={item.title} />
+                    <div>
+                      <h3>{item.title}</h3>
+                      {/* <p>
                       {formatMoney(item.product.price)} | qty: {item.quantity} |
                       total: {formatMoney(item.quantity * item.product.price)}
-                    </p>
-                  </div>
-                  <BigButton
-                    onClick={() =>
-                      this.props.deleteCartItem(this.user.id, item.product.id)
-                    }
-                  >
-                    &times;
-                  </BigButton>
-                </CartItemStyles>
-              ))}
+                    </p> */}
+                    </div>
+                    <BigButton
+                      onClick={() => this.props.guestRemoveCartItem(item.id)}
+                    >
+                      &times;
+                    </BigButton>
+                  </CartItemStyles>
+                ))
+              )}
             </ul>
           )}
-          <footer>
+          {/* <footer>
             <p>{formatMoney(calcTotalPrice(productsInCart))}</p>
             <CheckoutButton
               onClick={async () => {
@@ -131,7 +137,8 @@ class Cart extends Component {
 
 const mapState = state => ({
   cart: state.cart,
-  // isOpen: state.cart.isOpen,
+  isOpen: state.cart.isOpen,
+  products: state.products,
   user: state.user,
   isLoggedIn: state.isLoggedIn,
   guestCart: state.guestCart.cart
@@ -143,7 +150,8 @@ const mapDispatch = dispatch => ({
   deleteCartItem: (userId, productId) =>
     dispatch(deleteCartItem(userId, productId)),
   checkout: userId => dispatch(checkout(userId)),
-  requestCart
+  requestCart,
+  guestRemoveCartItem: id => dispatch(guestRemoveCartItem(id))
 });
 
 export default connect(mapState, mapDispatch)(Cart);

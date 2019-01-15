@@ -28,11 +28,6 @@ import AdminManageRoutes from './components/AdminManageRoutes';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-    this.props.checkLocalStorage();
-
-    if (this.props.user.id) {
-      this.props.fetchCart(this.props.user.id);
-    }
   }
 
   render() {
@@ -82,9 +77,7 @@ const mapDispatch = dispatch => {
       dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
-    },
-    fetchCart,
-    checkLocalStorage
+    }
   };
 };
 
