@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
 module.exports = router;
@@ -50,11 +51,11 @@ router.post('/:userId', async (req, res, next) => {
     // re-calculate total for safety's sake
     const total = calcTotalPrice(cartItems);
     //! 3 CREATE STRIPE CHARGE
-    // const charge = await stripe.charges.create({
-    //   total,
-    //   currency: 'USD',
-    //   source: req.body.token,
-    // })
+    const charge = await stripe.charges.create({
+      total,
+      currency: 'USD',
+      source: req.body.token
+    });
     // 4. build order and grab orderId
     const newOrder = await Order.build();
     newOrder.userId = userId;

@@ -63,7 +63,8 @@ const initialState = {
     city: '',
     state: '',
     zip: '',
-    country: ''
+    country: '',
+    token: ''
   }
 };
 
