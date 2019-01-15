@@ -30,43 +30,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-class App extends React.Component {
-  componentDidMount() {
-    this.props.fetchProducts();
-    this.props.checkLocalStorage();
-
-    if (!this.props.user.id) {
-      if (!localStorage.guestCart) {
-        const cart = JSON.stringify([]);
-        localStorage.setItem('guestCart', cart);
-      }
-      // this.props.requestCart(JSON.parse(localStorage.guestCart));
-    } else this.props.fetchCart(this.props.user.id);
-  }
-  render() {
-    return (
-      <div>
-        <Navbar />
-        <Routes />
-        <GlobalStyle />
-      </div>
-    );
-  }
-}
-
-const mapDispatchToProps = {
-  fetchProducts,
-  requestCart,
-  fetchCart,
-  checkLocalStorage
+const App = () => {
+  return (
+    <div>
+      <Navbar />
+      <Routes />
+      <GlobalStyle />
+    </div>
+  );
 };
 
-const mapStateToProps = state => {
-  const { user, cart } = state;
-  return {
-    user,
-    cart
-  };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default App;

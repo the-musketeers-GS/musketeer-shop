@@ -58,42 +58,24 @@ const CheckoutButton = styled.button`
 `;
 
 class Cart extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      products: []
-      // quantity: 0,
-    };
-  }
   componentDidMount() {
     if (!this.props.user.id) {
       let guestCart = JSON.parse(localStorage.getItem('guestCart'));
-      this.setState({
-        products: guestCart.cart
-      });
     } else {
-      this.props.getCart(this.props.user.id);
-      this.setState({ products: this.props.cart });
+      this.props.fetchCart(this.props.user.id);
     }
   }
 
   render() {
-    // let cartProducts = this.props.cart.products.cart || [];
-    // let products = this.props.products || [];
-    // let productsInCart = [];
-    // if (cartProducts.length && products.length) {
-    //   console.log('reached this js');
-    //   cartProducts.forEach(item => {
-    //     productsInCart.push(products.filter(product => product.id === item.id));
-    //   });
-    // }
-    // console.log('this.props.products', this.props.products);
-    // console.log(
-    //   'what is in the cart.products.cart?',
-    //   this.props.cart.products.cart
-    // );
-    // console.log('productsInCart >>>>>', productsInCart);
+    let cartProducts = this.props.cart.products.cart || [];
+    let products = this.props.products || [];
+    let productsInCart = [];
+    if (cartProducts.length && products.length) {
+      console.log('reached this js');
+      cartProducts.forEach(item => {
+        productsInCart.push(products.filter(product => product.id === item.id));
+      });
+    }
 
     return (
       <CartStyles open={this.props.isOpen}>
