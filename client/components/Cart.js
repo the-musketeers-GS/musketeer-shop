@@ -3,10 +3,16 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
-import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
+import {
+  fetchCart,
+  toggleCart,
+  deleteCartItem,
+  createCartItem
+} from '../store/cart';
 import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
 import GuestCart from './GuestCart';
+import { guestRemoveCartItem } from '../store';
 
 const CloseButton = styled.button`
   background: black;
@@ -57,9 +63,18 @@ class Cart extends Component {
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen, toggleCart } = this.props;
+    let {
+      products,
+      user,
+      isLoggedIn,
+      guestCart,
+      isOpen,
+      toggleCart,
+      createCartItem,
+      guestRemoveCartItem
+    } = this.props;
 
-    if (!isLoggedIn && guestCart.length) {
+    if (!user.mapDispatch && guestCart.length) {
       return (
         <GuestCart
           products={guestCart}
@@ -67,6 +82,16 @@ class Cart extends Component {
           toggleCart={toggleCart}
         />
       );
+    }
+
+    if (user.id && guestCartProducts.length) {
+      console.log('guestCartProducts>>> ', guestCartProducts);
+      guestCartProducts.forEach(product => {
+        this.props.createCartItem(user.id, product.id);
+        console.log('created');
+        this.props.guestRemoveCartItem(product.id);
+      });
+      this.props.getCart(user.id);
     } else {
       products = products || [];
       const userId = this.props.user.id;
@@ -138,6 +163,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getCart: userId => dispatch(fetchCart(userId)),
   toggleCart: () => dispatch(toggleCart()),
+  createCartItem: (id, product) => dispatch(createCartItem(id, product)),
   deleteCartItem: (userId, productId) =>
     dispatch(deleteCartItem(userId, productId)),
   checkout: userId => dispatch(checkout(userId))

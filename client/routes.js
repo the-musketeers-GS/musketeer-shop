@@ -11,7 +11,7 @@ import {
   SingleOrder,
   OrderList
 } from './components';
-import { me, fetchProducts, fetchStorageData } from './store';
+import { me, fetchProducts, fetchStorageData, createCartItem } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
@@ -20,6 +20,7 @@ import AdminManageRoutes from './components/AdminManageRoutes';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    window.onload();
   }
 
   render() {
@@ -67,6 +68,9 @@ const mapDispatch = dispatch => {
       dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
+    },
+    createCartItem(id, product) {
+      dispatch(createCartItem(id, product));
     }
   };
 };
