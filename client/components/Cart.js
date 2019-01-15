@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
@@ -109,16 +110,18 @@ class Cart extends Component {
             )}
             <footer>
               <p>{formatMoney(calcTotalPrice(products))}</p>
-              <CheckoutButton
-                onClick={async () => {
-                  await this.props.checkout(userId);
-                  await this.props.toggleCart();
-                  await this.props.getCart(userId);
-                }}
-                disabled={!products.length}
-              >
-                Checkout
-              </CheckoutButton>
+              <Link to="/checkout">
+                <CheckoutButton
+                  onClick={async () => {
+                    // await this.props.checkout(userId);
+                    await this.props.toggleCart();
+                    await this.props.getCart(userId);
+                  }}
+                  disabled={!products.length}
+                >
+                  Checkout
+                </CheckoutButton>
+              </Link>
             </footer>
           </>
         </CartStyles>
