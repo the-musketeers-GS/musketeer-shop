@@ -10,6 +10,7 @@ import {
   SingleProduct,
   SingleOrder,
   OrderList,
+  CheckoutPage,
   Admin
 } from './components';
 import { me, fetchProducts, fetchStorageData } from './store';
@@ -33,6 +34,7 @@ class Routes extends Component {
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/checkout" component={CheckoutPage} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
