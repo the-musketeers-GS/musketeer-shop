@@ -13,7 +13,8 @@ const AddToCart = ({
       type="button"
       onClick={e => {
         e.preventDefault();
-        isLoggedIn ? handleAdd(user.id, product.id) : handleAddNoUser(product);
+        console.log('click');
+        user.id ? handleAdd(user.id, product.id) : handleAddNoUser(product);
       }}
     >
       Add To Cart
