@@ -64,7 +64,7 @@ class Cart extends Component {
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen, user } = this.props;
+    let { products, guestCart, isOpen, user } = this.props;
 
     if (!user.id && guestCart.length) {
       return (
@@ -82,7 +82,7 @@ class Cart extends Component {
           <>
             <header>
               Your Cart
-              <CloseButton onClick={toggleCart}>&times;</CloseButton>
+              <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
             </header>
             {!products.length ? (
               <CartItemStyles>No items in your cart ☹️</CartItemStyles>

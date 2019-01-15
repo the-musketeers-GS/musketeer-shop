@@ -22,7 +22,7 @@ class TakeMyMoney extends Component {
   render() {
     return (
       <StripeCheckout
-        stripeKey="pk_test_0fuF1ykOy2R8WCu0NY2ephSJ"
+        stripeKey="pk_test_Os9hy8zwMYMNkzkvnre9kXL7"
         token={this.onToken}
         amount={Number(formatMoney(calcTotalPrice(this.props.products)))}
       />
