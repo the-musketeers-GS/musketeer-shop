@@ -4,7 +4,7 @@ const OrderItemStyles = styled.li`
   box-shadow: lightgray;
   list-style: none;
   padding: 2rem;
-  border: 1px solid whitesmoke;
+  border: 1px solid lightslategray;
   h2 {
     border-bottom: 2px solid red;
     margin-top: 0;

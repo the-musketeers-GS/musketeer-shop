@@ -22,9 +22,9 @@ export const addShippingInfo = (field, value) => ({
 });
 
 // THUNK CREATORS
-export const fetchSingleOrder = orderId => async dispatch => {
+export const fetchSingleOrder = (orderId, userId) => async dispatch => {
   try {
-    const { data } = await axios.get(`/api/order/${orderId}/data`);
+    const { data } = await axios.get(`/api/order/${userId}/${orderId}/data`);
     dispatch(requestOrder(data));
   } catch (err) {
     console.error(err);

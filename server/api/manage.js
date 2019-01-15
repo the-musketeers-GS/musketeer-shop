@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const { Product } = require('../db/models');
+const isAdmin = require('../middlewares/isAdmin');
 module.exports = router;
 
-router.post('/products', async (req, res, next) => {
+router.post('/products', isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.findOrCreate({
       where: {
@@ -21,7 +22,7 @@ router.post('/products', async (req, res, next) => {
   }
 });
 
-router.put('/product/:id', async (req, res, next) => {
+router.put('/product/:id', isAdmin, async (req, res, next) => {
   try {
     const [count, update] = await Product.update(
       {
@@ -45,7 +46,7 @@ router.put('/product/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/product/:id', async (req, res, next) => {
+router.delete('/product/:id', isAdmin, async (req, res, next) => {
   try {
     await Product.destroy({
       where: {

@@ -21,6 +21,7 @@ class OrderList extends Component {
   }
 
   render() {
+    const userId = this.props.match.params.userId;
     const orders = this.props.orders || [];
     if (!orders.length) {
       return (
@@ -35,7 +36,7 @@ class OrderList extends Component {
         <OrderUl>
           {orders.map(order => (
             <OrderItemStyles key={order.id}>
-              <Link to={`/order/${order.id}`}>
+              <Link to={`/order/${userId}/${order.id}`}>
                 <div className="order-meta">
                   <p>Order ID: AFG3ZSG89HL{order.id}</p>
                   <p>
