@@ -9,6 +9,7 @@ import products from './product';
 import review from './review';
 import order from './order';
 import guestCart from './guestCart';
+import users from './admin';
 
 const reducer = combineReducers({
   user,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
   products,
   review,
   order,
-  guestCart
+  guestCart,
+  users
 });
 
 const middleware = composeWithDevTools(
@@ -34,3 +36,4 @@ export * from './product';
 export * from './cart';
 export * from './order';
 export * from './guestCart';
+export * from './admin';

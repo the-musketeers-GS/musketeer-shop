@@ -5,6 +5,7 @@ import axios from 'axios';
 const REQUEST_CART = 'REQUEST_CART';
 const TOGGLE_CART = 'TOGGLE_CART';
 const CHECK_LOCALSTORAGE = 'CHECK_LOCALSTORAGE';
+const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
 
 // ACTION CREATORS
 // export const requestMade = () => ({
@@ -16,6 +17,9 @@ export const requestCart = products => ({
 });
 export const toggleCart = () => ({
   type: TOGGLE_CART
+});
+export const toggleSnackbar = () => ({
+  type: TOGGLE_SNACKBAR
 });
 
 export const checkLocalStorage = () => ({
@@ -54,7 +58,8 @@ export const deleteCartItem = (userId, productId) => async dispatch => {
 // INITIAL STATE
 const initialState = {
   products: [],
-  isOpen: false
+  isOpen: false,
+  snackbarOpen: false
   // isLoading: false
 };
 
@@ -68,6 +73,8 @@ export default function(state = initialState, action) {
       return { ...state, products: action.products };
     case TOGGLE_CART:
       return { ...state, isOpen: !state.isOpen };
+    case TOGGLE_SNACKBAR:
+      return { ...state, snackbarOpen: !state.snackbarOpen };
     default:
       return state;
   }
