@@ -35,7 +35,7 @@ router.get('/:userId/:orderId/data', isSelforAdmin, async (req, res, next) => {
 });
 
 // POST /api/order/:userId ---- turn Cart and CartItems into Order and OrderItems, change Cart completed to true
-router.post('/:userId', isSelforAdmin, async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   try {
     // 1. find cart for user + save cartId
     const userId = req.params.userId;
