@@ -1,22 +1,8 @@
 import React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import formatMoney from '../../lib/formatMoney';
-import AddToCart from './AddToCart';
-import avgRating from '../../lib/avgRating';
 import { createCartItem, guestAddCart } from '../store';
-
-const ProductListStyles = styled.div`
-  img {
-    width: 15%;
-    height: 15%;
-  }
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 60px;
-  margin: 0 auto;
-`;
+import ProductCard from './ProductCard';
 
 class ProductList extends React.Component {
   constructor() {
@@ -109,40 +95,21 @@ class ProductList extends React.Component {
           </form>
         </div>
 
-        <ProductListStyles>
-          {!products.length ? (
-            !filteredProducts ? (
-              <h2>
-                I'm sorry but we do not carry the item you are looking for..
-              </h2>
-            ) : (
-              <h2>No result found in {filteredProducts.toUpperCase()}</h2>
-            )
+        {!products.length ? (
+          !filteredProducts ? (
+            <h2>
+              I'm sorry but we do not carry the item you are looking for..
+            </h2>
           ) : (
-            products.map(product => (
-              <ul key={product.id}>
-                <Link to={`/products/${product.id}`}>
-                  <li>{product.title}</li>
-                  <li>{formatMoney(product.price)}</li>
-                  <img src={`${product.image}`} />
-                  <li>
-                    Avg rating:{' '}
-                    {product.reviews.length
-                      ? avgRating(product.reviews.map(review => review.rating))
-                      : 'No Reviews'}
-                  </li>
-                </Link>
-                <AddToCart
-                  product={product}
-                  user={user}
-                  isLoggedIn={isLoggedIn}
-                  handleAdd={this.handleAdd}
-                  handleAddNoUser={this.handleAddNoUser}
-                />
-              </ul>
-            ))
-          )}
-        </ProductListStyles>
+            <h2>No result found in {filteredProducts.toUpperCase()}</h2>
+          )
+        ) : (
+          <ProductCard
+            products={products}
+            handleAdd={this.props.handleAdd}
+            handleAddNoUser={this.props.handleAddNoUser}
+          />
+        )}
       </div>
     );
   }

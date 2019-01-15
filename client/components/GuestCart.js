@@ -92,10 +92,10 @@ const GuestCart = props => {
         <footer>
           <p>{formatMoney(calcTotalPriceGuest(products))}</p>
           <CheckoutButton
-            onClick={() => {
+            onClick={async () => {
               if (!props.user.id) {
                 alert('Please Login/Signup to continue..');
-                history.push('/login');
+                await history.push('/login');
               }
             }}
             disabled={!products.length}

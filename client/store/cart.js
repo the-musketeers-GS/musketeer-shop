@@ -6,10 +6,10 @@ const REQUEST_CART = 'REQUEST_CART';
 const TOGGLE_CART = 'TOGGLE_CART';
 
 // ACTION CREATORS
-const requestMade = () => ({
+export const requestMade = () => ({
   type: REQUEST_MADE
 });
-const requestCart = products => ({
+export const requestCart = products => ({
   type: REQUEST_CART,
   products
 });
