@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchSingleOrder } from '../store';
 import formatMoney from '../../lib/formatMoney';
 import OrderStyles from './styles/OrderStyles';
+import orderStatus from '../../lib/orderStatus';
 
 class SingleOrder extends Component {
   componentDidMount() {
@@ -34,7 +35,7 @@ class SingleOrder extends Component {
           </p>
           <p>
             <span>Status: </span>
-            <span>{orderData.status}</span>
+            <span>{orderStatus(orderData.status)}</span>
           </p>
           <div className="items">
             {orderItems.map(item => (
