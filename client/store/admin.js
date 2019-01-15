@@ -27,7 +27,6 @@ export const fetchUsers = () => async dispatch => {
 
 export const deleteUser = userId => {
   return async dispatch => {
-    console.log('userId in thunk', userId);
     await axios.delete(`/api/users/${userId}`);
     dispatch(deleteOneUser(userId));
   };
