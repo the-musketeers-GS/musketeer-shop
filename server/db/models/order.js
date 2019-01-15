@@ -5,6 +5,7 @@ const Order = db.define('order', {
   total: {
     type: Sequelize.INTEGER
   },
+  charge: Sequelize.STRING,
   status: {
     // 1: checkout clicked
     // 2: confirmation email sent
