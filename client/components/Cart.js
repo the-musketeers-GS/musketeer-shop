@@ -8,7 +8,8 @@ import {
   fetchCart,
   toggleCart,
   deleteCartItem,
-  createCartItem
+  createCartItem,
+  requestCart
 } from '../store/cart';
 import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
@@ -58,87 +59,79 @@ const CheckoutButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    if (this.props.isLoggedIn) {
+    if (!this.props.user.id) {
+      let guestCart = JSON.parse(localStorage.getItem('guestCart'));
+      this.props.requestCart(guestCart);
+    } else {
       this.props.getCart(this.props.user.id);
     }
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen } = this.props;
+    // let productsInCart = [];
+    // this.props.cart.forEach(item => {
+    //   productsInCart.push(this.props.products.filter(product => product.id === item.id))
+    // })
+    console.log('what is in the cart?', this.props.cart);
 
-    if (!user.id && guestCart.length) {
-      return (
-        <GuestCart
-          products={guestCart}
-          isOpen={isOpen}
-          toggleCart={this.props.toggleCart}
-        />
-      );
-    } else {
-      products = products || [];
-      const userId = this.props.user.id;
-      return (
-        <CartStyles open={this.props.isOpen}>
-          <>
-            <header>
-              Your Cart
-              <CloseButton onClick={toggleCart}>&times;</CloseButton>
-            </header>
-            {!products.length ? (
-              <CartItemStyles>No items in your cart ☹️</CartItemStyles>
-            ) : (
-              <ul>
-                {products.map(item => (
-                  <CartItemStyles key={item.product.id}>
-                    <img
-                      width="100"
-                      src={item.product.image}
-                      alt={item.product.title}
-                    />
-                    <div>
-                      <h3>{item.product.title}</h3>
-                      <p>
-                        {formatMoney(item.product.price)} | qty: {item.quantity}{' '}
-                        | total:{' '}
-                        {formatMoney(item.quantity * item.product.price)}
-                      </p>
-                    </div>
-                    <BigButton
-                      onClick={() =>
-                        this.props.deleteCartItem(userId, item.product.id)
-                      }
-                    >
-                      &times;
-                    </BigButton>
-                  </CartItemStyles>
-                ))}
-              </ul>
-            )}
-            <footer>
-              <p>{formatMoney(calcTotalPrice(products))}</p>
-              <Link to="/checkout">
-                <CheckoutButton
-                  onClick={async () => {
-                    // await this.props.checkout(userId);
-                    await this.props.toggleCart();
-                    await this.props.getCart(userId);
-                  }}
-                  disabled={!products.length}
-                >
-                  Checkout
-                </CheckoutButton>
-              </Link>
-            </footer>
-          </>
-        </CartStyles>
-      );
-    }
+    return (
+      <CartStyles open={this.props.isOpen}>
+        <>
+          <header>
+            Your Cart
+            <CloseButton onClick={toggleCart}>&times;</CloseButton>
+          </header>
+          {/* {!productsInCart.length ? (
+            <CartItemStyles>No items in your cart ☹️</CartItemStyles>
+          ) : (
+            <ul>
+              {productsInCart.map(item => (
+                <CartItemStyles key={item.product.id}>
+                  <img
+                    width="100"
+                    src={item.product.image}
+                    alt={item.product.title}
+                  />
+                  <div>
+                    <h3>{item.product.title}</h3>
+                    <p>
+                      {formatMoney(item.product.price)} | qty: {item.quantity} |
+                      total: {formatMoney(item.quantity * item.product.price)}
+                    </p>
+                  </div>
+                  <BigButton
+                    onClick={() =>
+                      this.props.deleteCartItem(this.user.id, item.product.id)
+                    }
+                  >
+                    &times;
+                  </BigButton>
+                </CartItemStyles>
+              ))}
+            </ul>
+          )}
+          <footer>
+            <p>{formatMoney(calcTotalPrice(productsInCart))}</p>
+            <CheckoutButton
+              onClick={async () => {
+                await this.props.checkout(userId);
+                await this.props.toggleCart();
+                await this.props.getCart(userId);
+              }}
+              disabled={!products.length}
+            >
+              Checkout
+            </CheckoutButton>
+          </footer> */}
+        </>
+      </CartStyles>
+    );
   }
 }
 
 const mapState = state => ({
-  products: state.cart.products,
-  isOpen: state.cart.isOpen,
+  cart: state.cart,
+  // isOpen: state.cart.isOpen,
   user: state.user,
   isLoggedIn: state.isLoggedIn,
   guestCart: state.guestCart.cart
@@ -147,10 +140,10 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getCart: userId => dispatch(fetchCart(userId)),
   toggleCart: () => dispatch(toggleCart()),
-  createCartItem: (id, product) => dispatch(createCartItem(id, product)),
   deleteCartItem: (userId, productId) =>
     dispatch(deleteCartItem(userId, productId)),
-  checkout: userId => dispatch(checkout(userId))
+  checkout: userId => dispatch(checkout(userId)),
+  requestCart
 });
 
 export default connect(mapState, mapDispatch)(Cart);

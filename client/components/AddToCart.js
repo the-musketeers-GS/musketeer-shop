@@ -13,7 +13,9 @@ const AddToCart = ({
       type="button"
       onClick={e => {
         e.preventDefault();
-        isLoggedIn ? handleAdd(user.id, product.id) : handleAddNoUser(product);
+        // 1 needs to be changed to userId when we have user on state
+        isLoggedIn && handleAdd(user.id, product.id);
+        // : handleAddNoUser(product);
       }}
     >
       Add To Cart
@@ -22,7 +24,7 @@ const AddToCart = ({
 );
 
 const mapState = state => ({
-  isLoading: state.cart.isLoading,
+  // isLoading: state.cart.isLoading,
   user: state.user
 });
 

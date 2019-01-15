@@ -25,8 +25,8 @@ const ProductCard = props => {
               product={product}
               user={user}
               isLoggedIn={isLoggedIn}
-              handleAdd={handleAdd}
-              handleAddNoUser={handleAddNoUser}
+              handleAdd={props.handleAdd}
+              handleAddNoUser={props.handleAddNoUser}
             />
           </div>
         </Link>

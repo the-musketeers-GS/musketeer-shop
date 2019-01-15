@@ -4,6 +4,7 @@ import thunkMiddleware from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user';
 import cart from './cart';
+import { localCartMiddleware } from './cart';
 import products from './product';
 import review from './review';
 import order from './order';
@@ -19,7 +20,11 @@ const reducer = combineReducers({
 });
 
 const middleware = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
+  applyMiddleware(
+    thunkMiddleware,
+    localCartMiddleware,
+    createLogger({ collapsed: true })
+  )
 );
 const store = createStore(reducer, middleware);
 

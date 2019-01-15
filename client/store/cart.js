@@ -4,6 +4,7 @@ import axios from 'axios';
 const REQUEST_MADE = 'REQUEST_MADE';
 const REQUEST_CART = 'REQUEST_CART';
 const TOGGLE_CART = 'TOGGLE_CART';
+const CHECK_LOCALSTORAGE = 'CHECK_LOCALSTORAGE';
 
 // ACTION CREATORS
 export const requestMade = () => ({
@@ -15,6 +16,10 @@ export const requestCart = products => ({
 });
 export const toggleCart = () => ({
   type: TOGGLE_CART
+});
+
+export const checkLocalStorage = () => ({
+  type: CHECK_LOCALSTORAGE
 });
 
 // THUNK CREATORS
@@ -66,4 +71,39 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
+}
+
+export function localCartMiddleware(store) {
+  return next => action => {
+    if (action.type === CHECK_LOCALSTORAGE) {
+      let state = store.getState();
+      const isAuthenticated = !!state.user.id;
+
+      let localStorageCart = localStorage.getItem('guestCart')
+        ? JSON.parse(localStorage.getItem('guestCart'))
+        : [];
+
+      if (!isAuthenticated) {
+        // unauthenticated user
+        return store.dispatch(requestCart(localStorageCart));
+      } else {
+        // authenticated user
+        if (localStorageCart.length > 0) {
+          localStorageCart.forEach(product => {
+            store.dispatch(createCartItem(state.user.id, product.id));
+          });
+          localStorageCart = [];
+          localStorage.setItem('cart', JSON.stringify([]));
+        }
+        return store.dispatch(fetchCart(state.user.id));
+      }
+    }
+
+    // Call the next dispatch method in the middleware chain.
+    let returnValue = next(action);
+
+    // This will likely be the action itself, unless
+    // a middleware further in chain changed it.
+    return returnValue;
+  };
 }
