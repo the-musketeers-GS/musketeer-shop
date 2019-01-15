@@ -10,7 +10,8 @@ import {
   SingleProduct,
   SingleOrder,
   OrderList,
-  CheckoutPage
+  CheckoutPage,
+  Admin
 } from './components';
 import { me, fetchProducts, fetchStorageData } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';

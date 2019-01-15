@@ -17,57 +17,28 @@ const User = db.define('user', {
     }
   },
   firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   addr1: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   addr2: {
     type: Sequelize.STRING
   },
   city: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   state: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.STRING
   },
   zipCode: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    type: Sequelize.INTEGER
   },
   phone: {
-    type: Sequelize.BIGINT.UNSIGNED,
-    allowNull: false,
-    validate: {
-      isInt: true,
-      len: [10, 10]
-    }
+    type: Sequelize.BIGINT.UNSIGNED
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,

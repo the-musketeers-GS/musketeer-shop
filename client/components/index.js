@@ -17,6 +17,7 @@ export { default as ReviewList } from './ReviewList';
 export { default as OrderList } from './OrderList';
 export { default as SingleOrder } from './SingleOrder';
 export { default as CheckoutPage } from './CheckoutPage';
+export { default as Admin } from './Admin';
 
 export { Signup } from './auth-form';
 export { Login } from './login-form';
