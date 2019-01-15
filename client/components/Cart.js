@@ -64,7 +64,7 @@ class Cart extends Component {
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen } = this.props;
+    let { products, isLoggedIn, guestCart, isOpen, user } = this.props;
 
     if (!user.id && guestCart.length) {
       return (
