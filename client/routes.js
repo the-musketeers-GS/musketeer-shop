@@ -12,7 +12,14 @@ import {
   OrderList,
   Admin
 } from './components';
-import { me, fetchProducts, fetchStorageData, createCartItem } from './store';
+import {
+  me,
+  fetchProducts,
+  fetchStorageData,
+  createCartItem,
+  requestCart,
+  fetchCart
+} from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
@@ -21,7 +28,13 @@ import AdminManageRoutes from './components/AdminManageRoutes';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
-    window.onload();
+
+    if (!this.props.user.id) {
+      let data = JSON.parse(window.localStorage.getItem('guestCart'));
+    } else {
+      this.props.fetchCart(this.props.user.id);
+      // data.forEach(product =>  createCartItem())
+    }
   }
 
   render() {
@@ -70,9 +83,7 @@ const mapDispatch = dispatch => {
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
     },
-    createCartItem(id, product) {
-      dispatch(createCartItem(id, product));
-    }
+    fetchCart
   };
 };
 
