@@ -5,6 +5,7 @@ const request = require('supertest');
 const db = require('../db');
 const app = require('../index');
 const User = db.model('user');
+const isAdmin = require('../middlewares/isAdmin');
 
 describe('User routes', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ describe('User routes', () => {
     const codysEmail = 'cody@puppybook.com';
 
     beforeEach(() => {
-      return User.create({
+      User.create({
         email: codysEmail,
         firstName: 'Cody',
         lastName: 'Puggy',
@@ -24,11 +25,11 @@ describe('User routes', () => {
         state: 'IL',
         zipCode: '61240',
         phone: '0123456789',
-        isAdmin: false
+        isAdmin: true
       });
     });
 
-    it('GET /api/users', async () => {
+    it('GET /api/users', isAdmin, async () => {
       const res = await request(app)
         .get('/api/users')
         .expect(200);

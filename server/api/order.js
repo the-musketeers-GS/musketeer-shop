@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
-const isSelforAdmin = require('../middlewares/issSelforAdmin');
+const isSelforAdmin = require('../middlewares/isSelforAdmin');
 module.exports = router;
 
 // GET /api/order/:userId ---- return all orders for a user
