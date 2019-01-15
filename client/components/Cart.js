@@ -66,7 +66,7 @@ class Cart extends Component {
   render() {
     let { products, isLoggedIn, guestCart, isOpen, user } = this.props;
 
-    if (!user.id) {
+    if (!user.id && guestCart.length) {
       return (
         <GuestCart
           products={guestCart}
@@ -116,15 +116,15 @@ class Cart extends Component {
             )}
             <footer>
               <p>{formatMoney(calcTotalPrice(products))}</p>
-              <Link to="/checkout">
-                <CheckoutButton
-                  onClick={async () => {
-                    // await this.props.checkout(userId);
-                    await this.props.toggleCart();
-                    await this.props.getCart(userId);
-                  }}
-                  disabled={!products.length}
-                >
+              <Link
+                to="/checkout"
+                onClick={async () => {
+                  // await this.props.checkout(userId);
+                  await this.props.toggleCart();
+                  await this.props.getCart(userId);
+                }}
+              >
+                <CheckoutButton disabled={!products.length}>
                   Checkout
                 </CheckoutButton>
               </Link>
