@@ -13,13 +13,7 @@ import {
   CheckoutPage,
   Admin
 } from './components';
-import {
-  me,
-  fetchProducts,
-  fetchStorageData,
-  fetchCart,
-  checkLocalStorage
-} from './store';
+import { me, fetchProducts, fetchStorageData } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
@@ -73,11 +67,10 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData() {
-      dispatch(me());
+    async loadInitialData() {
+      await dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
-      dispatch(checkLocalStorage());
     }
   };
 };

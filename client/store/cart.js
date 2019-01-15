@@ -4,7 +4,6 @@ import axios from 'axios';
 // const REQUEST_MADE = 'REQUEST_MADE';
 const REQUEST_CART = 'REQUEST_CART';
 const TOGGLE_CART = 'TOGGLE_CART';
-const CHECK_LOCALSTORAGE = 'CHECK_LOCALSTORAGE';
 
 // ACTION CREATORS
 // export const requestMade = () => ({
@@ -18,10 +17,6 @@ export const toggleCart = () => ({
   type: TOGGLE_CART
 });
 
-export const checkLocalStorage = () => ({
-  type: CHECK_LOCALSTORAGE
-});
-
 // THUNK CREATORS
 export const fetchCart = userId => async dispatch => {
   try {
@@ -32,8 +27,11 @@ export const fetchCart = userId => async dispatch => {
     console.error(err);
   }
 };
+
 export const createCartItem = (userId, productId) => async dispatch => {
   // dispatch(requestMade());
+  console.log('userid', userId);
+  console.log('productid', productId);
   try {
     await axios.post(`/api/cart/${userId}/${productId}`);
     dispatch(fetchCart(userId));
@@ -73,41 +71,41 @@ export default function(state = initialState, action) {
   }
 }
 
-export function localCartMiddleware(store) {
-  return next => action => {
-    if (action.type === CHECK_LOCALSTORAGE) {
-      console.log('checked');
-      let state = store.getState();
-      console.log('state', state);
-      const isLoggedIn = !!state.user.id;
+// export function localCartMiddleware(store) {
+//   return next => action => {
+//     if (action.type === CHECK_LOCALSTORAGE) {
+//       console.log('checked');
+//       let state = store.getState();
+//       console.log('state', state);
+//       const isLoggedIn = !!state.user.id;
 
-      let localStorageCart = localStorage.getItem('guestCart')
-        ? JSON.parse(localStorage.getItem('guestCart'))
-        : [];
+//       let localStorageCart = localStorage.getItem('guestCart')
+//         ? JSON.parse(localStorage.getItem('guestCart'))
+//         : [];
 
-      // if (!isLoggedIn) {
-      //   // unauthenticated user
-      //   return store.dispatch(requestCart(localStorageCart));
-      // } else {
-      // authenticated user
-      if (isLoggedIn) {
-        if (localStorageCart.length > 0) {
-          console.log('localStorageCart', localStorageCart);
-          localStorageCart.forEach(async product => {
-            await store.dispatch(createCartItem(state.user.id, product.id));
-          });
-          localStorageCart = [];
-          localStorage.setItem('guestCart', JSON.stringify([]));
-        }
-        return store.dispatch(fetchCart(state.user.id));
-      }
-    }
+//       // if (!isLoggedIn) {
+//       //   // unauthenticated user
+//       //   return store.dispatch(requestCart(localStorageCart));
+//       // } else {
+//       // authenticated user
+//       if (isLoggedIn) {
+//         if (localStorageCart.length > 0) {
+//           console.log('localStorageCart', localStorageCart);
+//           localStorageCart.forEach(async product => {
+//             await store.dispatch(createCartItem(state.user.id, product.id));
+//           });
+//           localStorageCart = [];
+//           localStorage.setItem('guestCart', JSON.stringify([]));
+//         }
+//         return store.dispatch(fetchCart(state.user.id));
+//       }
+//     }
 
-    // Call the next dispatch method in the middleware chain.
-    let returnValue = next(action);
+//     // Call the next dispatch method in the middleware chain.
+//     let returnValue = next(action);
 
-    // This will likely be the action itself, unless
-    // a middleware further in chain changed it.
-    return returnValue;
-  };
-}
+//     // This will likely be the action itself, unless
+//     // a middleware further in chain changed it.
+//     return returnValue;
+//   };
+// }

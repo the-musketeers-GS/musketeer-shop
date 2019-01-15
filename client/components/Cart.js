@@ -9,7 +9,9 @@ import {
   toggleCart,
   deleteCartItem,
   createCartItem,
-  requestCart
+  requestCart,
+  checkLocalStorage,
+  me
 } from '../store/cart';
 import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
@@ -59,22 +61,30 @@ const CheckoutButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    if (!this.props.user.id) {
-      let guestCart = JSON.parse(localStorage.getItem('guestCart'));
-    } else {
+    let localStorageCart = JSON.parse(window.localStorage.getItem('guestCart'));
+    console.log('localStorageCart', localStorageCart);
+    console.log('am i here?', this.props.user.id);
+    if (this.props.user.id) {
+      if (localStorageCart.cart.length) {
+        localStorageCart.cart.forEach(async product => {
+          await createCartItem(this.props.user.id, product.id);
+        });
+      }
       this.props.fetchCart(this.props.user.id);
     }
   }
 
   render() {
-    let cartProducts = this.props.cart.products.cart || [];
-    let products = this.props.products || [];
     let productsInCart = [];
-    if (cartProducts.length && products.length) {
-      console.log('reached this js');
-      cartProducts.forEach(item => {
-        productsInCart.push(products.filter(product => product.id === item.id));
-      });
+    if (this.props.user.id) {
+      productsInCart = this.props.cart.products.map(item => item.product);
+    } else {
+      let localStorageCart = JSON.parse(
+        window.localStorage.getItem('guestCart')
+      );
+      if (localStorageCart) {
+        productsInCart = localStorageCart;
+      }
     }
 
     return (
@@ -88,25 +98,26 @@ class Cart extends Component {
             <CartItemStyles>No items in your cart ☹️</CartItemStyles>
           ) : (
             <ul>
-              {productsInCart.map(product =>
-                product.map(item => (
-                  <CartItemStyles key={item.id}>
-                    <img width="100" src={item.image} alt={item.title} />
-                    <div>
-                      <h3>{item.title}</h3>
-                      {/* <p>
-                      {formatMoney(item.product.price)} | qty: {item.quantity} |
-                      total: {formatMoney(item.quantity * item.product.price)}
-                    </p> */}
-                    </div>
-                    <BigButton
-                      onClick={() => this.props.guestRemoveCartItem(item.id)}
-                    >
-                      &times;
-                    </BigButton>
-                  </CartItemStyles>
-                ))
-              )}
+              {productsInCart.map(item => (
+                <CartItemStyles key={item.id}>
+                  <img width="100" src={item.image} alt={item.title} />
+                  <div>
+                    <h3>{item.title}</h3>
+                    }
+                    {/* <p>
+                    {formatMoney(item.price)} | qty: {item.quantity} |
+                    total: {formatMoney(item.quantity * item.price)}
+                  </p> */}
+                  </div>
+                  <BigButton
+                    onClick={() =>
+                      this.props.deleteCartItem(this.props.user.id, item.id)
+                    }
+                  >
+                    &times;
+                  </BigButton>
+                </CartItemStyles>
+              ))}
             </ul>
           )}
           {/* <footer>
@@ -137,14 +148,14 @@ const mapState = state => ({
   guestCart: state.guestCart.cart
 });
 
-const mapDispatch = dispatch => ({
-  getCart: userId => dispatch(fetchCart(userId)),
-  toggleCart: () => dispatch(toggleCart()),
-  deleteCartItem: (userId, productId) =>
-    dispatch(deleteCartItem(userId, productId)),
-  checkout: userId => dispatch(checkout(userId)),
+const mapDispatch = {
+  fetchCart,
+  toggleCart,
+  deleteCartItem,
+  checkout,
   requestCart,
-  guestRemoveCartItem: id => dispatch(guestRemoveCartItem(id))
-});
+  checkLocalStorage,
+  me
+};
 
 export default connect(mapState, mapDispatch)(Cart);
