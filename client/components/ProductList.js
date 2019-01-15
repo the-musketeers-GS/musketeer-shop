@@ -106,8 +106,8 @@ class ProductList extends React.Component {
         ) : (
           <ProductCard
             products={products}
-            handleAdd={this.props.handleAdd}
-            handleAddNoUser={this.props.handleAddNoUser}
+            handleAdd={this.handleAdd}
+            handleAddNoUser={this.handleAddNoUser}
           />
         )}
       </div>
