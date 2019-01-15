@@ -5,6 +5,7 @@ const Order = db.define('order', {
   total: {
     type: Sequelize.INTEGER
   },
+  charge: Sequelize.STRING,
   status: {
     // 1: checkout clicked
     // 2: confirmation email sent
@@ -16,7 +17,15 @@ const Order = db.define('order', {
       min: 1,
       max: 4
     }
-  }
+  },
+  firstName: Sequelize.STRING,
+  lastName: Sequelize.STRING,
+  address1: Sequelize.STRING,
+  address2: Sequelize.STRING,
+  city: Sequelize.STRING,
+  state: Sequelize.STRING,
+  zip: Sequelize.STRING,
+  country: Sequelize.STRING
 });
 
 module.exports = Order;
