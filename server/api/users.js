@@ -18,10 +18,8 @@ router.get('/', isAdmin, async (req, res, next) => {
 });
 
 router.delete('/:id', async function(req, res, next) {
-  console.log('req.params.id', req.params.id);
   try {
     const user = await User.findById(req.params.id);
-    console.log('user', user);
     if (!user) {
       const err = new Error('Not Found');
       err.status = 404;
