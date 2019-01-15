@@ -58,13 +58,21 @@ const CheckoutButton = styled.button`
 
 class Cart extends Component {
   componentDidMount() {
-    if (this.props.isLoggedIn) {
-      this.props.getCart(this.props.user.id);
+    let localStorageCart = JSON.parse(window.localStorage.getItem('guestCart'));
+    console.log('localStorageCart', localStorageCart);
+    console.log('am i here?', this.props.user);
+    if (this.props.user.id) {
+      if (localStorageCart.cart.length) {
+        localStorageCart.cart.forEach(async product => {
+          await createCartItem(this.props.user.id, product.id);
+        });
+      }
+      this.props.fetchCart(this.props.user.id);
     }
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen } = this.props;
+    let { products, isLoggedIn, guestCart, isOpen, user } = this.props;
 
     if (!user.id && guestCart.length) {
       return (

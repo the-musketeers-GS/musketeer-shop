@@ -84,8 +84,7 @@ const mapDispatch = dispatch => {
       dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
-    },
-    fetchCart
+    }
   };
 };
 
