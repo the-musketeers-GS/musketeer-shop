@@ -116,15 +116,15 @@ class Cart extends Component {
             )}
             <footer>
               <p>{formatMoney(calcTotalPrice(products))}</p>
-              <Link to="/checkout">
-                <CheckoutButton
-                  onClick={async () => {
-                    // await this.props.checkout(userId);
-                    await this.props.toggleCart();
-                    await this.props.getCart(userId);
-                  }}
-                  disabled={!products.length}
-                >
+              <Link
+                to="/checkout"
+                onClick={async () => {
+                  // await this.props.checkout(userId);
+                  await this.props.toggleCart();
+                  await this.props.getCart(userId);
+                }}
+              >
+                <CheckoutButton disabled={!products.length}>
                   Checkout
                 </CheckoutButton>
               </Link>
