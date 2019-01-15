@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPrice from '../../lib/calcTotalPrice';
-import { fetchCart, toggleCart, deleteCartItem } from '../store/cart';
+import {
+  fetchCart,
+  toggleCart,
+  deleteCartItem,
+  createCartItem
+} from '../store/cart';
 import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
 import GuestCart from './GuestCart';
+import { guestRemoveCartItem } from '../store';
 
 const CloseButton = styled.button`
   background: black;
@@ -57,14 +64,14 @@ class Cart extends Component {
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen, toggleCart } = this.props;
+    let { products, isLoggedIn, guestCart, isOpen, user } = this.props;
 
-    if (!isLoggedIn && guestCart.length) {
+    if (!user.id && guestCart.length) {
       return (
         <GuestCart
           products={guestCart}
           isOpen={isOpen}
-          toggleCart={toggleCart}
+          toggleCart={this.props.toggleCart}
         />
       );
     } else {
@@ -109,16 +116,18 @@ class Cart extends Component {
             )}
             <footer>
               <p>{formatMoney(calcTotalPrice(products))}</p>
-              <CheckoutButton
-                onClick={async () => {
-                  await this.props.checkout(userId);
-                  await this.props.toggleCart();
-                  await this.props.getCart(userId);
-                }}
-                disabled={!products.length}
-              >
-                Checkout
-              </CheckoutButton>
+              <Link to="/checkout">
+                <CheckoutButton
+                  onClick={async () => {
+                    // await this.props.checkout(userId);
+                    await this.props.toggleCart();
+                    await this.props.getCart(userId);
+                  }}
+                  disabled={!products.length}
+                >
+                  Checkout
+                </CheckoutButton>
+              </Link>
             </footer>
           </>
         </CartStyles>
@@ -138,6 +147,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
   getCart: userId => dispatch(fetchCart(userId)),
   toggleCart: () => dispatch(toggleCart()),
+  createCartItem: (id, product) => dispatch(createCartItem(id, product)),
   deleteCartItem: (userId, productId) =>
     dispatch(deleteCartItem(userId, productId)),
   checkout: userId => dispatch(checkout(userId))

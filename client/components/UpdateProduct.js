@@ -175,7 +175,7 @@ class UpdateProduct extends React.Component {
           />
           <div id="manage-buttons">
             <UpdateButton type="submit">Update</UpdateButton>
-            <Button onClick={() => history.goBack()}>Cancel</Button>
+            <Button onClick={() => history.push('/manage')}>Cancel</Button>
           </div>
         </Form>
       </div>

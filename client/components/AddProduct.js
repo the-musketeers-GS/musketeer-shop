@@ -173,7 +173,7 @@ class AddProduct extends React.Component {
           />
           <div id="manage-buttons">
             <AddButton type="submit">Add</AddButton>
-            <Button onClick={() => history.goBack()}>Cancel</Button>
+            <Button onClick={() => history.push('/manage')}>Cancel</Button>
           </div>
         </Form>
       </div>

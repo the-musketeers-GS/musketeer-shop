@@ -50,13 +50,20 @@ router.post('/:userId', isSelforAdmin, async (req, res, next) => {
     });
     // re-calculate total for safety's sake
     const total = calcTotalPrice(cartItems);
-    // 3. build order and grab orderId
+    //! 3 CREATE STRIPE CHARGE
+    // const charge = await stripe.charges.create({
+    //   total,
+    //   currency: 'USD',
+    //   source: req.body.token,
+    // })
+    // 4. build order and grab orderId
     const newOrder = await Order.build();
     newOrder.userId = userId;
     newOrder.total = total;
+    // newOrder.charge = charge.id;
     await newOrder.save();
     const orderId = newOrder.id;
-    // 4. map over cartItems and create orderItem for each
+    // 5. map over cartItems and create orderItem for each
     await cartItems.map(async cartItem => {
       const newOrderItem = await OrderItem.build();
       newOrderItem.orderId = orderId;
@@ -67,9 +74,9 @@ router.post('/:userId', isSelforAdmin, async (req, res, next) => {
       newOrderItem.image = cartItem.product.image;
       await newOrderItem.save();
     });
-    // 5. update cart to completed: TRUE
+    // 6. update cart to completed: TRUE
     await cart.update({ completed: true }, { returning: true });
-    // 6. send back the newly created order
+    // 7. send back the newly created order
     res.status(201).json(orderId);
   } catch (err) {
     next(err);
