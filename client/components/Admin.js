@@ -8,7 +8,6 @@ class Admin extends React.Component {
   };
   render() {
     const users = this.props.users.users;
-    console.log('users', users);
     return (
       <div>
         <h1>Admin page</h1>
