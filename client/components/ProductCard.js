@@ -6,7 +6,6 @@ import avgRating from '../../lib/avgRating';
 
 const ProductCard = props => {
   const { user, isLoggedIn, products, handleAdd, handleAddNoUser } = props;
-  console.log('productcard props', props);
 
   return (
     <div className="product-card">

@@ -13,7 +13,6 @@ const AddToCart = ({
       type="button"
       onClick={e => {
         e.preventDefault();
-        console.log('click');
         user.id ? handleAdd(user.id, product.id) : handleAddNoUser(product);
       }}
     >

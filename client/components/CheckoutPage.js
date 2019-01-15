@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
 import CheckoutReview from './CheckoutReview';
 import orderInfoComplete from '../../lib/orderInfoComplete';
+import TakeMyMoney from './TakeMyMoney';
 
 const styles = theme => ({
   appBar: {
@@ -86,6 +87,8 @@ class CheckoutPage extends React.Component {
     });
   };
 
+  handleCheckout = () => {};
+
   render() {
     const { classes, orderInfo } = this.props;
     const { activeStep } = this.state;
@@ -129,15 +132,20 @@ class CheckoutPage extends React.Component {
                         Back
                       </Button>
                     )}
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                      className={classes.button}
-                      disabled={!orderInfoComplete(orderInfo)}
-                    >
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                    </Button>
+                    {/* {activeStep === steps.length - 1 ? 'Place order' : 'Next'} */}
+                    {activeStep === steps.length - 1 ? (
+                      <TakeMyMoney />
+                    ) : (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.handleNext}
+                        className={classes.button}
+                        disabled={!orderInfoComplete(orderInfo)}
+                      >
+                        'Next'
+                      </Button>
+                    )}
                   </div>
                 </React.Fragment>
               )}
