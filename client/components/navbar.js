@@ -14,11 +14,14 @@ const Navbar = ({ handleClick, isLoggedIn, openCart, user }) => (
       <Title>MUSKETEER SHOP</Title>
     </Link>
     <NavStyles>
+      <Link className="nav-button" to="/">
+        Shop
+      </Link>
       {isLoggedIn ? (
         <NavStyles>
           {/* The navbar will show these links after you log in */}
           <Link className="nav-button" to="/home">
-            Home
+            Account
           </Link>
           <a href="#" className="nav-button" onClick={handleClick}>
             Logout
