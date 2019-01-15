@@ -61,7 +61,7 @@ class Cart extends Component {
   componentDidMount() {
     if (!this.props.user.id) {
       let guestCart = JSON.parse(localStorage.getItem('guestCart'));
-      this.props.requestCart(guestCart);
+      // this.props.requestCart(guestCart);
     } else {
       this.props.getCart(this.props.user.id);
     }

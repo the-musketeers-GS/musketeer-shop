@@ -40,7 +40,7 @@ class App extends React.Component {
         const cart = JSON.stringify([]);
         localStorage.setItem('guestCart', cart);
       }
-      this.props.requestCart(JSON.parse(localStorage.guestCart));
+      // this.props.requestCart(JSON.parse(localStorage.guestCart));
     } else this.props.fetchCart(this.props.user.id);
   }
   render() {

@@ -76,18 +76,20 @@ export default function(state = initialState, action) {
 export function localCartMiddleware(store) {
   return next => action => {
     if (action.type === CHECK_LOCALSTORAGE) {
+      console.log('checked');
       let state = store.getState();
-      const isAuthenticated = !!state.user.id;
+      const isLoggedIn = !!state.user.id;
 
       let localStorageCart = localStorage.getItem('guestCart')
         ? JSON.parse(localStorage.getItem('guestCart'))
         : [];
 
-      if (!isAuthenticated) {
-        // unauthenticated user
-        return store.dispatch(requestCart(localStorageCart));
-      } else {
-        // authenticated user
+      // if (!isLoggedIn) {
+      //   // unauthenticated user
+      //   return store.dispatch(requestCart(localStorageCart));
+      // } else {
+      // authenticated user
+      if (isLoggedIn) {
         if (localStorageCart.length > 0) {
           console.log('localStorageCart', localStorageCart);
           localStorageCart.forEach(product => {
