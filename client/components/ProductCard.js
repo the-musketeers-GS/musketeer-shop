@@ -10,8 +10,8 @@ const ProductCard = props => {
   return (
     <div className="product-card">
       {products.map(product => (
-        <Link to={`/products/${product.id}`}>
-          <div id="product-card" key={product.id}>
+        <Link key={product.id} to={`/products/${product.id}`}>
+          <div id="product-card">
             <img src={product.image} alt={product.title} />
             <h5>{product.title}</h5>
             <p>{formatMoney(product.price)}</p>
