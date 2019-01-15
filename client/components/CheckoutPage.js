@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,8 +12,8 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
 import CheckoutReview from './CheckoutReview';
+import orderInfoComplete from '../../lib/orderInfoComplete';
 
 const styles = theme => ({
   appBar: {
@@ -51,22 +52,20 @@ const styles = theme => ({
   }
 });
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Review your order'];
 
 function getStepContent(step) {
   switch (step) {
     case 0:
       return <AddressForm />;
     case 1:
-      return <PaymentForm />;
-    case 2:
       return <CheckoutReview />;
     default:
       throw new Error('Unknown step');
   }
 }
 
-class Checkout extends React.Component {
+class CheckoutPage extends React.Component {
   state = {
     activeStep: 0
   };
@@ -90,7 +89,7 @@ class Checkout extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, orderInfo } = this.props;
     const { activeStep } = this.state;
 
     return (
@@ -144,6 +143,7 @@ class Checkout extends React.Component {
                       color="primary"
                       onClick={this.handleNext}
                       className={classes.button}
+                      disabled={!orderInfoComplete(orderInfo)}
                     >
                       {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
@@ -158,8 +158,14 @@ class Checkout extends React.Component {
   }
 }
 
-Checkout.propTypes = {
+CheckoutPage.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Checkout);
+const mapState = state => ({
+  orderInfo: state.order.shippingInfo
+});
+
+const ConnectedCheckoutPage = connect(mapState)(CheckoutPage);
+
+export default withStyles(styles)(ConnectedCheckoutPage);

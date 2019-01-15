@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -6,6 +7,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import formatMoney from '../../lib/formatMoney';
 
 const products = [
   { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
@@ -21,12 +23,12 @@ const addresses = [
   '99999',
   'USA'
 ];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' }
-];
+// const payments = [
+//   { name: 'Card type', detail: 'Visa' },
+//   { name: 'Card holder', detail: 'Mr John Smith' },
+//   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
+//   { name: 'Expiry date', detail: '04/2024' }
+// ];
 
 const styles = theme => ({
   listItem: {
@@ -69,7 +71,7 @@ function Review(props) {
           <Typography gutterBottom>John Smith</Typography>
           <Typography gutterBottom>{addresses.join(', ')}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
+        {/* <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Payment details
           </Typography>
@@ -84,8 +86,8 @@ function Review(props) {
                 </Grid>
               </React.Fragment>
             ))}
-          </Grid>
-        </Grid>
+          </Grid> */}
+        {/* </Grid> */}
       </Grid>
     </React.Fragment>
   );
@@ -95,4 +97,10 @@ Review.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Review);
+const mapState = state => ({
+  orderInfo: state.order.shippingInfo
+});
+
+const ConnectedReview = connect(mapState)(Review);
+
+export default withStyles(styles)(ConnectedReview);

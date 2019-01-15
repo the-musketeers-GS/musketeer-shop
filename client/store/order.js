@@ -4,6 +4,7 @@ import history from '../history';
 // ACTION TYPES
 const REQUEST_SINGLE_ORDER = 'REQUEST_SINGLE_ORDER';
 const REQUEST_ALL_ORDERS = 'REQUEST_ALL_ORDERS';
+const ADD_SHIPPING_INFO = 'ADD_SHIPPING_INFO';
 
 // ACTION CREATORS
 const requestOrder = order => ({
@@ -13,6 +14,11 @@ const requestOrder = order => ({
 const requestAllOrders = orders => ({
   type: REQUEST_ALL_ORDERS,
   orders
+});
+export const addShippingInfo = (field, value) => ({
+  type: ADD_SHIPPING_INFO,
+  field,
+  value
 });
 
 // THUNK CREATORS
@@ -49,7 +55,16 @@ export const checkout = (userId, shippingInfo) => async dispatch => {
 const initialState = {
   allOrders: [],
   currentOrder: {},
-  shippingInfo: {}
+  shippingInfo: {
+    firstName: '',
+    lastName: '',
+    address1: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
+    country: ''
+  }
 };
 
 // REDUCER
@@ -59,6 +74,14 @@ export default function(state = initialState, action) {
       return { ...state, currentOrder: action.order };
     case REQUEST_ALL_ORDERS:
       return { ...state, allOrders: action.orders };
+    case ADD_SHIPPING_INFO:
+      return {
+        ...state,
+        shippingInfo: {
+          ...state.shippingInfo,
+          [action.field]: action.value
+        }
+      };
     default:
       return state;
   }
