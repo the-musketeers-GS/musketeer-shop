@@ -16,6 +16,7 @@ export { default as ConnectedReviewList } from './ReviewList';
 export { default as ReviewList } from './ReviewList';
 export { default as OrderList } from './OrderList';
 export { default as SingleOrder } from './SingleOrder';
+export { default as Admin } from './Admin';
 
 export { Signup } from './auth-form';
 export { Login } from './login-form';
