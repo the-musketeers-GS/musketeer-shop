@@ -72,7 +72,7 @@ class Cart extends Component {
   }
 
   render() {
-    let { products, isLoggedIn, guestCart, isOpen, user } = this.props;
+    let { products, guestCart, isOpen, user } = this.props;
 
     if (!user.id && guestCart.length) {
       return (
@@ -90,7 +90,7 @@ class Cart extends Component {
           <>
             <header>
               Your Cart
-              <CloseButton onClick={toggleCart}>&times;</CloseButton>
+              <CloseButton onClick={this.props.toggleCart}>&times;</CloseButton>
             </header>
             {!products.length ? (
               <CartItemStyles>No items in your cart ☹️</CartItemStyles>
@@ -124,15 +124,15 @@ class Cart extends Component {
             )}
             <footer>
               <p>{formatMoney(calcTotalPrice(products))}</p>
-              <Link to="/checkout">
-                <CheckoutButton
-                  onClick={async () => {
-                    // await this.props.checkout(userId);
-                    await this.props.toggleCart();
-                    await this.props.getCart(userId);
-                  }}
-                  disabled={!products.length}
-                >
+              <Link
+                to="/checkout"
+                onClick={async () => {
+                  // await this.props.checkout(userId);
+                  await this.props.toggleCart();
+                  await this.props.getCart(userId);
+                }}
+              >
+                <CheckoutButton disabled={!products.length}>
                   Checkout
                 </CheckoutButton>
               </Link>

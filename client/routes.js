@@ -17,6 +17,7 @@ import {
   me,
   fetchProducts,
   fetchStorageData,
+  fetchUsers,
   createCartItem,
   requestCart,
   fetchCart
@@ -40,7 +41,6 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn } = this.props;
-
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -53,8 +53,15 @@ class Routes extends Component {
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            {this.props.user.isAdmin && (
+              <Route path="/admin" component={Admin} />
+            )}
             <Route exact path="/orders/:userId" component={OrderList} />
-            <Route exact path="/order/:orderId" component={SingleOrder} />
+            <Route
+              exact
+              path="/order/:userId/:orderId"
+              component={SingleOrder}
+            />
           </Switch>
         )}
         {/* Displays our ProductList component as a fallback */}
@@ -84,7 +91,9 @@ const mapDispatch = dispatch => {
       dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
-    }
+      dispatch(fetchUsers());
+    },
+    fetchCart
   };
 };
 

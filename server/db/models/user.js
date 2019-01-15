@@ -35,10 +35,10 @@ const User = db.define('user', {
     type: Sequelize.STRING
   },
   zipCode: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   phone: {
-    type: Sequelize.BIGINT.UNSIGNED
+    type: Sequelize.STRING
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,

@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
+const isSelforAdmin = require('../middlewares/isSelforAdmin');
 module.exports = router;
 
-// GET /api/order/:orderId ---- return all orders for a user
-router.get('/:userId', async (req, res, next) => {
+// GET /api/order/:userId ---- return all orders for a user
+router.get('/:userId', isSelforAdmin, async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const order = await Order.findAll({
@@ -21,8 +22,8 @@ router.get('/:userId', async (req, res, next) => {
   }
 });
 
-// GET /api/order/:orderId/data ---- return all data for a single order
-router.get('/:orderId/data', async (req, res, next) => {
+// GET /api/order/:userId/:orderId/data ---- return all data for a single order
+router.get('/:userId/:orderId/data', isSelforAdmin, async (req, res, next) => {
   try {
     const orderId = req.params.orderId;
     const order = await Order.findOne({ where: { id: orderId } });
@@ -49,16 +50,18 @@ router.post('/:userId', async (req, res, next) => {
     });
     // re-calculate total for safety's sake
     const total = calcTotalPrice(cartItems);
-    //! 3 CREATE STRIPE CHARGE
-    // const charge = await stripe.charges.create({
-    //   total,
-    //   currency: 'USD',
-    //   source: req.body.token,
-    // })
     // 4. build order and grab orderId
     const newOrder = await Order.build();
     newOrder.userId = userId;
     newOrder.total = total;
+    newOrder.firstName = req.body.firstName;
+    newOrder.lastName = req.body.lastName;
+    newOrder.address1 = req.body.address1;
+    newOrder.address2 = req.body.address2;
+    newOrder.city = req.body.city;
+    newOrder.state = req.body.state;
+    newOrder.zip = req.body.zip;
+    newOrder.country = req.body.country;
     // newOrder.charge = charge.id;
     await newOrder.save();
     const orderId = newOrder.id;

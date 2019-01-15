@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { fetchSingleOrder } from '../store';
 import formatMoney from '../../lib/formatMoney';
 import OrderStyles from './styles/OrderStyles';
+import orderStatus from '../../lib/orderStatus';
 
 class SingleOrder extends Component {
   componentDidMount() {
     const orderId = this.props.match.params.orderId;
-    this.props.getOrder(orderId);
+    const userId = this.props.match.params.userId;
+    this.props.getOrder(orderId, userId);
   }
   render() {
     const orderData = this.props.orderData || {};
@@ -34,7 +36,7 @@ class SingleOrder extends Component {
           </p>
           <p>
             <span>Status: </span>
-            <span>{orderData.status}</span>
+            <span>{orderStatus(orderData.status)}</span>
           </p>
           <div className="items">
             {orderItems.map(item => (
@@ -62,7 +64,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  getOrder: orderId => dispatch(fetchSingleOrder(orderId))
+  getOrder: (orderId, userId) => dispatch(fetchSingleOrder(orderId, userId))
 });
 
 export default connect(mapState, mapDispatch)(SingleOrder);
