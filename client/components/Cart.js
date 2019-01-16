@@ -8,7 +8,8 @@ import {
   fetchCart,
   toggleCart,
   deleteCartItem,
-  createCartItem
+  createCartItem,
+  checkLocalStorage
 } from '../store/cart';
 import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
@@ -56,16 +57,11 @@ const CheckoutButton = styled.button`
 `;
 
 class Cart extends Component {
-  componentDidMount() {
-    if (this.props.isLoggedIn) {
-      this.props.getCart(this.props.user.id);
-    }
-  }
-
   render() {
     let { products, guestCart, isOpen, user } = this.props;
+    let localStorageCart = JSON.parse(window.localStorage.getItem('guestCart'));
 
-    if (!user.id && guestCart.length) {
+    if (!user.id && localStorageCart) {
       return (
         <GuestCart
           products={guestCart}
@@ -144,12 +140,13 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-  getCart: userId => dispatch(fetchCart(userId)),
+  fetchCart: userId => dispatch(fetchCart(userId)),
   toggleCart: () => dispatch(toggleCart()),
   createCartItem: (id, product) => dispatch(createCartItem(id, product)),
   deleteCartItem: (userId, productId) =>
     dispatch(deleteCartItem(userId, productId)),
-  checkout: userId => dispatch(checkout(userId))
+  checkout: userId => dispatch(checkout(userId)),
+  checkLocalStorage: () => dispatch(checkLocalStorage())
 });
 
 export default connect(mapState, mapDispatch)(Cart);

@@ -13,16 +13,15 @@ import {
   CheckoutPage,
   Admin
 } from './components';
-import { me, fetchProducts, fetchStorageData, fetchCart } from './store';
+import { me, fetchProducts, fetchStorageData, fetchUsers } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  async componentDidMount() {
-    await this.props.loadInitialData();
-    if (this.props.user.id) this.props.fetchCart(this.props.user.id);
+  componentDidMount() {
+    this.props.loadInitialData();
   }
 
   render() {
@@ -67,7 +66,8 @@ const mapState = state => {
     user: state.user,
     isLoggedIn: !!state.user.id,
     products: state.products,
-    guestCart: state.guestCart.cart
+    guestCart: state.guestCart.cart,
+    cart: state.cart
   };
 };
 
@@ -77,8 +77,8 @@ const mapDispatch = dispatch => {
       await dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
-    },
-    fetchCart: userId => dispatch(fetchCart(userId))
+      dispatch(fetchUsers());
+    }
   };
 };
 

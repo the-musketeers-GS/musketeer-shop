@@ -34,6 +34,11 @@ const Navbar = ({ handleClick, isLoggedIn, openCart, user }) => (
               Admin
             </Link>
           )}
+          {user.isAdmin && (
+            <Link className="nav-button " to="/admin/manage">
+              Admin Products
+            </Link>
+          )}
         </NavStyles>
       ) : (
         <NavStyles>

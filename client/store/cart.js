@@ -3,6 +3,7 @@ import axios from 'axios';
 // ACTION TYPES
 // const REQUEST_MADE = 'REQUEST_MADE';
 const REQUEST_CART = 'REQUEST_CART';
+const CHECK_LOCALSTORAGE = 'CHECK_LOCALSTORAGE';
 const TOGGLE_CART = 'TOGGLE_CART';
 const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
 
@@ -13,6 +14,10 @@ const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
 export const requestCart = products => ({
   type: REQUEST_CART,
   products
+});
+
+export const checkLocalStorage = () => ({
+  type: CHECK_LOCALSTORAGE
 });
 export const toggleCart = () => ({
   type: TOGGLE_CART
@@ -31,8 +36,8 @@ export const fetchCart = userId => async dispatch => {
     console.error(err);
   }
 };
+
 export const createCartItem = (userId, productId) => async dispatch => {
-  // dispatch(requestMade());
   try {
     await axios.post(`/api/cart/${userId}/${productId}`);
     dispatch(fetchCart(userId));
@@ -73,4 +78,36 @@ export default function(state = initialState, action) {
     default:
       return state;
   }
+}
+
+export function localCartMiddleware(store) {
+  return next => action => {
+    if (action.type === CHECK_LOCALSTORAGE) {
+      let state = store.getState();
+      const isLogged = !!state.user.id;
+
+      let localStorageCart = localStorage.getItem('guestCart')
+        ? JSON.parse(localStorage.getItem('guestCart'))
+        : [];
+
+      if (isLogged) {
+        // authenticated user
+        if (localStorageCart.cart) {
+          localStorageCart.cart.forEach(item => {
+            store.dispatch(createCartItem(state.user.id, item.id));
+          });
+          localStorageCart = [];
+          localStorage.setItem('guestCart', JSON.stringify([]));
+        }
+        return store.dispatch(fetchCart(state.user.id));
+      }
+    }
+
+    // Call the next dispatch method in the middleware chain.
+    let returnValue = next(action);
+
+    // This will likely be the action itself, unless
+    // a middleware further in chain changed it.
+    return returnValue;
+  };
 }

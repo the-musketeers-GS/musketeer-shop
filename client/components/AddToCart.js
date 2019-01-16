@@ -20,7 +20,7 @@ const AddToCart = ({ product, handleAdd, handleAddNoUser, user, toggle }) => (
 );
 
 const mapState = state => ({
-  isLoading: state.cart.isLoading,
+  // isLoading: state.cart.isLoading,
   user: state.user
 });
 

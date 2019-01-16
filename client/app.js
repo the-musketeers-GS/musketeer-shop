@@ -1,8 +1,16 @@
 import React from 'react';
-
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Navbar } from './components';
 import Routes from './routes';
 import { createGlobalStyle } from 'styled-components';
+
+import {
+  fetchProducts,
+  requestCart,
+  fetchCart,
+  checkLocalStorage
+} from './store';
 
 const GlobalStyle = createGlobalStyle`
   html {
