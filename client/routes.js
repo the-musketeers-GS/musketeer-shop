@@ -13,13 +13,7 @@ import {
   CheckoutPage,
   Admin
 } from './components';
-import {
-  me,
-  fetchProducts,
-  fetchStorageData,
-  fetchUsers,
-  fetchCart
-} from './store';
+import { me, fetchProducts, fetchStorageData, fetchUsers } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**

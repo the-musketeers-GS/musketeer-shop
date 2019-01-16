@@ -37,7 +37,7 @@ class ProductList extends React.Component {
   };
 
   render() {
-    let { products, user, isLoggedIn } = this.props;
+    let { products } = this.props;
     let { filteredProducts, searchProducts } = this.state;
     if (filteredProducts) {
       products = products.filter(
