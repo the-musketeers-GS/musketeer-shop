@@ -24,8 +24,8 @@ const reducer = combineReducers({
 const middleware = composeWithDevTools(
   applyMiddleware(
     thunkMiddleware,
-    localCartMiddleware,
-    createLogger({ collapsed: true })
+    localCartMiddleware
+    // createLogger({ collapsed: true })
   )
 );
 const store = createStore(reducer, middleware);

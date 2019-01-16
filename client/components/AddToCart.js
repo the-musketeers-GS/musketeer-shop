@@ -3,14 +3,7 @@ import { connect } from 'react-redux';
 import AddedToCartSnackbar from './AddedToCartSnackbar';
 import { toggleSnackbar } from '../store/cart';
 
-const AddToCart = ({
-  product,
-  handleAdd,
-  handleAddNoUser,
-  user,
-  toggle,
-  isLoggedIn
-}) => (
+const AddToCart = ({ product, handleAdd, handleAddNoUser, user, toggle }) => (
   <div>
     <button
       type="button"

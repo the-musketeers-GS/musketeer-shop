@@ -3,12 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import history from '../history';
 
-import {
-  toggleCart,
-  guestRemoveCartItem,
-  createCartItem,
-  checkout
-} from '../store';
+import { toggleCart, guestRemoveCartItem } from '../store';
 
 import formatMoney from '../../lib/formatMoney';
 import calcTotalPriceGuest from '../../lib/calcTotalPriceGuest';
