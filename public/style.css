@@ -4,6 +4,9 @@
 
 body {
   font-family: sans-serif;
+  /* justify-content: center;
+  align-items: center;
+  align-content: center; */
 }
 
 a {
@@ -160,7 +163,7 @@ h2 {
 
 #product-card img {
   object-fit: contain;
-  width: 30%;
-  height: 30%;
+  width: 50%;
+  height: 50%;
   margin: 1em 0 1em 0;
 }

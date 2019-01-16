@@ -13,7 +13,6 @@ import {
 import { checkout } from '../store/order';
 import CartStyles from './styles/CartStyles';
 import GuestCart from './GuestCart';
-import { guestRemoveCartItem } from '../store';
 
 const CloseButton = styled.button`
   background: black;
