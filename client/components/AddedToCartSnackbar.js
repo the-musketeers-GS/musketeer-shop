@@ -23,7 +23,7 @@ class SimpleSnackbar extends React.Component {
             fontSize: '15px'
           }}
           open={this.props.open}
-          autoHideDuration={3000}
+          autoHideDuration={1000}
           onClose={this.props.toggle}
           ContentProps={{
             'aria-describedby': 'message-id'

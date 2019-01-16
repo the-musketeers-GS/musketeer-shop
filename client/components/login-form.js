@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { auth } from '../store';
+import { auth, checkLocalStorage } from '../store';
 
 /**
  * COMPONENT
@@ -58,6 +58,7 @@ const mapDispatch = dispatch => {
       const password = evt.target.password.value;
 
       dispatch(auth(email, password, formName));
+      dispatch(checkLocalStorage());
     }
   };
 };

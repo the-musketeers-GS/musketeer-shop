@@ -58,8 +58,8 @@ const CheckoutButton = styled.button`
 `;
 
 const GuestCart = props => {
-  const guestCart = JSON.parse(window.localStorage.getItem('guestCart'));
-  const products = guestCart.cart || [];
+  let products = [];
+  let guestCart = JSON.parse(window.localStorage.getItem('guestCart'));
 
   return (
     <CartStyles open={props.isOpen}>
@@ -68,9 +68,11 @@ const GuestCart = props => {
           Your Cart
           <CloseButton onClick={props.toggleCart}>&times;</CloseButton>
         </header>
-        {
+        {!guestCart.cart ? (
+          <CartItemStyles>No items in your cart ☹️</CartItemStyles>
+        ) : (
           <ul>
-            {products.map(product => (
+            {guestCart.cart.map(product => (
               <CartItemStyles key={product.id}>
                 <img width="100" src={product.image} alt={product.title} />
                 <div>
@@ -88,7 +90,7 @@ const GuestCart = props => {
               </CartItemStyles>
             ))}
           </ul>
-        }
+        )}
         <footer>
           <p>{formatMoney(calcTotalPriceGuest(products))}</p>
           <CheckoutButton

@@ -3,6 +3,7 @@ import axios from 'axios';
 // ACTION TYPES
 // const REQUEST_MADE = 'REQUEST_MADE';
 const REQUEST_CART = 'REQUEST_CART';
+const CHECK_LOCALSTORAGE = 'CHECK_LOCALSTORAGE';
 const TOGGLE_CART = 'TOGGLE_CART';
 const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
 
@@ -13,6 +14,10 @@ const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
 export const requestCart = products => ({
   type: REQUEST_CART,
   products
+});
+
+export const checkLocalStorage = () => ({
+  type: CHECK_LOCALSTORAGE
 });
 export const toggleCart = () => ({
   type: TOGGLE_CART
@@ -78,41 +83,36 @@ export default function(state = initialState, action) {
   }
 }
 
-// export function localCartMiddleware(store) {
-//   return next => action => {
-//     if (action.type === CHECK_LOCALSTORAGE) {
-//       console.log('checked');
-//       let state = store.getState();
-//       console.log('state', state);
-//       const isLoggedIn = !!state.user.id;
+export function localCartMiddleware(store) {
+  return next => action => {
+    if (action.type === CHECK_LOCALSTORAGE) {
+      let state = store.getState();
+      const isAuthenticated = !!state.user.id;
+      console.log(state);
 
-//       let localStorageCart = localStorage.getItem('guestCart')
-//         ? JSON.parse(localStorage.getItem('guestCart'))
-//         : [];
+      let localStorageCart = localStorage.getItem('guestCart')
+        ? JSON.parse(localStorage.getItem('guestCart'))
+        : [];
 
-//       // if (!isLoggedIn) {
-//       //   // unauthenticated user
-//       //   return store.dispatch(requestCart(localStorageCart));
-//       // } else {
-//       // authenticated user
-//       if (isLoggedIn) {
-//         if (localStorageCart.length > 0) {
-//           console.log('localStorageCart', localStorageCart);
-//           localStorageCart.forEach(async product => {
-//             await store.dispatch(createCartItem(state.user.id, product.id));
-//           });
-//           localStorageCart = [];
-//           localStorage.setItem('guestCart', JSON.stringify([]));
-//         }
-//         return store.dispatch(fetchCart(state.user.id));
-//       }
-//     }
+      if (isAuthenticated) {
+        console.log('HERE??????');
+        // authenticated user
+        if (localStorageCart.cart) {
+          localStorageCart.cart.forEach(item => {
+            store.dispatch(createCartItem(state.user.id, item.id));
+          });
+          localStorageCart = [];
+          localStorage.setItem('guestCart', JSON.stringify([]));
+        }
+        return store.dispatch(fetchCart(state.user.id));
+      }
+    }
 
-//     // Call the next dispatch method in the middleware chain.
-//     let returnValue = next(action);
+    // Call the next dispatch method in the middleware chain.
+    let returnValue = next(action);
 
-//     // This will likely be the action itself, unless
-//     // a middleware further in chain changed it.
-//     return returnValue;
-//   };
-// }
+    // This will likely be the action itself, unless
+    // a middleware further in chain changed it.
+    return returnValue;
+  };
+}

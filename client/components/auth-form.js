@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { auth } from '../store';
+import { auth, checkLocalStorage } from '../store';
 
 /**
  * COMPONENT
@@ -128,6 +128,7 @@ const mapDispatch = dispatch => {
           phone
         )
       );
+      dispatch(checkLocalStorage());
     }
   };
 };
