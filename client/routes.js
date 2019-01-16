@@ -13,13 +13,7 @@ import {
   CheckoutPage,
   Admin
 } from './components';
-import {
-  me,
-  fetchProducts,
-  fetchStorageData,
-  fetchUsers,
-  fetchCart
-} from './store';
+import { me, fetchProducts, fetchStorageData, fetchCart } from './store';
 import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
@@ -83,7 +77,6 @@ const mapDispatch = dispatch => {
       await dispatch(me());
       dispatch(fetchProducts());
       dispatch(fetchStorageData());
-      dispatch(fetchUsers());
     },
     fetchCart: userId => dispatch(fetchCart(userId))
   };

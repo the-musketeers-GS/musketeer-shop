@@ -16,11 +16,6 @@ export const deleteOneUser = userId => ({
   userId
 });
 
-export const toggleOneUser = userId => ({
-  type: TOGGLE_USER,
-  user: userId
-});
-
 //thunks
 export const fetchUsers = () => async dispatch => {
   try {

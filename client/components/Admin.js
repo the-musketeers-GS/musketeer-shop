@@ -1,8 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteUser, toggleisAdmin } from '../store';
+import { deleteUser, fetchUsers, toggleisAdmin } from '../store';
 
 class Admin extends React.Component {
+  componentDidMount() {
+    this.props.getUsers();
+  }
   handleUserDelete = userId => {
     this.props.deleteUser(userId);
   };
@@ -49,7 +52,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     deleteUser: userId => dispatch(deleteUser(userId)),
-    toggleisAdmin: userId => dispatch(toggleisAdmin(userId))
+    toggleisAdmin: userId => dispatch(toggleisAdmin(userId)),
+    getUsers: () => dispatch(fetchUsers())
   };
 };
 

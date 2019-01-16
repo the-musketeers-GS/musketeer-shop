@@ -44,7 +44,7 @@ export const checkout = (userId, shippingInfo) => async dispatch => {
       `/api/order/${userId}`,
       shippingInfo
     );
-    history.push(`/order/${orderId}`);
+    history.push(`/order/${userId}/${orderId}`);
     dispatch(fetchSingleOrder(orderId));
   } catch (err) {
     console.error(err);
