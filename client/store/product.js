@@ -53,6 +53,8 @@ export const deleteThunkProduct = product => async dispatch => {
   try {
     const { data } = await axios.delete(`/api/manage/product/${product.id}`);
     dispatch(deleteProduct(data));
+    // dispatch(fetchProducts());
+    history.push('/manage');
   } catch (err) {
     console.error(err);
   }

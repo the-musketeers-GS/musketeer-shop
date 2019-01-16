@@ -11,10 +11,13 @@ import {
   SingleOrder,
   OrderList,
   CheckoutPage,
-  Admin
+  Admin,
+  ManageProducts,
+  UpdateProduct,
+  AddProduct
 } from './components';
 import { me, fetchProducts, fetchStorageData, fetchUsers } from './store';
-import AdminManageRoutes from './components/AdminManageRoutes';
+// import AdminManageRoutes from './components/AdminManageRoutes';
 
 /**
  * COMPONENT
@@ -39,7 +42,24 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             {this.props.user.isAdmin && (
-              <Route path="/admin" component={Admin} />
+              <>
+                <Route path="/admin" component={Admin} />
+                <Route exact path="/manage" component={ManageProducts} />
+                <Route
+                  exact
+                  path="/manage/products"
+                  component={ManageProducts}
+                />
+                <Route
+                  exact
+                  path="/manage/product/add"
+                  component={AddProduct}
+                />
+                <Route
+                  path="/manage/product/:productId"
+                  component={UpdateProduct}
+                />
+              </>
             )}
             <Route exact path="/orders/:userId" component={OrderList} />
             <Route
@@ -50,7 +70,7 @@ class Routes extends Component {
           </Switch>
         )}
         {/* Displays our ProductList component as a fallback */}
-        <AdminManageRoutes />
+        {/* <AdminManageRoutes /> */}
       </Switch>
     );
   }

@@ -53,7 +53,7 @@ router.delete('/product/:id', isAdmin, async (req, res, next) => {
         id: req.params.id
       }
     });
-    res.send(req.params.id);
+    res.json(req.params.id);
   } catch (err) {
     next(err);
   }
