@@ -20,13 +20,11 @@ router.get('/', isAdmin, async (req, res, next) => {
 router.put('/:id', async function(req, res, next) {
   try {
     const user = await User.findById(req.params.id);
-    console.log('user switch isAdmin part1', user.isAdmin);
     // if (user.isAdmin) {
     //   user.isAdmin = false;
     // } else {
     //   user.isAdmin = true;
     // }
-    console.log('user switch isAdmin part2', user.isAdmin);
     const updatedUser = await user.update(
       { isAdmin: !user.isAdmin },
       {
@@ -42,10 +40,8 @@ router.put('/:id', async function(req, res, next) {
 });
 
 router.delete('/:id', async function(req, res, next) {
-  //console.log('req.params.id', req.params.id);
   try {
     const user = await User.findById(req.params.id);
-    console.log('user', user);
     if (!user) {
       const err = new Error('Not Found');
       err.status = 404;
