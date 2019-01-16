@@ -12,7 +12,6 @@ class Admin extends React.Component {
   };
   render() {
     const users = this.props.users.users;
-    console.log('Admin users to see isAdmin', users);
     return (
       <div>
         <h1>Admin page</h1>
@@ -27,7 +26,7 @@ class Admin extends React.Component {
                 type="button"
                 onClick={() => this.handleUserDelete(user.id)}
               >
-                x
+                &times;
               </button>
               <button
                 type="button"
