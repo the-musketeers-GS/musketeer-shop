@@ -38,9 +38,6 @@ export const fetchCart = userId => async dispatch => {
 };
 
 export const createCartItem = (userId, productId) => async dispatch => {
-  // dispatch(requestMade());
-  console.log('userid', userId);
-  console.log('productid', productId);
   try {
     await axios.post(`/api/cart/${userId}/${productId}`);
     dispatch(fetchCart(userId));
@@ -87,15 +84,13 @@ export function localCartMiddleware(store) {
   return next => action => {
     if (action.type === CHECK_LOCALSTORAGE) {
       let state = store.getState();
-      const isAuthenticated = !!state.user.id;
-      console.log(state);
+      const isLogged = !!state.user.id;
 
       let localStorageCart = localStorage.getItem('guestCart')
         ? JSON.parse(localStorage.getItem('guestCart'))
         : [];
 
-      if (isAuthenticated) {
-        console.log('HERE??????');
+      if (isLogged) {
         // authenticated user
         if (localStorageCart.cart) {
           localStorageCart.cart.forEach(item => {

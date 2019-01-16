@@ -58,18 +58,9 @@ const CheckoutButton = styled.button`
 `;
 
 class Cart extends Component {
-  componentDidMount() {
-    // if (this.props.user.id) {
-    //   this.props.checkLocalStorage()
-    // }
-    console.log('in the Cart component');
-  }
-
   render() {
     let { products, guestCart, isOpen, user } = this.props;
     let localStorageCart = JSON.parse(window.localStorage.getItem('guestCart'));
-    console.log('localStorageCart', localStorageCart);
-    console.log('am i here?', this.props.user);
 
     if (!user.id && localStorageCart) {
       return (
