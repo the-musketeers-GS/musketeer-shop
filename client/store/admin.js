@@ -3,6 +3,7 @@ import axios from 'axios';
 //action types
 const GET_ALL_USERS = 'GET_ALL_USERS';
 const DELETE_USER = 'DELETE_USER';
+const TOGGLE_USER = 'TOGGLE_USER';
 
 //action creators
 export const requestAllUsers = users => ({
@@ -12,6 +13,11 @@ export const requestAllUsers = users => ({
 
 export const deleteOneUser = userId => ({
   type: DELETE_USER,
+  user: userId
+});
+
+export const toggleOneUser = userId => ({
+  type: TOGGLE_USER,
   user: userId
 });
 
@@ -27,9 +33,15 @@ export const fetchUsers = () => async dispatch => {
 
 export const deleteUser = userId => {
   return async dispatch => {
-    console.log('userId in thunk', userId);
     await axios.delete(`/api/users/${userId}`);
     dispatch(deleteOneUser(userId));
+  };
+};
+
+export const toggleisAdmin = userId => {
+  return async dispatch => {
+    const { data } = await axios.put(`/api/users/${userId}`);
+    dispatch(toggleOneUser(data));
   };
 };
 
@@ -46,7 +58,8 @@ export default function(state = initialState, action) {
       const newAllUsersState = state.users.filter(user => {
         return user.id !== Number(action.user);
       });
-      return { ...state, users: newAllUsersState };
+    case toggleOneUser:
+      return { ...state, users: [...state.users, action.user] };
     default:
       return { state };
   }

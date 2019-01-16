@@ -17,8 +17,32 @@ router.get('/', isAdmin, async (req, res, next) => {
   }
 });
 
+router.put('/:id', async function(req, res, next) {
+  try {
+    const user = await User.findById(req.params.id);
+    console.log('user switch isAdmin part1', user.isAdmin);
+    // if (user.isAdmin) {
+    //   user.isAdmin = false;
+    // } else {
+    //   user.isAdmin = true;
+    // }
+    console.log('user switch isAdmin part2', user.isAdmin);
+    const updatedUser = await user.update(
+      { isAdmin: !user.isAdmin },
+      {
+        returning: true,
+        plain: true
+      }
+    );
+
+    res.json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.delete('/:id', async function(req, res, next) {
-  console.log('req.params.id', req.params.id);
+  //console.log('req.params.id', req.params.id);
   try {
     const user = await User.findById(req.params.id);
     console.log('user', user);
