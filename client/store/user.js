@@ -30,6 +30,7 @@ export const me = () => async dispatch => {
   }
 };
 
+// eslint-disable-next-line max-params
 export const auth = (
   email,
   password,

@@ -13,7 +13,7 @@ export const requestAllUsers = users => ({
 
 export const deleteOneUser = userId => ({
   type: DELETE_USER,
-  user: userId
+  userId
 });
 
 export const toggleOneUser = userId => ({
@@ -40,8 +40,8 @@ export const deleteUser = userId => {
 
 export const toggleisAdmin = userId => {
   return async dispatch => {
-    const { data } = await axios.put(`/api/users/${userId}`);
-    dispatch(toggleOneUser(data));
+    await axios.put(`/api/users/${userId}`);
+    dispatch(fetchUsers());
   };
 };
 
@@ -55,12 +55,13 @@ export default function(state = initialState, action) {
     case GET_ALL_USERS:
       return { ...state, users: action.users };
     case DELETE_USER:
-      const newAllUsersState = state.users.filter(user => {
-        return user.id !== Number(action.user);
-      });
-    case toggleOneUser:
+      return {
+        ...state,
+        users: state.users.filter(user => user.id !== +action.userId)
+      };
+    case TOGGLE_USER:
       return { ...state, users: [...state.users, action.user] };
     default:
-      return { state };
+      return state;
   }
 }
