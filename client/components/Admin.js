@@ -1,10 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { deleteUser } from '../store';
+import { deleteUser, toggleisAdmin } from '../store';
 
 class Admin extends React.Component {
   handleUserDelete = userId => {
     this.props.deleteUser(userId);
+  };
+
+  handleToggleisAdmin = userId => {
+    this.props.toggleisAdmin(userId);
   };
   render() {
     const users = this.props.users.users;
@@ -12,7 +16,7 @@ class Admin extends React.Component {
       <div>
         <h1>Admin page</h1>
         <h3>Edit/Delete Users</h3>
-        {!users || users.length === 0 ? (
+        {!users ? (
           <div>There are no users</div>
         ) : (
           users.map(user => (
@@ -22,7 +26,13 @@ class Admin extends React.Component {
                 type="button"
                 onClick={() => this.handleUserDelete(user.id)}
               >
-                x
+                &times;
+              </button>
+              <button
+                type="button"
+                onClick={() => this.handleToggleisAdmin(user.id)}
+              >
+                {user.isAdmin ? 'true' : 'false'}
               </button>
             </div>
           ))
@@ -38,7 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteUser: userId => dispatch(deleteUser(userId))
+    deleteUser: userId => dispatch(deleteUser(userId)),
+    toggleisAdmin: userId => dispatch(toggleisAdmin(userId))
   };
 };
 
