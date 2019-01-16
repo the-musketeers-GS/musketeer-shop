@@ -13,14 +13,13 @@ import AddProduct from './AddProduct';
 const AdminManageRoutes = () => {
   return (
     <Switch>
-      <Route exact path="/manage" component={ManageProducts} />
-      <Route exact path="/manage/products" component={ManageProducts} />
-      <Route exact path="/manage/product/add" component={AddProduct} />
-      <Route path="/manage/product/:productId" component={UpdateProduct} />
-      {/* <Route path="/manage/order" component={ManageOrders} />
-      <Route path="/manage/order/:orderId" component={UpdateOrder} />
-      <Route path="/manage/user" component={ManageUsers} />
-      <Route path="/manage/user/:userId" component={UpdateUser} /> */}
+      <Route exact path="/admin/manage" component={ManageProducts} />
+      <Route exact path="/admin/manage/products" component={ManageProducts} />
+      <Route exact path="/admin/manage/product/add" component={AddProduct} />
+      <Route
+        path="/admin/manage/product/:productId"
+        component={UpdateProduct}
+      />
     </Switch>
   );
 };
