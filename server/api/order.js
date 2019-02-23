@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const { Order, OrderItem, Cart, CartItem, Product } = require('../db/models');
 const calcTotalPrice = require('../lib/calcTotalPrice');
-const isSelforAdmin = require('../middlewares/isSelforAdmin');
+const isSelfOrAdmin = require('../middlewares/isSelfOrAdmin');
 module.exports = router;
 
 // GET /api/order/:userId ---- return all orders for a user
-router.get('/:userId', isSelforAdmin, async (req, res, next) => {
+router.get('/:userId', isSelfOrAdmin, async (req, res, next) => {
   try {
     const userId = req.params.userId;
     const order = await Order.findAll({
@@ -23,7 +23,7 @@ router.get('/:userId', isSelforAdmin, async (req, res, next) => {
 });
 
 // GET /api/order/:userId/:orderId/data ---- return all data for a single order
-router.get('/:userId/:orderId/data', isSelforAdmin, async (req, res, next) => {
+router.get('/:userId/:orderId/data', isSelfOrAdmin, async (req, res, next) => {
   try {
     const orderId = req.params.orderId;
     const order = await Order.findOne({ where: { id: orderId } });
