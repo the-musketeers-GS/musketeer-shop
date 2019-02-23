@@ -66,9 +66,6 @@ const initialState = {
 // REDUCER
 export default function(state = initialState, action) {
   switch (action.type) {
-    // case REQUEST_MADE: {
-    //   return { ...state, isLoading: true };
-    // }
     case REQUEST_CART:
       return { ...state, products: action.products };
     case TOGGLE_CART:
